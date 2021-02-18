@@ -105,21 +105,42 @@ common_constants = {
 }
 
 
+enum_categories = []
+src += "\n\n# ENUM TYPES\n"
+for entry in REGISTRY.find_all("type", category="enum"):
+    name = entry['name']
+    if entry.get("alias"):
+        src += f"{name} = {entry['alias']}\n"
+    else:
+        src += specialize(name, "ctypes.c_int")
+    enum_categories.append(name)
+
+
 for enum_group in REGISTRY.find_all("enums"):
-    src += f"\n\n# {enum_group['name']}\n"
+    ctype = enum_group['name'] if enum_group['name'] in enum_categories else None
+    if ctype:
+        src += f"\n\n# ENUM {enum_group['name']}\n"
+    else:
+        src += f"\n\n# {enum_group['name']}\n"
     for entry in enum_group.find_all("enum"):
         if entry.get("alias"):
             src += f"{entry['name']} = {entry['alias']}\n"
         elif entry.get("bitpos"):
             name = entry['name']
             value = 1 << int(entry['bitpos'])
-            src += f"{name} = {value}\n"
+            if ctype:
+                src += f"{name} = {ctype}({value})\n"
+            else:
+                src += f"{name} = {value}\n"
         elif entry.get("value"):
             name = entry['name']
             value = common_constants.get(entry['value']) or entry['value']
             if value.endswith("f"):
                 value = value[:-1]
-            src += f"{name} = {value}\n"
+            if ctype:
+                src += f"{name} = {ctype}({value})\n"
+            else:
+                src += f"{name} = {value}\n"
         else:
             breakpoint()
 
