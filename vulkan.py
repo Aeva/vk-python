@@ -1,12 +1,9 @@
 
-
 import ctypes
 import platform
 
-
 if ctypes.sizeof(ctypes.c_void_p) != 8:
     raise RuntimeError("Only 64 bit is supported.")
-
 
 VK_DLL = None
 VK_FUNCTYPE = None
@@ -19,16 +16,20 @@ elif platform.system() == "Linux":
 else:
     raise RuntimeError(f"Unsupported platform: {platform.system()}")
 
+#=============================================================================#
+# The remainder of this file was generated automatically from the Vulkan API  #
+# Registry XML file.                                                          #
+#=============================================================================#
 
-# BASE TYPES
+ANativeWindow = type('ANativeWindow', (ctypes.Structure,), dict())
+AHardwareBuffer = type('AHardwareBuffer', (ctypes.Structure,), dict())
+CAMetalLayer = type('CAMetalLayer', (ctypes.Structure,), dict())
 VkSampleMask = type('VkSampleMask', (ctypes.c_uint32,), dict())
 VkBool32 = type('VkBool32', (ctypes.c_uint32,), dict())
 VkFlags = type('VkFlags', (ctypes.c_uint32,), dict())
 VkDeviceSize = type('VkDeviceSize', (ctypes.c_uint64,), dict())
 VkDeviceAddress = type('VkDeviceAddress', (ctypes.c_uint64,), dict())
 
-
-# BITMASK TYPES
 VkFramebufferCreateFlags = type('VkFramebufferCreateFlags', (VkFlags,), dict())
 VkQueryPoolCreateFlags = type('VkQueryPoolCreateFlags', (VkFlags,), dict())
 VkRenderPassCreateFlags = type('VkRenderPassCreateFlags', (VkFlags,), dict())
@@ -91,20 +92,20 @@ VkSubgroupFeatureFlags = type('VkSubgroupFeatureFlags', (VkFlags,), dict())
 VkIndirectCommandsLayoutUsageFlagsNV = type('VkIndirectCommandsLayoutUsageFlagsNV', (VkFlags,), dict())
 VkIndirectStateFlagsNV = type('VkIndirectStateFlagsNV', (VkFlags,), dict())
 VkGeometryFlagsKHR = type('VkGeometryFlagsKHR', (VkFlags,), dict())
-VkGeometryFlagsNV = type('VkGeometryFlagsNV', (VkGeometryFlagsKHR,), dict())
+VkGeometryFlagsNV = VkGeometryFlagsKHR
 VkGeometryInstanceFlagsKHR = type('VkGeometryInstanceFlagsKHR', (VkFlags,), dict())
-VkGeometryInstanceFlagsNV = type('VkGeometryInstanceFlagsNV', (VkGeometryInstanceFlagsKHR,), dict())
+VkGeometryInstanceFlagsNV = VkGeometryInstanceFlagsKHR
 VkBuildAccelerationStructureFlagsKHR = type('VkBuildAccelerationStructureFlagsKHR', (VkFlags,), dict())
-VkBuildAccelerationStructureFlagsNV = type('VkBuildAccelerationStructureFlagsNV', (VkBuildAccelerationStructureFlagsKHR,), dict())
+VkBuildAccelerationStructureFlagsNV = VkBuildAccelerationStructureFlagsKHR
 VkPrivateDataSlotCreateFlagsEXT = type('VkPrivateDataSlotCreateFlagsEXT', (VkFlags,), dict())
 VkAccelerationStructureCreateFlagsKHR = type('VkAccelerationStructureCreateFlagsKHR', (VkFlags,), dict())
 VkDescriptorUpdateTemplateCreateFlags = type('VkDescriptorUpdateTemplateCreateFlags', (VkFlags,), dict())
-VkDescriptorUpdateTemplateCreateFlagsKHR = type('VkDescriptorUpdateTemplateCreateFlagsKHR', (VkDescriptorUpdateTemplateCreateFlags,), dict())
+VkDescriptorUpdateTemplateCreateFlagsKHR = VkDescriptorUpdateTemplateCreateFlags
 VkPipelineCreationFeedbackFlagsEXT = type('VkPipelineCreationFeedbackFlagsEXT', (VkFlags,), dict())
 VkPerformanceCounterDescriptionFlagsKHR = type('VkPerformanceCounterDescriptionFlagsKHR', (VkFlags,), dict())
 VkAcquireProfilingLockFlagsKHR = type('VkAcquireProfilingLockFlagsKHR', (VkFlags,), dict())
 VkSemaphoreWaitFlags = type('VkSemaphoreWaitFlags', (VkFlags,), dict())
-VkSemaphoreWaitFlagsKHR = type('VkSemaphoreWaitFlagsKHR', (VkSemaphoreWaitFlags,), dict())
+VkSemaphoreWaitFlagsKHR = VkSemaphoreWaitFlags
 VkPipelineCompilerControlFlagsAMD = type('VkPipelineCompilerControlFlagsAMD', (VkFlags,), dict())
 VkShaderCorePropertiesFlagsAMD = type('VkShaderCorePropertiesFlagsAMD', (VkFlags,), dict())
 VkDeviceDiagnosticsConfigFlagsNV = type('VkDeviceDiagnosticsConfigFlagsNV', (VkFlags,), dict())
@@ -128,31 +129,31 @@ VkImagePipeSurfaceCreateFlagsFUCHSIA = type('VkImagePipeSurfaceCreateFlagsFUCHSI
 VkStreamDescriptorSurfaceCreateFlagsGGP = type('VkStreamDescriptorSurfaceCreateFlagsGGP', (VkFlags,), dict())
 VkHeadlessSurfaceCreateFlagsEXT = type('VkHeadlessSurfaceCreateFlagsEXT', (VkFlags,), dict())
 VkPeerMemoryFeatureFlags = type('VkPeerMemoryFeatureFlags', (VkFlags,), dict())
-VkPeerMemoryFeatureFlagsKHR = type('VkPeerMemoryFeatureFlagsKHR', (VkPeerMemoryFeatureFlags,), dict())
+VkPeerMemoryFeatureFlagsKHR = VkPeerMemoryFeatureFlags
 VkMemoryAllocateFlags = type('VkMemoryAllocateFlags', (VkFlags,), dict())
-VkMemoryAllocateFlagsKHR = type('VkMemoryAllocateFlagsKHR', (VkMemoryAllocateFlags,), dict())
+VkMemoryAllocateFlagsKHR = VkMemoryAllocateFlags
 VkDeviceGroupPresentModeFlagsKHR = type('VkDeviceGroupPresentModeFlagsKHR', (VkFlags,), dict())
 VkDebugReportFlagsEXT = type('VkDebugReportFlagsEXT', (VkFlags,), dict())
 VkCommandPoolTrimFlags = type('VkCommandPoolTrimFlags', (VkFlags,), dict())
-VkCommandPoolTrimFlagsKHR = type('VkCommandPoolTrimFlagsKHR', (VkCommandPoolTrimFlags,), dict())
+VkCommandPoolTrimFlagsKHR = VkCommandPoolTrimFlags
 VkExternalMemoryHandleTypeFlagsNV = type('VkExternalMemoryHandleTypeFlagsNV', (VkFlags,), dict())
 VkExternalMemoryFeatureFlagsNV = type('VkExternalMemoryFeatureFlagsNV', (VkFlags,), dict())
 VkExternalMemoryHandleTypeFlags = type('VkExternalMemoryHandleTypeFlags', (VkFlags,), dict())
-VkExternalMemoryHandleTypeFlagsKHR = type('VkExternalMemoryHandleTypeFlagsKHR', (VkExternalMemoryHandleTypeFlags,), dict())
+VkExternalMemoryHandleTypeFlagsKHR = VkExternalMemoryHandleTypeFlags
 VkExternalMemoryFeatureFlags = type('VkExternalMemoryFeatureFlags', (VkFlags,), dict())
-VkExternalMemoryFeatureFlagsKHR = type('VkExternalMemoryFeatureFlagsKHR', (VkExternalMemoryFeatureFlags,), dict())
+VkExternalMemoryFeatureFlagsKHR = VkExternalMemoryFeatureFlags
 VkExternalSemaphoreHandleTypeFlags = type('VkExternalSemaphoreHandleTypeFlags', (VkFlags,), dict())
-VkExternalSemaphoreHandleTypeFlagsKHR = type('VkExternalSemaphoreHandleTypeFlagsKHR', (VkExternalSemaphoreHandleTypeFlags,), dict())
+VkExternalSemaphoreHandleTypeFlagsKHR = VkExternalSemaphoreHandleTypeFlags
 VkExternalSemaphoreFeatureFlags = type('VkExternalSemaphoreFeatureFlags', (VkFlags,), dict())
-VkExternalSemaphoreFeatureFlagsKHR = type('VkExternalSemaphoreFeatureFlagsKHR', (VkExternalSemaphoreFeatureFlags,), dict())
+VkExternalSemaphoreFeatureFlagsKHR = VkExternalSemaphoreFeatureFlags
 VkSemaphoreImportFlags = type('VkSemaphoreImportFlags', (VkFlags,), dict())
-VkSemaphoreImportFlagsKHR = type('VkSemaphoreImportFlagsKHR', (VkSemaphoreImportFlags,), dict())
+VkSemaphoreImportFlagsKHR = VkSemaphoreImportFlags
 VkExternalFenceHandleTypeFlags = type('VkExternalFenceHandleTypeFlags', (VkFlags,), dict())
-VkExternalFenceHandleTypeFlagsKHR = type('VkExternalFenceHandleTypeFlagsKHR', (VkExternalFenceHandleTypeFlags,), dict())
+VkExternalFenceHandleTypeFlagsKHR = VkExternalFenceHandleTypeFlags
 VkExternalFenceFeatureFlags = type('VkExternalFenceFeatureFlags', (VkFlags,), dict())
-VkExternalFenceFeatureFlagsKHR = type('VkExternalFenceFeatureFlagsKHR', (VkExternalFenceFeatureFlags,), dict())
+VkExternalFenceFeatureFlagsKHR = VkExternalFenceFeatureFlags
 VkFenceImportFlags = type('VkFenceImportFlags', (VkFlags,), dict())
-VkFenceImportFlagsKHR = type('VkFenceImportFlagsKHR', (VkFenceImportFlags,), dict())
+VkFenceImportFlagsKHR = VkFenceImportFlags
 VkSurfaceCounterFlagsEXT = type('VkSurfaceCounterFlagsEXT', (VkFlags,), dict())
 VkPipelineViewportSwizzleStateCreateFlagsNV = type('VkPipelineViewportSwizzleStateCreateFlagsNV', (VkFlags,), dict())
 VkPipelineDiscardRectangleStateCreateFlagsEXT = type('VkPipelineDiscardRectangleStateCreateFlagsEXT', (VkFlags,), dict())
@@ -167,275 +168,57 @@ VkDebugUtilsMessengerCallbackDataFlagsEXT = type('VkDebugUtilsMessengerCallbackD
 VkDeviceMemoryReportFlagsEXT = type('VkDeviceMemoryReportFlagsEXT', (VkFlags,), dict())
 VkPipelineRasterizationConservativeStateCreateFlagsEXT = type('VkPipelineRasterizationConservativeStateCreateFlagsEXT', (VkFlags,), dict())
 VkDescriptorBindingFlags = type('VkDescriptorBindingFlags', (VkFlags,), dict())
-VkDescriptorBindingFlagsEXT = type('VkDescriptorBindingFlagsEXT', (VkDescriptorBindingFlags,), dict())
+VkDescriptorBindingFlagsEXT = VkDescriptorBindingFlags
 VkConditionalRenderingFlagsEXT = type('VkConditionalRenderingFlagsEXT', (VkFlags,), dict())
 VkResolveModeFlags = type('VkResolveModeFlags', (VkFlags,), dict())
-VkResolveModeFlagsKHR = type('VkResolveModeFlagsKHR', (VkResolveModeFlags,), dict())
+VkResolveModeFlagsKHR = VkResolveModeFlags
 VkPipelineRasterizationStateStreamCreateFlagsEXT = type('VkPipelineRasterizationStateStreamCreateFlagsEXT', (VkFlags,), dict())
 VkPipelineRasterizationDepthClipStateCreateFlagsEXT = type('VkPipelineRasterizationDepthClipStateCreateFlagsEXT', (VkFlags,), dict())
 VkSwapchainImageUsageFlagsANDROID = type('VkSwapchainImageUsageFlagsANDROID', (VkFlags,), dict())
 VkToolPurposeFlagsEXT = type('VkToolPurposeFlagsEXT', (VkFlags,), dict())
 
-
-# HANDLE TYPES
-VK_NULL_HANDLE = 0
-VkInstance = ctypes.POINTER(type('VkInstance', (ctypes.Structure,), dict()))
-VkPhysicalDevice = ctypes.POINTER(type('VkPhysicalDevice', (ctypes.Structure,), dict()))
-VkDevice = ctypes.POINTER(type('VkDevice', (ctypes.Structure,), dict()))
-VkQueue = ctypes.POINTER(type('VkQueue', (ctypes.Structure,), dict()))
-VkCommandBuffer = ctypes.POINTER(type('VkCommandBuffer', (ctypes.Structure,), dict()))
-VkDeviceMemory = ctypes.POINTER(type('VkDeviceMemory', (ctypes.Structure,), dict()))
-VkCommandPool = ctypes.POINTER(type('VkCommandPool', (ctypes.Structure,), dict()))
-VkBuffer = ctypes.POINTER(type('VkBuffer', (ctypes.Structure,), dict()))
-VkBufferView = ctypes.POINTER(type('VkBufferView', (ctypes.Structure,), dict()))
-VkImage = ctypes.POINTER(type('VkImage', (ctypes.Structure,), dict()))
-VkImageView = ctypes.POINTER(type('VkImageView', (ctypes.Structure,), dict()))
-VkShaderModule = ctypes.POINTER(type('VkShaderModule', (ctypes.Structure,), dict()))
-VkPipeline = ctypes.POINTER(type('VkPipeline', (ctypes.Structure,), dict()))
-VkPipelineLayout = ctypes.POINTER(type('VkPipelineLayout', (ctypes.Structure,), dict()))
-VkSampler = ctypes.POINTER(type('VkSampler', (ctypes.Structure,), dict()))
-VkDescriptorSet = ctypes.POINTER(type('VkDescriptorSet', (ctypes.Structure,), dict()))
-VkDescriptorSetLayout = ctypes.POINTER(type('VkDescriptorSetLayout', (ctypes.Structure,), dict()))
-VkDescriptorPool = ctypes.POINTER(type('VkDescriptorPool', (ctypes.Structure,), dict()))
-VkFence = ctypes.POINTER(type('VkFence', (ctypes.Structure,), dict()))
-VkSemaphore = ctypes.POINTER(type('VkSemaphore', (ctypes.Structure,), dict()))
-VkEvent = ctypes.POINTER(type('VkEvent', (ctypes.Structure,), dict()))
-VkQueryPool = ctypes.POINTER(type('VkQueryPool', (ctypes.Structure,), dict()))
-VkFramebuffer = ctypes.POINTER(type('VkFramebuffer', (ctypes.Structure,), dict()))
-VkRenderPass = ctypes.POINTER(type('VkRenderPass', (ctypes.Structure,), dict()))
-VkPipelineCache = ctypes.POINTER(type('VkPipelineCache', (ctypes.Structure,), dict()))
-VkIndirectCommandsLayoutNV = ctypes.POINTER(type('VkIndirectCommandsLayoutNV', (ctypes.Structure,), dict()))
-VkDescriptorUpdateTemplate = ctypes.POINTER(type('VkDescriptorUpdateTemplate', (ctypes.Structure,), dict()))
+VkInstance = type('VkInstance', (ctypes.Structure,), dict())
+VkPhysicalDevice = type('VkPhysicalDevice', (ctypes.Structure,), dict())
+VkDevice = type('VkDevice', (ctypes.Structure,), dict())
+VkQueue = type('VkQueue', (ctypes.Structure,), dict())
+VkCommandBuffer = type('VkCommandBuffer', (ctypes.Structure,), dict())
+VkDeviceMemory = type('VkDeviceMemory', (ctypes.Structure,), dict())
+VkCommandPool = type('VkCommandPool', (ctypes.Structure,), dict())
+VkBuffer = type('VkBuffer', (ctypes.Structure,), dict())
+VkBufferView = type('VkBufferView', (ctypes.Structure,), dict())
+VkImage = type('VkImage', (ctypes.Structure,), dict())
+VkImageView = type('VkImageView', (ctypes.Structure,), dict())
+VkShaderModule = type('VkShaderModule', (ctypes.Structure,), dict())
+VkPipeline = type('VkPipeline', (ctypes.Structure,), dict())
+VkPipelineLayout = type('VkPipelineLayout', (ctypes.Structure,), dict())
+VkSampler = type('VkSampler', (ctypes.Structure,), dict())
+VkDescriptorSet = type('VkDescriptorSet', (ctypes.Structure,), dict())
+VkDescriptorSetLayout = type('VkDescriptorSetLayout', (ctypes.Structure,), dict())
+VkDescriptorPool = type('VkDescriptorPool', (ctypes.Structure,), dict())
+VkFence = type('VkFence', (ctypes.Structure,), dict())
+VkSemaphore = type('VkSemaphore', (ctypes.Structure,), dict())
+VkEvent = type('VkEvent', (ctypes.Structure,), dict())
+VkQueryPool = type('VkQueryPool', (ctypes.Structure,), dict())
+VkFramebuffer = type('VkFramebuffer', (ctypes.Structure,), dict())
+VkRenderPass = type('VkRenderPass', (ctypes.Structure,), dict())
+VkPipelineCache = type('VkPipelineCache', (ctypes.Structure,), dict())
+VkIndirectCommandsLayoutNV = type('VkIndirectCommandsLayoutNV', (ctypes.Structure,), dict())
+VkDescriptorUpdateTemplate = type('VkDescriptorUpdateTemplate', (ctypes.Structure,), dict())
 VkDescriptorUpdateTemplateKHR = VkDescriptorUpdateTemplate
-VkSamplerYcbcrConversion = ctypes.POINTER(type('VkSamplerYcbcrConversion', (ctypes.Structure,), dict()))
+VkSamplerYcbcrConversion = type('VkSamplerYcbcrConversion', (ctypes.Structure,), dict())
 VkSamplerYcbcrConversionKHR = VkSamplerYcbcrConversion
-VkValidationCacheEXT = ctypes.POINTER(type('VkValidationCacheEXT', (ctypes.Structure,), dict()))
-VkAccelerationStructureKHR = ctypes.POINTER(type('VkAccelerationStructureKHR', (ctypes.Structure,), dict()))
-VkAccelerationStructureNV = ctypes.POINTER(type('VkAccelerationStructureNV', (ctypes.Structure,), dict()))
-VkPerformanceConfigurationINTEL = ctypes.POINTER(type('VkPerformanceConfigurationINTEL', (ctypes.Structure,), dict()))
-VkDeferredOperationKHR = ctypes.POINTER(type('VkDeferredOperationKHR', (ctypes.Structure,), dict()))
-VkPrivateDataSlotEXT = ctypes.POINTER(type('VkPrivateDataSlotEXT', (ctypes.Structure,), dict()))
-VkDisplayKHR = ctypes.POINTER(type('VkDisplayKHR', (ctypes.Structure,), dict()))
-VkDisplayModeKHR = ctypes.POINTER(type('VkDisplayModeKHR', (ctypes.Structure,), dict()))
-VkSurfaceKHR = ctypes.POINTER(type('VkSurfaceKHR', (ctypes.Structure,), dict()))
-VkSwapchainKHR = ctypes.POINTER(type('VkSwapchainKHR', (ctypes.Structure,), dict()))
-VkDebugReportCallbackEXT = ctypes.POINTER(type('VkDebugReportCallbackEXT', (ctypes.Structure,), dict()))
-VkDebugUtilsMessengerEXT = ctypes.POINTER(type('VkDebugUtilsMessengerEXT', (ctypes.Structure,), dict()))
-
-
-# ENUM TYPES
-VkAttachmentLoadOp = type('VkAttachmentLoadOp', (ctypes.c_int,), dict())
-VkAttachmentStoreOp = type('VkAttachmentStoreOp', (ctypes.c_int,), dict())
-VkBlendFactor = type('VkBlendFactor', (ctypes.c_int,), dict())
-VkBlendOp = type('VkBlendOp', (ctypes.c_int,), dict())
-VkBorderColor = type('VkBorderColor', (ctypes.c_int,), dict())
-VkFramebufferCreateFlagBits = type('VkFramebufferCreateFlagBits', (ctypes.c_int,), dict())
-VkQueryPoolCreateFlagBits = type('VkQueryPoolCreateFlagBits', (ctypes.c_int,), dict())
-VkRenderPassCreateFlagBits = type('VkRenderPassCreateFlagBits', (ctypes.c_int,), dict())
-VkSamplerCreateFlagBits = type('VkSamplerCreateFlagBits', (ctypes.c_int,), dict())
-VkPipelineCacheHeaderVersion = type('VkPipelineCacheHeaderVersion', (ctypes.c_int,), dict())
-VkPipelineCacheCreateFlagBits = type('VkPipelineCacheCreateFlagBits', (ctypes.c_int,), dict())
-VkPipelineShaderStageCreateFlagBits = type('VkPipelineShaderStageCreateFlagBits', (ctypes.c_int,), dict())
-VkDescriptorSetLayoutCreateFlagBits = type('VkDescriptorSetLayoutCreateFlagBits', (ctypes.c_int,), dict())
-VkInstanceCreateFlagBits = type('VkInstanceCreateFlagBits', (ctypes.c_int,), dict())
-VkDeviceQueueCreateFlagBits = type('VkDeviceQueueCreateFlagBits', (ctypes.c_int,), dict())
-VkBufferCreateFlagBits = type('VkBufferCreateFlagBits', (ctypes.c_int,), dict())
-VkBufferUsageFlagBits = type('VkBufferUsageFlagBits', (ctypes.c_int,), dict())
-VkColorComponentFlagBits = type('VkColorComponentFlagBits', (ctypes.c_int,), dict())
-VkComponentSwizzle = type('VkComponentSwizzle', (ctypes.c_int,), dict())
-VkCommandPoolCreateFlagBits = type('VkCommandPoolCreateFlagBits', (ctypes.c_int,), dict())
-VkCommandPoolResetFlagBits = type('VkCommandPoolResetFlagBits', (ctypes.c_int,), dict())
-VkCommandBufferResetFlagBits = type('VkCommandBufferResetFlagBits', (ctypes.c_int,), dict())
-VkCommandBufferLevel = type('VkCommandBufferLevel', (ctypes.c_int,), dict())
-VkCommandBufferUsageFlagBits = type('VkCommandBufferUsageFlagBits', (ctypes.c_int,), dict())
-VkCompareOp = type('VkCompareOp', (ctypes.c_int,), dict())
-VkCullModeFlagBits = type('VkCullModeFlagBits', (ctypes.c_int,), dict())
-VkDescriptorType = type('VkDescriptorType', (ctypes.c_int,), dict())
-VkDeviceCreateFlagBits = type('VkDeviceCreateFlagBits', (ctypes.c_int,), dict())
-VkDynamicState = type('VkDynamicState', (ctypes.c_int,), dict())
-VkFenceCreateFlagBits = type('VkFenceCreateFlagBits', (ctypes.c_int,), dict())
-VkPolygonMode = type('VkPolygonMode', (ctypes.c_int,), dict())
-VkFormat = type('VkFormat', (ctypes.c_int,), dict())
-VkFormatFeatureFlagBits = type('VkFormatFeatureFlagBits', (ctypes.c_int,), dict())
-VkFrontFace = type('VkFrontFace', (ctypes.c_int,), dict())
-VkImageAspectFlagBits = type('VkImageAspectFlagBits', (ctypes.c_int,), dict())
-VkImageCreateFlagBits = type('VkImageCreateFlagBits', (ctypes.c_int,), dict())
-VkImageLayout = type('VkImageLayout', (ctypes.c_int,), dict())
-VkImageTiling = type('VkImageTiling', (ctypes.c_int,), dict())
-VkImageType = type('VkImageType', (ctypes.c_int,), dict())
-VkImageUsageFlagBits = type('VkImageUsageFlagBits', (ctypes.c_int,), dict())
-VkImageViewCreateFlagBits = type('VkImageViewCreateFlagBits', (ctypes.c_int,), dict())
-VkImageViewType = type('VkImageViewType', (ctypes.c_int,), dict())
-VkSharingMode = type('VkSharingMode', (ctypes.c_int,), dict())
-VkIndexType = type('VkIndexType', (ctypes.c_int,), dict())
-VkLogicOp = type('VkLogicOp', (ctypes.c_int,), dict())
-VkMemoryHeapFlagBits = type('VkMemoryHeapFlagBits', (ctypes.c_int,), dict())
-VkAccessFlagBits = type('VkAccessFlagBits', (ctypes.c_int,), dict())
-VkMemoryPropertyFlagBits = type('VkMemoryPropertyFlagBits', (ctypes.c_int,), dict())
-VkPhysicalDeviceType = type('VkPhysicalDeviceType', (ctypes.c_int,), dict())
-VkPipelineBindPoint = type('VkPipelineBindPoint', (ctypes.c_int,), dict())
-VkPipelineCreateFlagBits = type('VkPipelineCreateFlagBits', (ctypes.c_int,), dict())
-VkPrimitiveTopology = type('VkPrimitiveTopology', (ctypes.c_int,), dict())
-VkQueryControlFlagBits = type('VkQueryControlFlagBits', (ctypes.c_int,), dict())
-VkQueryPipelineStatisticFlagBits = type('VkQueryPipelineStatisticFlagBits', (ctypes.c_int,), dict())
-VkQueryResultFlagBits = type('VkQueryResultFlagBits', (ctypes.c_int,), dict())
-VkQueryType = type('VkQueryType', (ctypes.c_int,), dict())
-VkQueueFlagBits = type('VkQueueFlagBits', (ctypes.c_int,), dict())
-VkSubpassContents = type('VkSubpassContents', (ctypes.c_int,), dict())
-VkResult = type('VkResult', (ctypes.c_int,), dict())
-VkShaderStageFlagBits = type('VkShaderStageFlagBits', (ctypes.c_int,), dict())
-VkSparseMemoryBindFlagBits = type('VkSparseMemoryBindFlagBits', (ctypes.c_int,), dict())
-VkStencilFaceFlagBits = type('VkStencilFaceFlagBits', (ctypes.c_int,), dict())
-VkStencilOp = type('VkStencilOp', (ctypes.c_int,), dict())
-VkStructureType = type('VkStructureType', (ctypes.c_int,), dict())
-VkSystemAllocationScope = type('VkSystemAllocationScope', (ctypes.c_int,), dict())
-VkInternalAllocationType = type('VkInternalAllocationType', (ctypes.c_int,), dict())
-VkSamplerAddressMode = type('VkSamplerAddressMode', (ctypes.c_int,), dict())
-VkFilter = type('VkFilter', (ctypes.c_int,), dict())
-VkSamplerMipmapMode = type('VkSamplerMipmapMode', (ctypes.c_int,), dict())
-VkVertexInputRate = type('VkVertexInputRate', (ctypes.c_int,), dict())
-VkPipelineStageFlagBits = type('VkPipelineStageFlagBits', (ctypes.c_int,), dict())
-VkSparseImageFormatFlagBits = type('VkSparseImageFormatFlagBits', (ctypes.c_int,), dict())
-VkSampleCountFlagBits = type('VkSampleCountFlagBits', (ctypes.c_int,), dict())
-VkAttachmentDescriptionFlagBits = type('VkAttachmentDescriptionFlagBits', (ctypes.c_int,), dict())
-VkDescriptorPoolCreateFlagBits = type('VkDescriptorPoolCreateFlagBits', (ctypes.c_int,), dict())
-VkDependencyFlagBits = type('VkDependencyFlagBits', (ctypes.c_int,), dict())
-VkObjectType = type('VkObjectType', (ctypes.c_int,), dict())
-VkIndirectCommandsLayoutUsageFlagBitsNV = type('VkIndirectCommandsLayoutUsageFlagBitsNV', (ctypes.c_int,), dict())
-VkIndirectCommandsTokenTypeNV = type('VkIndirectCommandsTokenTypeNV', (ctypes.c_int,), dict())
-VkIndirectStateFlagBitsNV = type('VkIndirectStateFlagBitsNV', (ctypes.c_int,), dict())
-VkPrivateDataSlotCreateFlagBitsEXT = type('VkPrivateDataSlotCreateFlagBitsEXT', (ctypes.c_int,), dict())
-VkDescriptorUpdateTemplateType = type('VkDescriptorUpdateTemplateType', (ctypes.c_int,), dict())
-VkDescriptorUpdateTemplateTypeKHR = VkDescriptorUpdateTemplateType
-VkViewportCoordinateSwizzleNV = type('VkViewportCoordinateSwizzleNV', (ctypes.c_int,), dict())
-VkDiscardRectangleModeEXT = type('VkDiscardRectangleModeEXT', (ctypes.c_int,), dict())
-VkSubpassDescriptionFlagBits = type('VkSubpassDescriptionFlagBits', (ctypes.c_int,), dict())
-VkPointClippingBehavior = type('VkPointClippingBehavior', (ctypes.c_int,), dict())
-VkPointClippingBehaviorKHR = VkPointClippingBehavior
-VkCoverageModulationModeNV = type('VkCoverageModulationModeNV', (ctypes.c_int,), dict())
-VkCoverageReductionModeNV = type('VkCoverageReductionModeNV', (ctypes.c_int,), dict())
-VkValidationCacheHeaderVersionEXT = type('VkValidationCacheHeaderVersionEXT', (ctypes.c_int,), dict())
-VkShaderInfoTypeAMD = type('VkShaderInfoTypeAMD', (ctypes.c_int,), dict())
-VkQueueGlobalPriorityEXT = type('VkQueueGlobalPriorityEXT', (ctypes.c_int,), dict())
-VkTimeDomainEXT = type('VkTimeDomainEXT', (ctypes.c_int,), dict())
-VkConservativeRasterizationModeEXT = type('VkConservativeRasterizationModeEXT', (ctypes.c_int,), dict())
-VkResolveModeFlagBits = type('VkResolveModeFlagBits', (ctypes.c_int,), dict())
-VkResolveModeFlagBitsKHR = VkResolveModeFlagBits
-VkDescriptorBindingFlagBits = type('VkDescriptorBindingFlagBits', (ctypes.c_int,), dict())
-VkDescriptorBindingFlagBitsEXT = VkDescriptorBindingFlagBits
-VkConditionalRenderingFlagBitsEXT = type('VkConditionalRenderingFlagBitsEXT', (ctypes.c_int,), dict())
-VkSemaphoreType = type('VkSemaphoreType', (ctypes.c_int,), dict())
-VkSemaphoreTypeKHR = VkSemaphoreType
-VkGeometryFlagBitsKHR = type('VkGeometryFlagBitsKHR', (ctypes.c_int,), dict())
-VkGeometryFlagBitsNV = VkGeometryFlagBitsKHR
-VkGeometryInstanceFlagBitsKHR = type('VkGeometryInstanceFlagBitsKHR', (ctypes.c_int,), dict())
-VkGeometryInstanceFlagBitsNV = VkGeometryInstanceFlagBitsKHR
-VkBuildAccelerationStructureFlagBitsKHR = type('VkBuildAccelerationStructureFlagBitsKHR', (ctypes.c_int,), dict())
-VkBuildAccelerationStructureFlagBitsNV = VkBuildAccelerationStructureFlagBitsKHR
-VkAccelerationStructureCreateFlagBitsKHR = type('VkAccelerationStructureCreateFlagBitsKHR', (ctypes.c_int,), dict())
-VkBuildAccelerationStructureModeKHR = type('VkBuildAccelerationStructureModeKHR', (ctypes.c_int,), dict())
-VkCopyAccelerationStructureModeKHR = type('VkCopyAccelerationStructureModeKHR', (ctypes.c_int,), dict())
-VkCopyAccelerationStructureModeNV = VkCopyAccelerationStructureModeKHR
-VkAccelerationStructureTypeKHR = type('VkAccelerationStructureTypeKHR', (ctypes.c_int,), dict())
-VkAccelerationStructureTypeNV = VkAccelerationStructureTypeKHR
-VkGeometryTypeKHR = type('VkGeometryTypeKHR', (ctypes.c_int,), dict())
-VkGeometryTypeNV = VkGeometryTypeKHR
-VkRayTracingShaderGroupTypeKHR = type('VkRayTracingShaderGroupTypeKHR', (ctypes.c_int,), dict())
-VkRayTracingShaderGroupTypeNV = VkRayTracingShaderGroupTypeKHR
-VkAccelerationStructureMemoryRequirementsTypeNV = type('VkAccelerationStructureMemoryRequirementsTypeNV', (ctypes.c_int,), dict())
-VkAccelerationStructureBuildTypeKHR = type('VkAccelerationStructureBuildTypeKHR', (ctypes.c_int,), dict())
-VkAccelerationStructureCompatibilityKHR = type('VkAccelerationStructureCompatibilityKHR', (ctypes.c_int,), dict())
-VkShaderGroupShaderKHR = type('VkShaderGroupShaderKHR', (ctypes.c_int,), dict())
-VkMemoryOverallocationBehaviorAMD = type('VkMemoryOverallocationBehaviorAMD', (ctypes.c_int,), dict())
-VkScopeNV = type('VkScopeNV', (ctypes.c_int,), dict())
-VkComponentTypeNV = type('VkComponentTypeNV', (ctypes.c_int,), dict())
-VkDeviceDiagnosticsConfigFlagBitsNV = type('VkDeviceDiagnosticsConfigFlagBitsNV', (ctypes.c_int,), dict())
-VkPipelineCreationFeedbackFlagBitsEXT = type('VkPipelineCreationFeedbackFlagBitsEXT', (ctypes.c_int,), dict())
-VkPerformanceCounterScopeKHR = type('VkPerformanceCounterScopeKHR', (ctypes.c_int,), dict())
-VkPerformanceCounterUnitKHR = type('VkPerformanceCounterUnitKHR', (ctypes.c_int,), dict())
-VkPerformanceCounterStorageKHR = type('VkPerformanceCounterStorageKHR', (ctypes.c_int,), dict())
-VkPerformanceCounterDescriptionFlagBitsKHR = type('VkPerformanceCounterDescriptionFlagBitsKHR', (ctypes.c_int,), dict())
-VkAcquireProfilingLockFlagBitsKHR = type('VkAcquireProfilingLockFlagBitsKHR', (ctypes.c_int,), dict())
-VkSemaphoreWaitFlagBits = type('VkSemaphoreWaitFlagBits', (ctypes.c_int,), dict())
-VkSemaphoreWaitFlagBitsKHR = VkSemaphoreWaitFlagBits
-VkPerformanceConfigurationTypeINTEL = type('VkPerformanceConfigurationTypeINTEL', (ctypes.c_int,), dict())
-VkQueryPoolSamplingModeINTEL = type('VkQueryPoolSamplingModeINTEL', (ctypes.c_int,), dict())
-VkPerformanceOverrideTypeINTEL = type('VkPerformanceOverrideTypeINTEL', (ctypes.c_int,), dict())
-VkPerformanceParameterTypeINTEL = type('VkPerformanceParameterTypeINTEL', (ctypes.c_int,), dict())
-VkPerformanceValueTypeINTEL = type('VkPerformanceValueTypeINTEL', (ctypes.c_int,), dict())
-VkLineRasterizationModeEXT = type('VkLineRasterizationModeEXT', (ctypes.c_int,), dict())
-VkShaderModuleCreateFlagBits = type('VkShaderModuleCreateFlagBits', (ctypes.c_int,), dict())
-VkPipelineCompilerControlFlagBitsAMD = type('VkPipelineCompilerControlFlagBitsAMD', (ctypes.c_int,), dict())
-VkShaderCorePropertiesFlagBitsAMD = type('VkShaderCorePropertiesFlagBitsAMD', (ctypes.c_int,), dict())
-VkToolPurposeFlagBitsEXT = type('VkToolPurposeFlagBitsEXT', (ctypes.c_int,), dict())
-VkFragmentShadingRateNV = type('VkFragmentShadingRateNV', (ctypes.c_int,), dict())
-VkFragmentShadingRateTypeNV = type('VkFragmentShadingRateTypeNV', (ctypes.c_int,), dict())
-VkColorSpaceKHR = type('VkColorSpaceKHR', (ctypes.c_int,), dict())
-VkCompositeAlphaFlagBitsKHR = type('VkCompositeAlphaFlagBitsKHR', (ctypes.c_int,), dict())
-VkDisplayPlaneAlphaFlagBitsKHR = type('VkDisplayPlaneAlphaFlagBitsKHR', (ctypes.c_int,), dict())
-VkPresentModeKHR = type('VkPresentModeKHR', (ctypes.c_int,), dict())
-VkSurfaceTransformFlagBitsKHR = type('VkSurfaceTransformFlagBitsKHR', (ctypes.c_int,), dict())
-VkDebugReportFlagBitsEXT = type('VkDebugReportFlagBitsEXT', (ctypes.c_int,), dict())
-VkDebugReportObjectTypeEXT = type('VkDebugReportObjectTypeEXT', (ctypes.c_int,), dict())
-VkDeviceMemoryReportEventTypeEXT = type('VkDeviceMemoryReportEventTypeEXT', (ctypes.c_int,), dict())
-VkRasterizationOrderAMD = type('VkRasterizationOrderAMD', (ctypes.c_int,), dict())
-VkExternalMemoryHandleTypeFlagBitsNV = type('VkExternalMemoryHandleTypeFlagBitsNV', (ctypes.c_int,), dict())
-VkExternalMemoryFeatureFlagBitsNV = type('VkExternalMemoryFeatureFlagBitsNV', (ctypes.c_int,), dict())
-VkValidationCheckEXT = type('VkValidationCheckEXT', (ctypes.c_int,), dict())
-VkValidationFeatureEnableEXT = type('VkValidationFeatureEnableEXT', (ctypes.c_int,), dict())
-VkValidationFeatureDisableEXT = type('VkValidationFeatureDisableEXT', (ctypes.c_int,), dict())
-VkExternalMemoryHandleTypeFlagBits = type('VkExternalMemoryHandleTypeFlagBits', (ctypes.c_int,), dict())
-VkExternalMemoryHandleTypeFlagBitsKHR = VkExternalMemoryHandleTypeFlagBits
-VkExternalMemoryFeatureFlagBits = type('VkExternalMemoryFeatureFlagBits', (ctypes.c_int,), dict())
-VkExternalMemoryFeatureFlagBitsKHR = VkExternalMemoryFeatureFlagBits
-VkExternalSemaphoreHandleTypeFlagBits = type('VkExternalSemaphoreHandleTypeFlagBits', (ctypes.c_int,), dict())
-VkExternalSemaphoreHandleTypeFlagBitsKHR = VkExternalSemaphoreHandleTypeFlagBits
-VkExternalSemaphoreFeatureFlagBits = type('VkExternalSemaphoreFeatureFlagBits', (ctypes.c_int,), dict())
-VkExternalSemaphoreFeatureFlagBitsKHR = VkExternalSemaphoreFeatureFlagBits
-VkSemaphoreImportFlagBits = type('VkSemaphoreImportFlagBits', (ctypes.c_int,), dict())
-VkSemaphoreImportFlagBitsKHR = VkSemaphoreImportFlagBits
-VkExternalFenceHandleTypeFlagBits = type('VkExternalFenceHandleTypeFlagBits', (ctypes.c_int,), dict())
-VkExternalFenceHandleTypeFlagBitsKHR = VkExternalFenceHandleTypeFlagBits
-VkExternalFenceFeatureFlagBits = type('VkExternalFenceFeatureFlagBits', (ctypes.c_int,), dict())
-VkExternalFenceFeatureFlagBitsKHR = VkExternalFenceFeatureFlagBits
-VkFenceImportFlagBits = type('VkFenceImportFlagBits', (ctypes.c_int,), dict())
-VkFenceImportFlagBitsKHR = VkFenceImportFlagBits
-VkSurfaceCounterFlagBitsEXT = type('VkSurfaceCounterFlagBitsEXT', (ctypes.c_int,), dict())
-VkDisplayPowerStateEXT = type('VkDisplayPowerStateEXT', (ctypes.c_int,), dict())
-VkDeviceEventTypeEXT = type('VkDeviceEventTypeEXT', (ctypes.c_int,), dict())
-VkDisplayEventTypeEXT = type('VkDisplayEventTypeEXT', (ctypes.c_int,), dict())
-VkPeerMemoryFeatureFlagBits = type('VkPeerMemoryFeatureFlagBits', (ctypes.c_int,), dict())
-VkPeerMemoryFeatureFlagBitsKHR = VkPeerMemoryFeatureFlagBits
-VkMemoryAllocateFlagBits = type('VkMemoryAllocateFlagBits', (ctypes.c_int,), dict())
-VkMemoryAllocateFlagBitsKHR = VkMemoryAllocateFlagBits
-VkDeviceGroupPresentModeFlagBitsKHR = type('VkDeviceGroupPresentModeFlagBitsKHR', (ctypes.c_int,), dict())
-VkSwapchainCreateFlagBitsKHR = type('VkSwapchainCreateFlagBitsKHR', (ctypes.c_int,), dict())
-VkSubgroupFeatureFlagBits = type('VkSubgroupFeatureFlagBits', (ctypes.c_int,), dict())
-VkTessellationDomainOrigin = type('VkTessellationDomainOrigin', (ctypes.c_int,), dict())
-VkTessellationDomainOriginKHR = VkTessellationDomainOrigin
-VkSamplerYcbcrModelConversion = type('VkSamplerYcbcrModelConversion', (ctypes.c_int,), dict())
-VkSamplerYcbcrModelConversionKHR = VkSamplerYcbcrModelConversion
-VkSamplerYcbcrRange = type('VkSamplerYcbcrRange', (ctypes.c_int,), dict())
-VkSamplerYcbcrRangeKHR = VkSamplerYcbcrRange
-VkChromaLocation = type('VkChromaLocation', (ctypes.c_int,), dict())
-VkChromaLocationKHR = VkChromaLocation
-VkSamplerReductionMode = type('VkSamplerReductionMode', (ctypes.c_int,), dict())
-VkSamplerReductionModeEXT = VkSamplerReductionMode
-VkBlendOverlapEXT = type('VkBlendOverlapEXT', (ctypes.c_int,), dict())
-VkDebugUtilsMessageSeverityFlagBitsEXT = type('VkDebugUtilsMessageSeverityFlagBitsEXT', (ctypes.c_int,), dict())
-VkDebugUtilsMessageTypeFlagBitsEXT = type('VkDebugUtilsMessageTypeFlagBitsEXT', (ctypes.c_int,), dict())
-VkFullScreenExclusiveEXT = type('VkFullScreenExclusiveEXT', (ctypes.c_int,), dict())
-VkShaderFloatControlsIndependence = type('VkShaderFloatControlsIndependence', (ctypes.c_int,), dict())
-VkShaderFloatControlsIndependenceKHR = VkShaderFloatControlsIndependence
-VkSwapchainImageUsageFlagBitsANDROID = type('VkSwapchainImageUsageFlagBitsANDROID', (ctypes.c_int,), dict())
-VkFragmentShadingRateCombinerOpKHR = type('VkFragmentShadingRateCombinerOpKHR', (ctypes.c_int,), dict())
-VkVendorId = type('VkVendorId', (ctypes.c_int,), dict())
-VkDriverId = type('VkDriverId', (ctypes.c_int,), dict())
-VkDriverIdKHR = VkDriverId
-VkShadingRatePaletteEntryNV = type('VkShadingRatePaletteEntryNV', (ctypes.c_int,), dict())
-VkCoarseSampleOrderTypeNV = type('VkCoarseSampleOrderTypeNV', (ctypes.c_int,), dict())
-VkPipelineExecutableStatisticFormatKHR = type('VkPipelineExecutableStatisticFormatKHR', (ctypes.c_int,), dict())
-
+VkValidationCacheEXT = type('VkValidationCacheEXT', (ctypes.Structure,), dict())
+VkAccelerationStructureKHR = type('VkAccelerationStructureKHR', (ctypes.Structure,), dict())
+VkAccelerationStructureNV = type('VkAccelerationStructureNV', (ctypes.Structure,), dict())
+VkPerformanceConfigurationINTEL = type('VkPerformanceConfigurationINTEL', (ctypes.Structure,), dict())
+VkDeferredOperationKHR = type('VkDeferredOperationKHR', (ctypes.Structure,), dict())
+VkPrivateDataSlotEXT = type('VkPrivateDataSlotEXT', (ctypes.Structure,), dict())
+VkDisplayKHR = type('VkDisplayKHR', (ctypes.Structure,), dict())
+VkDisplayModeKHR = type('VkDisplayModeKHR', (ctypes.Structure,), dict())
+VkSurfaceKHR = type('VkSurfaceKHR', (ctypes.Structure,), dict())
+VkSwapchainKHR = type('VkSwapchainKHR', (ctypes.Structure,), dict())
+VkDebugReportCallbackEXT = type('VkDebugReportCallbackEXT', (ctypes.Structure,), dict())
+VkDebugUtilsMessengerEXT = type('VkDebugUtilsMessengerEXT', (ctypes.Structure,), dict())
 
 # API Constants
 VK_MAX_PHYSICAL_DEVICE_NAME_SIZE = 256
@@ -467,171 +250,17 @@ VK_MAX_DRIVER_INFO_SIZE_KHR = VK_MAX_DRIVER_INFO_SIZE
 VK_SHADER_UNUSED_KHR = 0xFFFFFFFF
 VK_SHADER_UNUSED_NV = VK_SHADER_UNUSED_KHR
 
-
-# ENUM VkImageLayout
-VK_IMAGE_LAYOUT_UNDEFINED = VkImageLayout(0)
-VK_IMAGE_LAYOUT_GENERAL = VkImageLayout(1)
-VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL = VkImageLayout(2)
-VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL = VkImageLayout(3)
-VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL = VkImageLayout(4)
-VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL = VkImageLayout(5)
-VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL = VkImageLayout(6)
-VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL = VkImageLayout(7)
-VK_IMAGE_LAYOUT_PREINITIALIZED = VkImageLayout(8)
-
-
-# ENUM VkAttachmentLoadOp
+VkAttachmentLoadOp = type('VkAttachmentLoadOp', (ctypes.c_int,), dict())
 VK_ATTACHMENT_LOAD_OP_LOAD = VkAttachmentLoadOp(0)
 VK_ATTACHMENT_LOAD_OP_CLEAR = VkAttachmentLoadOp(1)
 VK_ATTACHMENT_LOAD_OP_DONT_CARE = VkAttachmentLoadOp(2)
 
-
-# ENUM VkAttachmentStoreOp
+VkAttachmentStoreOp = type('VkAttachmentStoreOp', (ctypes.c_int,), dict())
 VK_ATTACHMENT_STORE_OP_STORE = VkAttachmentStoreOp(0)
 VK_ATTACHMENT_STORE_OP_DONT_CARE = VkAttachmentStoreOp(1)
+VK_ATTACHMENT_STORE_OP_NONE_QCOM = VkAttachmentStoreOp(1000301000)
 
-
-# ENUM VkImageType
-VK_IMAGE_TYPE_1D = VkImageType(0)
-VK_IMAGE_TYPE_2D = VkImageType(1)
-VK_IMAGE_TYPE_3D = VkImageType(2)
-
-
-# ENUM VkImageTiling
-VK_IMAGE_TILING_OPTIMAL = VkImageTiling(0)
-VK_IMAGE_TILING_LINEAR = VkImageTiling(1)
-
-
-# ENUM VkImageViewType
-VK_IMAGE_VIEW_TYPE_1D = VkImageViewType(0)
-VK_IMAGE_VIEW_TYPE_2D = VkImageViewType(1)
-VK_IMAGE_VIEW_TYPE_3D = VkImageViewType(2)
-VK_IMAGE_VIEW_TYPE_CUBE = VkImageViewType(3)
-VK_IMAGE_VIEW_TYPE_1D_ARRAY = VkImageViewType(4)
-VK_IMAGE_VIEW_TYPE_2D_ARRAY = VkImageViewType(5)
-VK_IMAGE_VIEW_TYPE_CUBE_ARRAY = VkImageViewType(6)
-
-
-# ENUM VkCommandBufferLevel
-VK_COMMAND_BUFFER_LEVEL_PRIMARY = VkCommandBufferLevel(0)
-VK_COMMAND_BUFFER_LEVEL_SECONDARY = VkCommandBufferLevel(1)
-
-
-# ENUM VkComponentSwizzle
-VK_COMPONENT_SWIZZLE_IDENTITY = VkComponentSwizzle(0)
-VK_COMPONENT_SWIZZLE_ZERO = VkComponentSwizzle(1)
-VK_COMPONENT_SWIZZLE_ONE = VkComponentSwizzle(2)
-VK_COMPONENT_SWIZZLE_R = VkComponentSwizzle(3)
-VK_COMPONENT_SWIZZLE_G = VkComponentSwizzle(4)
-VK_COMPONENT_SWIZZLE_B = VkComponentSwizzle(5)
-VK_COMPONENT_SWIZZLE_A = VkComponentSwizzle(6)
-
-
-# ENUM VkDescriptorType
-VK_DESCRIPTOR_TYPE_SAMPLER = VkDescriptorType(0)
-VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER = VkDescriptorType(1)
-VK_DESCRIPTOR_TYPE_SAMPLED_IMAGE = VkDescriptorType(2)
-VK_DESCRIPTOR_TYPE_STORAGE_IMAGE = VkDescriptorType(3)
-VK_DESCRIPTOR_TYPE_UNIFORM_TEXEL_BUFFER = VkDescriptorType(4)
-VK_DESCRIPTOR_TYPE_STORAGE_TEXEL_BUFFER = VkDescriptorType(5)
-VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER = VkDescriptorType(6)
-VK_DESCRIPTOR_TYPE_STORAGE_BUFFER = VkDescriptorType(7)
-VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC = VkDescriptorType(8)
-VK_DESCRIPTOR_TYPE_STORAGE_BUFFER_DYNAMIC = VkDescriptorType(9)
-VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT = VkDescriptorType(10)
-
-
-# ENUM VkQueryType
-VK_QUERY_TYPE_OCCLUSION = VkQueryType(0)
-VK_QUERY_TYPE_PIPELINE_STATISTICS = VkQueryType(1)
-VK_QUERY_TYPE_TIMESTAMP = VkQueryType(2)
-
-
-# ENUM VkBorderColor
-VK_BORDER_COLOR_FLOAT_TRANSPARENT_BLACK = VkBorderColor(0)
-VK_BORDER_COLOR_INT_TRANSPARENT_BLACK = VkBorderColor(1)
-VK_BORDER_COLOR_FLOAT_OPAQUE_BLACK = VkBorderColor(2)
-VK_BORDER_COLOR_INT_OPAQUE_BLACK = VkBorderColor(3)
-VK_BORDER_COLOR_FLOAT_OPAQUE_WHITE = VkBorderColor(4)
-VK_BORDER_COLOR_INT_OPAQUE_WHITE = VkBorderColor(5)
-
-
-# ENUM VkPipelineBindPoint
-VK_PIPELINE_BIND_POINT_GRAPHICS = VkPipelineBindPoint(0)
-VK_PIPELINE_BIND_POINT_COMPUTE = VkPipelineBindPoint(1)
-
-
-# ENUM VkPipelineCacheHeaderVersion
-VK_PIPELINE_CACHE_HEADER_VERSION_ONE = VkPipelineCacheHeaderVersion(1)
-
-
-# ENUM VkPipelineCacheCreateFlagBits
-
-
-# ENUM VkPrimitiveTopology
-VK_PRIMITIVE_TOPOLOGY_POINT_LIST = VkPrimitiveTopology(0)
-VK_PRIMITIVE_TOPOLOGY_LINE_LIST = VkPrimitiveTopology(1)
-VK_PRIMITIVE_TOPOLOGY_LINE_STRIP = VkPrimitiveTopology(2)
-VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST = VkPrimitiveTopology(3)
-VK_PRIMITIVE_TOPOLOGY_TRIANGLE_STRIP = VkPrimitiveTopology(4)
-VK_PRIMITIVE_TOPOLOGY_TRIANGLE_FAN = VkPrimitiveTopology(5)
-VK_PRIMITIVE_TOPOLOGY_LINE_LIST_WITH_ADJACENCY = VkPrimitiveTopology(6)
-VK_PRIMITIVE_TOPOLOGY_LINE_STRIP_WITH_ADJACENCY = VkPrimitiveTopology(7)
-VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST_WITH_ADJACENCY = VkPrimitiveTopology(8)
-VK_PRIMITIVE_TOPOLOGY_TRIANGLE_STRIP_WITH_ADJACENCY = VkPrimitiveTopology(9)
-VK_PRIMITIVE_TOPOLOGY_PATCH_LIST = VkPrimitiveTopology(10)
-
-
-# ENUM VkSharingMode
-VK_SHARING_MODE_EXCLUSIVE = VkSharingMode(0)
-VK_SHARING_MODE_CONCURRENT = VkSharingMode(1)
-
-
-# ENUM VkIndexType
-VK_INDEX_TYPE_UINT16 = VkIndexType(0)
-VK_INDEX_TYPE_UINT32 = VkIndexType(1)
-
-
-# ENUM VkFilter
-VK_FILTER_NEAREST = VkFilter(0)
-VK_FILTER_LINEAR = VkFilter(1)
-
-
-# ENUM VkSamplerMipmapMode
-VK_SAMPLER_MIPMAP_MODE_NEAREST = VkSamplerMipmapMode(0)
-VK_SAMPLER_MIPMAP_MODE_LINEAR = VkSamplerMipmapMode(1)
-
-
-# ENUM VkSamplerAddressMode
-VK_SAMPLER_ADDRESS_MODE_REPEAT = VkSamplerAddressMode(0)
-VK_SAMPLER_ADDRESS_MODE_MIRRORED_REPEAT = VkSamplerAddressMode(1)
-VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE = VkSamplerAddressMode(2)
-VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_BORDER = VkSamplerAddressMode(3)
-
-
-# ENUM VkCompareOp
-VK_COMPARE_OP_NEVER = VkCompareOp(0)
-VK_COMPARE_OP_LESS = VkCompareOp(1)
-VK_COMPARE_OP_EQUAL = VkCompareOp(2)
-VK_COMPARE_OP_LESS_OR_EQUAL = VkCompareOp(3)
-VK_COMPARE_OP_GREATER = VkCompareOp(4)
-VK_COMPARE_OP_NOT_EQUAL = VkCompareOp(5)
-VK_COMPARE_OP_GREATER_OR_EQUAL = VkCompareOp(6)
-VK_COMPARE_OP_ALWAYS = VkCompareOp(7)
-
-
-# ENUM VkPolygonMode
-VK_POLYGON_MODE_FILL = VkPolygonMode(0)
-VK_POLYGON_MODE_LINE = VkPolygonMode(1)
-VK_POLYGON_MODE_POINT = VkPolygonMode(2)
-
-
-# ENUM VkFrontFace
-VK_FRONT_FACE_COUNTER_CLOCKWISE = VkFrontFace(0)
-VK_FRONT_FACE_CLOCKWISE = VkFrontFace(1)
-
-
-# ENUM VkBlendFactor
+VkBlendFactor = type('VkBlendFactor', (ctypes.c_int,), dict())
 VK_BLEND_FACTOR_ZERO = VkBlendFactor(0)
 VK_BLEND_FACTOR_ONE = VkBlendFactor(1)
 VK_BLEND_FACTOR_SRC_COLOR = VkBlendFactor(2)
@@ -652,71 +281,243 @@ VK_BLEND_FACTOR_ONE_MINUS_SRC1_COLOR = VkBlendFactor(16)
 VK_BLEND_FACTOR_SRC1_ALPHA = VkBlendFactor(17)
 VK_BLEND_FACTOR_ONE_MINUS_SRC1_ALPHA = VkBlendFactor(18)
 
-
-# ENUM VkBlendOp
+VkBlendOp = type('VkBlendOp', (ctypes.c_int,), dict())
 VK_BLEND_OP_ADD = VkBlendOp(0)
 VK_BLEND_OP_SUBTRACT = VkBlendOp(1)
 VK_BLEND_OP_REVERSE_SUBTRACT = VkBlendOp(2)
 VK_BLEND_OP_MIN = VkBlendOp(3)
 VK_BLEND_OP_MAX = VkBlendOp(4)
+VK_BLEND_OP_ZERO_EXT = VkBlendOp(1000148000)
+VK_BLEND_OP_SRC_EXT = VkBlendOp(1000148001)
+VK_BLEND_OP_DST_EXT = VkBlendOp(1000148002)
+VK_BLEND_OP_SRC_OVER_EXT = VkBlendOp(1000148003)
+VK_BLEND_OP_DST_OVER_EXT = VkBlendOp(1000148004)
+VK_BLEND_OP_SRC_IN_EXT = VkBlendOp(1000148005)
+VK_BLEND_OP_DST_IN_EXT = VkBlendOp(1000148006)
+VK_BLEND_OP_SRC_OUT_EXT = VkBlendOp(1000148007)
+VK_BLEND_OP_DST_OUT_EXT = VkBlendOp(1000148008)
+VK_BLEND_OP_SRC_ATOP_EXT = VkBlendOp(1000148009)
+VK_BLEND_OP_DST_ATOP_EXT = VkBlendOp(1000148010)
+VK_BLEND_OP_XOR_EXT = VkBlendOp(1000148011)
+VK_BLEND_OP_MULTIPLY_EXT = VkBlendOp(1000148012)
+VK_BLEND_OP_SCREEN_EXT = VkBlendOp(1000148013)
+VK_BLEND_OP_OVERLAY_EXT = VkBlendOp(1000148014)
+VK_BLEND_OP_DARKEN_EXT = VkBlendOp(1000148015)
+VK_BLEND_OP_LIGHTEN_EXT = VkBlendOp(1000148016)
+VK_BLEND_OP_COLORDODGE_EXT = VkBlendOp(1000148017)
+VK_BLEND_OP_COLORBURN_EXT = VkBlendOp(1000148018)
+VK_BLEND_OP_HARDLIGHT_EXT = VkBlendOp(1000148019)
+VK_BLEND_OP_SOFTLIGHT_EXT = VkBlendOp(1000148020)
+VK_BLEND_OP_DIFFERENCE_EXT = VkBlendOp(1000148021)
+VK_BLEND_OP_EXCLUSION_EXT = VkBlendOp(1000148022)
+VK_BLEND_OP_INVERT_EXT = VkBlendOp(1000148023)
+VK_BLEND_OP_INVERT_RGB_EXT = VkBlendOp(1000148024)
+VK_BLEND_OP_LINEARDODGE_EXT = VkBlendOp(1000148025)
+VK_BLEND_OP_LINEARBURN_EXT = VkBlendOp(1000148026)
+VK_BLEND_OP_VIVIDLIGHT_EXT = VkBlendOp(1000148027)
+VK_BLEND_OP_LINEARLIGHT_EXT = VkBlendOp(1000148028)
+VK_BLEND_OP_PINLIGHT_EXT = VkBlendOp(1000148029)
+VK_BLEND_OP_HARDMIX_EXT = VkBlendOp(1000148030)
+VK_BLEND_OP_HSL_HUE_EXT = VkBlendOp(1000148031)
+VK_BLEND_OP_HSL_SATURATION_EXT = VkBlendOp(1000148032)
+VK_BLEND_OP_HSL_COLOR_EXT = VkBlendOp(1000148033)
+VK_BLEND_OP_HSL_LUMINOSITY_EXT = VkBlendOp(1000148034)
+VK_BLEND_OP_PLUS_EXT = VkBlendOp(1000148035)
+VK_BLEND_OP_PLUS_CLAMPED_EXT = VkBlendOp(1000148036)
+VK_BLEND_OP_PLUS_CLAMPED_ALPHA_EXT = VkBlendOp(1000148037)
+VK_BLEND_OP_PLUS_DARKER_EXT = VkBlendOp(1000148038)
+VK_BLEND_OP_MINUS_EXT = VkBlendOp(1000148039)
+VK_BLEND_OP_MINUS_CLAMPED_EXT = VkBlendOp(1000148040)
+VK_BLEND_OP_CONTRAST_EXT = VkBlendOp(1000148041)
+VK_BLEND_OP_INVERT_OVG_EXT = VkBlendOp(1000148042)
+VK_BLEND_OP_RED_EXT = VkBlendOp(1000148043)
+VK_BLEND_OP_GREEN_EXT = VkBlendOp(1000148044)
+VK_BLEND_OP_BLUE_EXT = VkBlendOp(1000148045)
 
+VkBorderColor = type('VkBorderColor', (ctypes.c_int,), dict())
+VK_BORDER_COLOR_FLOAT_TRANSPARENT_BLACK = VkBorderColor(0)
+VK_BORDER_COLOR_INT_TRANSPARENT_BLACK = VkBorderColor(1)
+VK_BORDER_COLOR_FLOAT_OPAQUE_BLACK = VkBorderColor(2)
+VK_BORDER_COLOR_INT_OPAQUE_BLACK = VkBorderColor(3)
+VK_BORDER_COLOR_FLOAT_OPAQUE_WHITE = VkBorderColor(4)
+VK_BORDER_COLOR_INT_OPAQUE_WHITE = VkBorderColor(5)
+VK_BORDER_COLOR_FLOAT_CUSTOM_EXT = VkBorderColor(1000287003)
+VK_BORDER_COLOR_INT_CUSTOM_EXT = VkBorderColor(1000287004)
 
-# ENUM VkStencilOp
-VK_STENCIL_OP_KEEP = VkStencilOp(0)
-VK_STENCIL_OP_ZERO = VkStencilOp(1)
-VK_STENCIL_OP_REPLACE = VkStencilOp(2)
-VK_STENCIL_OP_INCREMENT_AND_CLAMP = VkStencilOp(3)
-VK_STENCIL_OP_DECREMENT_AND_CLAMP = VkStencilOp(4)
-VK_STENCIL_OP_INVERT = VkStencilOp(5)
-VK_STENCIL_OP_INCREMENT_AND_WRAP = VkStencilOp(6)
-VK_STENCIL_OP_DECREMENT_AND_WRAP = VkStencilOp(7)
+VkFramebufferCreateFlagBits = type('VkFramebufferCreateFlagBits', (ctypes.c_int,), dict())
+VK_FRAMEBUFFER_CREATE_IMAGELESS_BIT = VkFramebufferCreateFlagBits(1)
+VK_FRAMEBUFFER_CREATE_IMAGELESS_BIT_KHR = VK_FRAMEBUFFER_CREATE_IMAGELESS_BIT
 
+VkQueryPoolCreateFlagBits = type('VkQueryPoolCreateFlagBits', (ctypes.c_int,), dict())
 
-# ENUM VkLogicOp
-VK_LOGIC_OP_CLEAR = VkLogicOp(0)
-VK_LOGIC_OP_AND = VkLogicOp(1)
-VK_LOGIC_OP_AND_REVERSE = VkLogicOp(2)
-VK_LOGIC_OP_COPY = VkLogicOp(3)
-VK_LOGIC_OP_AND_INVERTED = VkLogicOp(4)
-VK_LOGIC_OP_NO_OP = VkLogicOp(5)
-VK_LOGIC_OP_XOR = VkLogicOp(6)
-VK_LOGIC_OP_OR = VkLogicOp(7)
-VK_LOGIC_OP_NOR = VkLogicOp(8)
-VK_LOGIC_OP_EQUIVALENT = VkLogicOp(9)
-VK_LOGIC_OP_INVERT = VkLogicOp(10)
-VK_LOGIC_OP_OR_REVERSE = VkLogicOp(11)
-VK_LOGIC_OP_COPY_INVERTED = VkLogicOp(12)
-VK_LOGIC_OP_OR_INVERTED = VkLogicOp(13)
-VK_LOGIC_OP_NAND = VkLogicOp(14)
-VK_LOGIC_OP_SET = VkLogicOp(15)
+VkRenderPassCreateFlagBits = type('VkRenderPassCreateFlagBits', (ctypes.c_int,), dict())
+VK_RENDER_PASS_CREATE_TRANSFORM_BIT_QCOM = VkRenderPassCreateFlagBits(2)
 
+VkSamplerCreateFlagBits = type('VkSamplerCreateFlagBits', (ctypes.c_int,), dict())
+VK_SAMPLER_CREATE_SUBSAMPLED_BIT_EXT = VkSamplerCreateFlagBits(1)
+VK_SAMPLER_CREATE_SUBSAMPLED_COARSE_RECONSTRUCTION_BIT_EXT = VkSamplerCreateFlagBits(2)
 
-# ENUM VkInternalAllocationType
-VK_INTERNAL_ALLOCATION_TYPE_EXECUTABLE = VkInternalAllocationType(0)
+VkPipelineCacheHeaderVersion = type('VkPipelineCacheHeaderVersion', (ctypes.c_int,), dict())
+VK_PIPELINE_CACHE_HEADER_VERSION_ONE = VkPipelineCacheHeaderVersion(1)
 
+VkPipelineCacheCreateFlagBits = type('VkPipelineCacheCreateFlagBits', (ctypes.c_int,), dict())
+VK_PIPELINE_CACHE_CREATE_EXTERNALLY_SYNCHRONIZED_BIT_EXT = VkPipelineCacheCreateFlagBits(1)
 
-# ENUM VkSystemAllocationScope
-VK_SYSTEM_ALLOCATION_SCOPE_COMMAND = VkSystemAllocationScope(0)
-VK_SYSTEM_ALLOCATION_SCOPE_OBJECT = VkSystemAllocationScope(1)
-VK_SYSTEM_ALLOCATION_SCOPE_CACHE = VkSystemAllocationScope(2)
-VK_SYSTEM_ALLOCATION_SCOPE_DEVICE = VkSystemAllocationScope(3)
-VK_SYSTEM_ALLOCATION_SCOPE_INSTANCE = VkSystemAllocationScope(4)
+VkPipelineShaderStageCreateFlagBits = type('VkPipelineShaderStageCreateFlagBits', (ctypes.c_int,), dict())
+VK_PIPELINE_SHADER_STAGE_CREATE_ALLOW_VARYING_SUBGROUP_SIZE_BIT_EXT = VkPipelineShaderStageCreateFlagBits(1)
+VK_PIPELINE_SHADER_STAGE_CREATE_REQUIRE_FULL_SUBGROUPS_BIT_EXT = VkPipelineShaderStageCreateFlagBits(2)
 
+VkDescriptorSetLayoutCreateFlagBits = type('VkDescriptorSetLayoutCreateFlagBits', (ctypes.c_int,), dict())
+VK_DESCRIPTOR_SET_LAYOUT_CREATE_UPDATE_AFTER_BIND_POOL_BIT = VkDescriptorSetLayoutCreateFlagBits(2)
+VK_DESCRIPTOR_SET_LAYOUT_CREATE_PUSH_DESCRIPTOR_BIT_KHR = VkDescriptorSetLayoutCreateFlagBits(1)
+VK_DESCRIPTOR_SET_LAYOUT_CREATE_UPDATE_AFTER_BIND_POOL_BIT_EXT = VK_DESCRIPTOR_SET_LAYOUT_CREATE_UPDATE_AFTER_BIND_POOL_BIT
 
-# ENUM VkPhysicalDeviceType
-VK_PHYSICAL_DEVICE_TYPE_OTHER = VkPhysicalDeviceType(0)
-VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU = VkPhysicalDeviceType(1)
-VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU = VkPhysicalDeviceType(2)
-VK_PHYSICAL_DEVICE_TYPE_VIRTUAL_GPU = VkPhysicalDeviceType(3)
-VK_PHYSICAL_DEVICE_TYPE_CPU = VkPhysicalDeviceType(4)
+VkInstanceCreateFlagBits = type('VkInstanceCreateFlagBits', (ctypes.c_int,), dict())
 
+VkDeviceQueueCreateFlagBits = type('VkDeviceQueueCreateFlagBits', (ctypes.c_int,), dict())
+VK_DEVICE_QUEUE_CREATE_PROTECTED_BIT = VkDeviceQueueCreateFlagBits(1)
 
-# ENUM VkVertexInputRate
-VK_VERTEX_INPUT_RATE_VERTEX = VkVertexInputRate(0)
-VK_VERTEX_INPUT_RATE_INSTANCE = VkVertexInputRate(1)
+VkBufferCreateFlagBits = type('VkBufferCreateFlagBits', (ctypes.c_int,), dict())
+VK_BUFFER_CREATE_SPARSE_BINDING_BIT = VkBufferCreateFlagBits(1)
+VK_BUFFER_CREATE_SPARSE_RESIDENCY_BIT = VkBufferCreateFlagBits(2)
+VK_BUFFER_CREATE_SPARSE_ALIASED_BIT = VkBufferCreateFlagBits(4)
+VK_BUFFER_CREATE_PROTECTED_BIT = VkBufferCreateFlagBits(8)
+VK_BUFFER_CREATE_DEVICE_ADDRESS_CAPTURE_REPLAY_BIT = VkBufferCreateFlagBits(16)
+VK_BUFFER_CREATE_DEVICE_ADDRESS_CAPTURE_REPLAY_BIT_EXT = VK_BUFFER_CREATE_DEVICE_ADDRESS_CAPTURE_REPLAY_BIT
+VK_BUFFER_CREATE_DEVICE_ADDRESS_CAPTURE_REPLAY_BIT_KHR = VK_BUFFER_CREATE_DEVICE_ADDRESS_CAPTURE_REPLAY_BIT
 
+VkBufferUsageFlagBits = type('VkBufferUsageFlagBits', (ctypes.c_int,), dict())
+VK_BUFFER_USAGE_TRANSFER_SRC_BIT = VkBufferUsageFlagBits(1)
+VK_BUFFER_USAGE_TRANSFER_DST_BIT = VkBufferUsageFlagBits(2)
+VK_BUFFER_USAGE_UNIFORM_TEXEL_BUFFER_BIT = VkBufferUsageFlagBits(4)
+VK_BUFFER_USAGE_STORAGE_TEXEL_BUFFER_BIT = VkBufferUsageFlagBits(8)
+VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT = VkBufferUsageFlagBits(16)
+VK_BUFFER_USAGE_STORAGE_BUFFER_BIT = VkBufferUsageFlagBits(32)
+VK_BUFFER_USAGE_INDEX_BUFFER_BIT = VkBufferUsageFlagBits(64)
+VK_BUFFER_USAGE_VERTEX_BUFFER_BIT = VkBufferUsageFlagBits(128)
+VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT = VkBufferUsageFlagBits(256)
+VK_BUFFER_USAGE_SHADER_DEVICE_ADDRESS_BIT = VkBufferUsageFlagBits(131072)
+VK_BUFFER_USAGE_TRANSFORM_FEEDBACK_BUFFER_BIT_EXT = VkBufferUsageFlagBits(2048)
+VK_BUFFER_USAGE_TRANSFORM_FEEDBACK_COUNTER_BUFFER_BIT_EXT = VkBufferUsageFlagBits(4096)
+VK_BUFFER_USAGE_CONDITIONAL_RENDERING_BIT_EXT = VkBufferUsageFlagBits(512)
+VK_BUFFER_USAGE_ACCELERATION_STRUCTURE_BUILD_INPUT_READ_ONLY_BIT_KHR = VkBufferUsageFlagBits(524288)
+VK_BUFFER_USAGE_ACCELERATION_STRUCTURE_STORAGE_BIT_KHR = VkBufferUsageFlagBits(1048576)
+VK_BUFFER_USAGE_SHADER_BINDING_TABLE_BIT_KHR = VkBufferUsageFlagBits(1024)
+VK_BUFFER_USAGE_RAY_TRACING_BIT_NV = VK_BUFFER_USAGE_SHADER_BINDING_TABLE_BIT_KHR
+VK_BUFFER_USAGE_SHADER_DEVICE_ADDRESS_BIT_EXT = VK_BUFFER_USAGE_SHADER_DEVICE_ADDRESS_BIT
+VK_BUFFER_USAGE_SHADER_DEVICE_ADDRESS_BIT_KHR = VK_BUFFER_USAGE_SHADER_DEVICE_ADDRESS_BIT
 
-# ENUM VkFormat
+VkColorComponentFlagBits = type('VkColorComponentFlagBits', (ctypes.c_int,), dict())
+VK_COLOR_COMPONENT_R_BIT = VkColorComponentFlagBits(1)
+VK_COLOR_COMPONENT_G_BIT = VkColorComponentFlagBits(2)
+VK_COLOR_COMPONENT_B_BIT = VkColorComponentFlagBits(4)
+VK_COLOR_COMPONENT_A_BIT = VkColorComponentFlagBits(8)
+
+VkComponentSwizzle = type('VkComponentSwizzle', (ctypes.c_int,), dict())
+VK_COMPONENT_SWIZZLE_IDENTITY = VkComponentSwizzle(0)
+VK_COMPONENT_SWIZZLE_ZERO = VkComponentSwizzle(1)
+VK_COMPONENT_SWIZZLE_ONE = VkComponentSwizzle(2)
+VK_COMPONENT_SWIZZLE_R = VkComponentSwizzle(3)
+VK_COMPONENT_SWIZZLE_G = VkComponentSwizzle(4)
+VK_COMPONENT_SWIZZLE_B = VkComponentSwizzle(5)
+VK_COMPONENT_SWIZZLE_A = VkComponentSwizzle(6)
+
+VkCommandPoolCreateFlagBits = type('VkCommandPoolCreateFlagBits', (ctypes.c_int,), dict())
+VK_COMMAND_POOL_CREATE_TRANSIENT_BIT = VkCommandPoolCreateFlagBits(1)
+VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT = VkCommandPoolCreateFlagBits(2)
+VK_COMMAND_POOL_CREATE_PROTECTED_BIT = VkCommandPoolCreateFlagBits(4)
+
+VkCommandPoolResetFlagBits = type('VkCommandPoolResetFlagBits', (ctypes.c_int,), dict())
+VK_COMMAND_POOL_RESET_RELEASE_RESOURCES_BIT = VkCommandPoolResetFlagBits(1)
+
+VkCommandBufferResetFlagBits = type('VkCommandBufferResetFlagBits', (ctypes.c_int,), dict())
+VK_COMMAND_BUFFER_RESET_RELEASE_RESOURCES_BIT = VkCommandBufferResetFlagBits(1)
+
+VkCommandBufferLevel = type('VkCommandBufferLevel', (ctypes.c_int,), dict())
+VK_COMMAND_BUFFER_LEVEL_PRIMARY = VkCommandBufferLevel(0)
+VK_COMMAND_BUFFER_LEVEL_SECONDARY = VkCommandBufferLevel(1)
+
+VkCommandBufferUsageFlagBits = type('VkCommandBufferUsageFlagBits', (ctypes.c_int,), dict())
+VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT = VkCommandBufferUsageFlagBits(1)
+VK_COMMAND_BUFFER_USAGE_RENDER_PASS_CONTINUE_BIT = VkCommandBufferUsageFlagBits(2)
+VK_COMMAND_BUFFER_USAGE_SIMULTANEOUS_USE_BIT = VkCommandBufferUsageFlagBits(4)
+
+VkCompareOp = type('VkCompareOp', (ctypes.c_int,), dict())
+VK_COMPARE_OP_NEVER = VkCompareOp(0)
+VK_COMPARE_OP_LESS = VkCompareOp(1)
+VK_COMPARE_OP_EQUAL = VkCompareOp(2)
+VK_COMPARE_OP_LESS_OR_EQUAL = VkCompareOp(3)
+VK_COMPARE_OP_GREATER = VkCompareOp(4)
+VK_COMPARE_OP_NOT_EQUAL = VkCompareOp(5)
+VK_COMPARE_OP_GREATER_OR_EQUAL = VkCompareOp(6)
+VK_COMPARE_OP_ALWAYS = VkCompareOp(7)
+
+VkCullModeFlagBits = type('VkCullModeFlagBits', (ctypes.c_int,), dict())
+VK_CULL_MODE_NONE = VkCullModeFlagBits(0)
+VK_CULL_MODE_FRONT_BIT = VkCullModeFlagBits(1)
+VK_CULL_MODE_BACK_BIT = VkCullModeFlagBits(2)
+VK_CULL_MODE_FRONT_AND_BACK = VkCullModeFlagBits(0x00000003)
+
+VkDescriptorType = type('VkDescriptorType', (ctypes.c_int,), dict())
+VK_DESCRIPTOR_TYPE_SAMPLER = VkDescriptorType(0)
+VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER = VkDescriptorType(1)
+VK_DESCRIPTOR_TYPE_SAMPLED_IMAGE = VkDescriptorType(2)
+VK_DESCRIPTOR_TYPE_STORAGE_IMAGE = VkDescriptorType(3)
+VK_DESCRIPTOR_TYPE_UNIFORM_TEXEL_BUFFER = VkDescriptorType(4)
+VK_DESCRIPTOR_TYPE_STORAGE_TEXEL_BUFFER = VkDescriptorType(5)
+VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER = VkDescriptorType(6)
+VK_DESCRIPTOR_TYPE_STORAGE_BUFFER = VkDescriptorType(7)
+VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC = VkDescriptorType(8)
+VK_DESCRIPTOR_TYPE_STORAGE_BUFFER_DYNAMIC = VkDescriptorType(9)
+VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT = VkDescriptorType(10)
+VK_DESCRIPTOR_TYPE_INLINE_UNIFORM_BLOCK_EXT = VkDescriptorType(1000138000)
+VK_DESCRIPTOR_TYPE_ACCELERATION_STRUCTURE_KHR = VkDescriptorType(1000150000)
+VK_DESCRIPTOR_TYPE_ACCELERATION_STRUCTURE_NV = VkDescriptorType(1000165000)
+
+VkDeviceCreateFlagBits = type('VkDeviceCreateFlagBits', (ctypes.c_int,), dict())
+
+VkDynamicState = type('VkDynamicState', (ctypes.c_int,), dict())
+VK_DYNAMIC_STATE_VIEWPORT = VkDynamicState(0)
+VK_DYNAMIC_STATE_SCISSOR = VkDynamicState(1)
+VK_DYNAMIC_STATE_LINE_WIDTH = VkDynamicState(2)
+VK_DYNAMIC_STATE_DEPTH_BIAS = VkDynamicState(3)
+VK_DYNAMIC_STATE_BLEND_CONSTANTS = VkDynamicState(4)
+VK_DYNAMIC_STATE_DEPTH_BOUNDS = VkDynamicState(5)
+VK_DYNAMIC_STATE_STENCIL_COMPARE_MASK = VkDynamicState(6)
+VK_DYNAMIC_STATE_STENCIL_WRITE_MASK = VkDynamicState(7)
+VK_DYNAMIC_STATE_STENCIL_REFERENCE = VkDynamicState(8)
+VK_DYNAMIC_STATE_VIEWPORT_W_SCALING_NV = VkDynamicState(1000087000)
+VK_DYNAMIC_STATE_DISCARD_RECTANGLE_EXT = VkDynamicState(1000099000)
+VK_DYNAMIC_STATE_SAMPLE_LOCATIONS_EXT = VkDynamicState(1000143000)
+VK_DYNAMIC_STATE_RAY_TRACING_PIPELINE_STACK_SIZE_KHR = VkDynamicState(1000347000)
+VK_DYNAMIC_STATE_VIEWPORT_SHADING_RATE_PALETTE_NV = VkDynamicState(1000164004)
+VK_DYNAMIC_STATE_VIEWPORT_COARSE_SAMPLE_ORDER_NV = VkDynamicState(1000164006)
+VK_DYNAMIC_STATE_EXCLUSIVE_SCISSOR_NV = VkDynamicState(1000205001)
+VK_DYNAMIC_STATE_FRAGMENT_SHADING_RATE_KHR = VkDynamicState(1000226000)
+VK_DYNAMIC_STATE_LINE_STIPPLE_EXT = VkDynamicState(1000259000)
+VK_DYNAMIC_STATE_CULL_MODE_EXT = VkDynamicState(1000267000)
+VK_DYNAMIC_STATE_FRONT_FACE_EXT = VkDynamicState(1000267001)
+VK_DYNAMIC_STATE_PRIMITIVE_TOPOLOGY_EXT = VkDynamicState(1000267002)
+VK_DYNAMIC_STATE_VIEWPORT_WITH_COUNT_EXT = VkDynamicState(1000267003)
+VK_DYNAMIC_STATE_SCISSOR_WITH_COUNT_EXT = VkDynamicState(1000267004)
+VK_DYNAMIC_STATE_VERTEX_INPUT_BINDING_STRIDE_EXT = VkDynamicState(1000267005)
+VK_DYNAMIC_STATE_DEPTH_TEST_ENABLE_EXT = VkDynamicState(1000267006)
+VK_DYNAMIC_STATE_DEPTH_WRITE_ENABLE_EXT = VkDynamicState(1000267007)
+VK_DYNAMIC_STATE_DEPTH_COMPARE_OP_EXT = VkDynamicState(1000267008)
+VK_DYNAMIC_STATE_DEPTH_BOUNDS_TEST_ENABLE_EXT = VkDynamicState(1000267009)
+VK_DYNAMIC_STATE_STENCIL_TEST_ENABLE_EXT = VkDynamicState(1000267010)
+VK_DYNAMIC_STATE_STENCIL_OP_EXT = VkDynamicState(1000267011)
+
+VkFenceCreateFlagBits = type('VkFenceCreateFlagBits', (ctypes.c_int,), dict())
+VK_FENCE_CREATE_SIGNALED_BIT = VkFenceCreateFlagBits(1)
+
+VkPolygonMode = type('VkPolygonMode', (ctypes.c_int,), dict())
+VK_POLYGON_MODE_FILL = VkPolygonMode(0)
+VK_POLYGON_MODE_LINE = VkPolygonMode(1)
+VK_POLYGON_MODE_POINT = VkPolygonMode(2)
+VK_POLYGON_MODE_FILL_RECTANGLE_NV = VkPolygonMode(1000153000)
+
+VkFormat = type('VkFormat', (ctypes.c_int,), dict())
 VK_FORMAT_UNDEFINED = VkFormat(0)
 VK_FORMAT_R4G4_UNORM_PACK8 = VkFormat(1)
 VK_FORMAT_R4G4B4A4_UNORM_PACK16 = VkFormat(2)
@@ -902,9 +703,507 @@ VK_FORMAT_ASTC_12x10_UNORM_BLOCK = VkFormat(181)
 VK_FORMAT_ASTC_12x10_SRGB_BLOCK = VkFormat(182)
 VK_FORMAT_ASTC_12x12_UNORM_BLOCK = VkFormat(183)
 VK_FORMAT_ASTC_12x12_SRGB_BLOCK = VkFormat(184)
+VK_FORMAT_G8B8G8R8_422_UNORM = VkFormat(1000156000)
+VK_FORMAT_B8G8R8G8_422_UNORM = VkFormat(1000156001)
+VK_FORMAT_G8_B8_R8_3PLANE_420_UNORM = VkFormat(1000156002)
+VK_FORMAT_G8_B8R8_2PLANE_420_UNORM = VkFormat(1000156003)
+VK_FORMAT_G8_B8_R8_3PLANE_422_UNORM = VkFormat(1000156004)
+VK_FORMAT_G8_B8R8_2PLANE_422_UNORM = VkFormat(1000156005)
+VK_FORMAT_G8_B8_R8_3PLANE_444_UNORM = VkFormat(1000156006)
+VK_FORMAT_R10X6_UNORM_PACK16 = VkFormat(1000156007)
+VK_FORMAT_R10X6G10X6_UNORM_2PACK16 = VkFormat(1000156008)
+VK_FORMAT_R10X6G10X6B10X6A10X6_UNORM_4PACK16 = VkFormat(1000156009)
+VK_FORMAT_G10X6B10X6G10X6R10X6_422_UNORM_4PACK16 = VkFormat(1000156010)
+VK_FORMAT_B10X6G10X6R10X6G10X6_422_UNORM_4PACK16 = VkFormat(1000156011)
+VK_FORMAT_G10X6_B10X6_R10X6_3PLANE_420_UNORM_3PACK16 = VkFormat(1000156012)
+VK_FORMAT_G10X6_B10X6R10X6_2PLANE_420_UNORM_3PACK16 = VkFormat(1000156013)
+VK_FORMAT_G10X6_B10X6_R10X6_3PLANE_422_UNORM_3PACK16 = VkFormat(1000156014)
+VK_FORMAT_G10X6_B10X6R10X6_2PLANE_422_UNORM_3PACK16 = VkFormat(1000156015)
+VK_FORMAT_G10X6_B10X6_R10X6_3PLANE_444_UNORM_3PACK16 = VkFormat(1000156016)
+VK_FORMAT_R12X4_UNORM_PACK16 = VkFormat(1000156017)
+VK_FORMAT_R12X4G12X4_UNORM_2PACK16 = VkFormat(1000156018)
+VK_FORMAT_R12X4G12X4B12X4A12X4_UNORM_4PACK16 = VkFormat(1000156019)
+VK_FORMAT_G12X4B12X4G12X4R12X4_422_UNORM_4PACK16 = VkFormat(1000156020)
+VK_FORMAT_B12X4G12X4R12X4G12X4_422_UNORM_4PACK16 = VkFormat(1000156021)
+VK_FORMAT_G12X4_B12X4_R12X4_3PLANE_420_UNORM_3PACK16 = VkFormat(1000156022)
+VK_FORMAT_G12X4_B12X4R12X4_2PLANE_420_UNORM_3PACK16 = VkFormat(1000156023)
+VK_FORMAT_G12X4_B12X4_R12X4_3PLANE_422_UNORM_3PACK16 = VkFormat(1000156024)
+VK_FORMAT_G12X4_B12X4R12X4_2PLANE_422_UNORM_3PACK16 = VkFormat(1000156025)
+VK_FORMAT_G12X4_B12X4_R12X4_3PLANE_444_UNORM_3PACK16 = VkFormat(1000156026)
+VK_FORMAT_G16B16G16R16_422_UNORM = VkFormat(1000156027)
+VK_FORMAT_B16G16R16G16_422_UNORM = VkFormat(1000156028)
+VK_FORMAT_G16_B16_R16_3PLANE_420_UNORM = VkFormat(1000156029)
+VK_FORMAT_G16_B16R16_2PLANE_420_UNORM = VkFormat(1000156030)
+VK_FORMAT_G16_B16_R16_3PLANE_422_UNORM = VkFormat(1000156031)
+VK_FORMAT_G16_B16R16_2PLANE_422_UNORM = VkFormat(1000156032)
+VK_FORMAT_G16_B16_R16_3PLANE_444_UNORM = VkFormat(1000156033)
+VK_FORMAT_PVRTC1_2BPP_UNORM_BLOCK_IMG = VkFormat(1000054000)
+VK_FORMAT_PVRTC1_4BPP_UNORM_BLOCK_IMG = VkFormat(1000054001)
+VK_FORMAT_PVRTC2_2BPP_UNORM_BLOCK_IMG = VkFormat(1000054002)
+VK_FORMAT_PVRTC2_4BPP_UNORM_BLOCK_IMG = VkFormat(1000054003)
+VK_FORMAT_PVRTC1_2BPP_SRGB_BLOCK_IMG = VkFormat(1000054004)
+VK_FORMAT_PVRTC1_4BPP_SRGB_BLOCK_IMG = VkFormat(1000054005)
+VK_FORMAT_PVRTC2_2BPP_SRGB_BLOCK_IMG = VkFormat(1000054006)
+VK_FORMAT_PVRTC2_4BPP_SRGB_BLOCK_IMG = VkFormat(1000054007)
+VK_FORMAT_ASTC_4x4_SFLOAT_BLOCK_EXT = VkFormat(1000066000)
+VK_FORMAT_ASTC_5x4_SFLOAT_BLOCK_EXT = VkFormat(1000066001)
+VK_FORMAT_ASTC_5x5_SFLOAT_BLOCK_EXT = VkFormat(1000066002)
+VK_FORMAT_ASTC_6x5_SFLOAT_BLOCK_EXT = VkFormat(1000066003)
+VK_FORMAT_ASTC_6x6_SFLOAT_BLOCK_EXT = VkFormat(1000066004)
+VK_FORMAT_ASTC_8x5_SFLOAT_BLOCK_EXT = VkFormat(1000066005)
+VK_FORMAT_ASTC_8x6_SFLOAT_BLOCK_EXT = VkFormat(1000066006)
+VK_FORMAT_ASTC_8x8_SFLOAT_BLOCK_EXT = VkFormat(1000066007)
+VK_FORMAT_ASTC_10x5_SFLOAT_BLOCK_EXT = VkFormat(1000066008)
+VK_FORMAT_ASTC_10x6_SFLOAT_BLOCK_EXT = VkFormat(1000066009)
+VK_FORMAT_ASTC_10x8_SFLOAT_BLOCK_EXT = VkFormat(1000066010)
+VK_FORMAT_ASTC_10x10_SFLOAT_BLOCK_EXT = VkFormat(1000066011)
+VK_FORMAT_ASTC_12x10_SFLOAT_BLOCK_EXT = VkFormat(1000066012)
+VK_FORMAT_ASTC_12x12_SFLOAT_BLOCK_EXT = VkFormat(1000066013)
+VK_FORMAT_G8B8G8R8_422_UNORM_KHR = VK_FORMAT_G8B8G8R8_422_UNORM
+VK_FORMAT_B8G8R8G8_422_UNORM_KHR = VK_FORMAT_B8G8R8G8_422_UNORM
+VK_FORMAT_G8_B8_R8_3PLANE_420_UNORM_KHR = VK_FORMAT_G8_B8_R8_3PLANE_420_UNORM
+VK_FORMAT_G8_B8R8_2PLANE_420_UNORM_KHR = VK_FORMAT_G8_B8R8_2PLANE_420_UNORM
+VK_FORMAT_G8_B8_R8_3PLANE_422_UNORM_KHR = VK_FORMAT_G8_B8_R8_3PLANE_422_UNORM
+VK_FORMAT_G8_B8R8_2PLANE_422_UNORM_KHR = VK_FORMAT_G8_B8R8_2PLANE_422_UNORM
+VK_FORMAT_G8_B8_R8_3PLANE_444_UNORM_KHR = VK_FORMAT_G8_B8_R8_3PLANE_444_UNORM
+VK_FORMAT_R10X6_UNORM_PACK16_KHR = VK_FORMAT_R10X6_UNORM_PACK16
+VK_FORMAT_R10X6G10X6_UNORM_2PACK16_KHR = VK_FORMAT_R10X6G10X6_UNORM_2PACK16
+VK_FORMAT_R10X6G10X6B10X6A10X6_UNORM_4PACK16_KHR = VK_FORMAT_R10X6G10X6B10X6A10X6_UNORM_4PACK16
+VK_FORMAT_G10X6B10X6G10X6R10X6_422_UNORM_4PACK16_KHR = VK_FORMAT_G10X6B10X6G10X6R10X6_422_UNORM_4PACK16
+VK_FORMAT_B10X6G10X6R10X6G10X6_422_UNORM_4PACK16_KHR = VK_FORMAT_B10X6G10X6R10X6G10X6_422_UNORM_4PACK16
+VK_FORMAT_G10X6_B10X6_R10X6_3PLANE_420_UNORM_3PACK16_KHR = VK_FORMAT_G10X6_B10X6_R10X6_3PLANE_420_UNORM_3PACK16
+VK_FORMAT_G10X6_B10X6R10X6_2PLANE_420_UNORM_3PACK16_KHR = VK_FORMAT_G10X6_B10X6R10X6_2PLANE_420_UNORM_3PACK16
+VK_FORMAT_G10X6_B10X6_R10X6_3PLANE_422_UNORM_3PACK16_KHR = VK_FORMAT_G10X6_B10X6_R10X6_3PLANE_422_UNORM_3PACK16
+VK_FORMAT_G10X6_B10X6R10X6_2PLANE_422_UNORM_3PACK16_KHR = VK_FORMAT_G10X6_B10X6R10X6_2PLANE_422_UNORM_3PACK16
+VK_FORMAT_G10X6_B10X6_R10X6_3PLANE_444_UNORM_3PACK16_KHR = VK_FORMAT_G10X6_B10X6_R10X6_3PLANE_444_UNORM_3PACK16
+VK_FORMAT_R12X4_UNORM_PACK16_KHR = VK_FORMAT_R12X4_UNORM_PACK16
+VK_FORMAT_R12X4G12X4_UNORM_2PACK16_KHR = VK_FORMAT_R12X4G12X4_UNORM_2PACK16
+VK_FORMAT_R12X4G12X4B12X4A12X4_UNORM_4PACK16_KHR = VK_FORMAT_R12X4G12X4B12X4A12X4_UNORM_4PACK16
+VK_FORMAT_G12X4B12X4G12X4R12X4_422_UNORM_4PACK16_KHR = VK_FORMAT_G12X4B12X4G12X4R12X4_422_UNORM_4PACK16
+VK_FORMAT_B12X4G12X4R12X4G12X4_422_UNORM_4PACK16_KHR = VK_FORMAT_B12X4G12X4R12X4G12X4_422_UNORM_4PACK16
+VK_FORMAT_G12X4_B12X4_R12X4_3PLANE_420_UNORM_3PACK16_KHR = VK_FORMAT_G12X4_B12X4_R12X4_3PLANE_420_UNORM_3PACK16
+VK_FORMAT_G12X4_B12X4R12X4_2PLANE_420_UNORM_3PACK16_KHR = VK_FORMAT_G12X4_B12X4R12X4_2PLANE_420_UNORM_3PACK16
+VK_FORMAT_G12X4_B12X4_R12X4_3PLANE_422_UNORM_3PACK16_KHR = VK_FORMAT_G12X4_B12X4_R12X4_3PLANE_422_UNORM_3PACK16
+VK_FORMAT_G12X4_B12X4R12X4_2PLANE_422_UNORM_3PACK16_KHR = VK_FORMAT_G12X4_B12X4R12X4_2PLANE_422_UNORM_3PACK16
+VK_FORMAT_G12X4_B12X4_R12X4_3PLANE_444_UNORM_3PACK16_KHR = VK_FORMAT_G12X4_B12X4_R12X4_3PLANE_444_UNORM_3PACK16
+VK_FORMAT_G16B16G16R16_422_UNORM_KHR = VK_FORMAT_G16B16G16R16_422_UNORM
+VK_FORMAT_B16G16R16G16_422_UNORM_KHR = VK_FORMAT_B16G16R16G16_422_UNORM
+VK_FORMAT_G16_B16_R16_3PLANE_420_UNORM_KHR = VK_FORMAT_G16_B16_R16_3PLANE_420_UNORM
+VK_FORMAT_G16_B16R16_2PLANE_420_UNORM_KHR = VK_FORMAT_G16_B16R16_2PLANE_420_UNORM
+VK_FORMAT_G16_B16_R16_3PLANE_422_UNORM_KHR = VK_FORMAT_G16_B16_R16_3PLANE_422_UNORM
+VK_FORMAT_G16_B16R16_2PLANE_422_UNORM_KHR = VK_FORMAT_G16_B16R16_2PLANE_422_UNORM
+VK_FORMAT_G16_B16_R16_3PLANE_444_UNORM_KHR = VK_FORMAT_G16_B16_R16_3PLANE_444_UNORM
+VK_FORMAT_A4R4G4B4_UNORM_PACK16_EXT = VkFormat(1000340000)
+VK_FORMAT_A4B4G4R4_UNORM_PACK16_EXT = VkFormat(1000340001)
 
+VkFormatFeatureFlagBits = type('VkFormatFeatureFlagBits', (ctypes.c_int,), dict())
+VK_FORMAT_FEATURE_SAMPLED_IMAGE_BIT = VkFormatFeatureFlagBits(1)
+VK_FORMAT_FEATURE_STORAGE_IMAGE_BIT = VkFormatFeatureFlagBits(2)
+VK_FORMAT_FEATURE_STORAGE_IMAGE_ATOMIC_BIT = VkFormatFeatureFlagBits(4)
+VK_FORMAT_FEATURE_UNIFORM_TEXEL_BUFFER_BIT = VkFormatFeatureFlagBits(8)
+VK_FORMAT_FEATURE_STORAGE_TEXEL_BUFFER_BIT = VkFormatFeatureFlagBits(16)
+VK_FORMAT_FEATURE_STORAGE_TEXEL_BUFFER_ATOMIC_BIT = VkFormatFeatureFlagBits(32)
+VK_FORMAT_FEATURE_VERTEX_BUFFER_BIT = VkFormatFeatureFlagBits(64)
+VK_FORMAT_FEATURE_COLOR_ATTACHMENT_BIT = VkFormatFeatureFlagBits(128)
+VK_FORMAT_FEATURE_COLOR_ATTACHMENT_BLEND_BIT = VkFormatFeatureFlagBits(256)
+VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT = VkFormatFeatureFlagBits(512)
+VK_FORMAT_FEATURE_BLIT_SRC_BIT = VkFormatFeatureFlagBits(1024)
+VK_FORMAT_FEATURE_BLIT_DST_BIT = VkFormatFeatureFlagBits(2048)
+VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_LINEAR_BIT = VkFormatFeatureFlagBits(4096)
+VK_FORMAT_FEATURE_TRANSFER_SRC_BIT = VkFormatFeatureFlagBits(16384)
+VK_FORMAT_FEATURE_TRANSFER_DST_BIT = VkFormatFeatureFlagBits(32768)
+VK_FORMAT_FEATURE_MIDPOINT_CHROMA_SAMPLES_BIT = VkFormatFeatureFlagBits(131072)
+VK_FORMAT_FEATURE_SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER_BIT = VkFormatFeatureFlagBits(262144)
+VK_FORMAT_FEATURE_SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER_BIT = VkFormatFeatureFlagBits(524288)
+VK_FORMAT_FEATURE_SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_BIT = VkFormatFeatureFlagBits(1048576)
+VK_FORMAT_FEATURE_SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE_BIT = VkFormatFeatureFlagBits(2097152)
+VK_FORMAT_FEATURE_DISJOINT_BIT = VkFormatFeatureFlagBits(4194304)
+VK_FORMAT_FEATURE_COSITED_CHROMA_SAMPLES_BIT = VkFormatFeatureFlagBits(8388608)
+VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_MINMAX_BIT = VkFormatFeatureFlagBits(65536)
+VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_CUBIC_BIT_IMG = VkFormatFeatureFlagBits(8192)
+VK_FORMAT_FEATURE_TRANSFER_SRC_BIT_KHR = VK_FORMAT_FEATURE_TRANSFER_SRC_BIT
+VK_FORMAT_FEATURE_TRANSFER_DST_BIT_KHR = VK_FORMAT_FEATURE_TRANSFER_DST_BIT
+VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_MINMAX_BIT_EXT = VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_MINMAX_BIT
+VK_FORMAT_FEATURE_ACCELERATION_STRUCTURE_VERTEX_BUFFER_BIT_KHR = VkFormatFeatureFlagBits(536870912)
+VK_FORMAT_FEATURE_MIDPOINT_CHROMA_SAMPLES_BIT_KHR = VK_FORMAT_FEATURE_MIDPOINT_CHROMA_SAMPLES_BIT
+VK_FORMAT_FEATURE_SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER_BIT_KHR = VK_FORMAT_FEATURE_SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER_BIT
+VK_FORMAT_FEATURE_SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER_BIT_KHR = VK_FORMAT_FEATURE_SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER_BIT
+VK_FORMAT_FEATURE_SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_BIT_KHR = VK_FORMAT_FEATURE_SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_BIT
+VK_FORMAT_FEATURE_SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE_BIT_KHR = VK_FORMAT_FEATURE_SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE_BIT
+VK_FORMAT_FEATURE_DISJOINT_BIT_KHR = VK_FORMAT_FEATURE_DISJOINT_BIT
+VK_FORMAT_FEATURE_COSITED_CHROMA_SAMPLES_BIT_KHR = VK_FORMAT_FEATURE_COSITED_CHROMA_SAMPLES_BIT
+VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_CUBIC_BIT_EXT = VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_CUBIC_BIT_IMG
+VK_FORMAT_FEATURE_FRAGMENT_DENSITY_MAP_BIT_EXT = VkFormatFeatureFlagBits(16777216)
+VK_FORMAT_FEATURE_FRAGMENT_SHADING_RATE_ATTACHMENT_BIT_KHR = VkFormatFeatureFlagBits(1073741824)
 
-# ENUM VkStructureType
+VkFrontFace = type('VkFrontFace', (ctypes.c_int,), dict())
+VK_FRONT_FACE_COUNTER_CLOCKWISE = VkFrontFace(0)
+VK_FRONT_FACE_CLOCKWISE = VkFrontFace(1)
+
+VkImageAspectFlagBits = type('VkImageAspectFlagBits', (ctypes.c_int,), dict())
+VK_IMAGE_ASPECT_COLOR_BIT = VkImageAspectFlagBits(1)
+VK_IMAGE_ASPECT_DEPTH_BIT = VkImageAspectFlagBits(2)
+VK_IMAGE_ASPECT_STENCIL_BIT = VkImageAspectFlagBits(4)
+VK_IMAGE_ASPECT_METADATA_BIT = VkImageAspectFlagBits(8)
+VK_IMAGE_ASPECT_PLANE_0_BIT = VkImageAspectFlagBits(16)
+VK_IMAGE_ASPECT_PLANE_1_BIT = VkImageAspectFlagBits(32)
+VK_IMAGE_ASPECT_PLANE_2_BIT = VkImageAspectFlagBits(64)
+VK_IMAGE_ASPECT_PLANE_0_BIT_KHR = VK_IMAGE_ASPECT_PLANE_0_BIT
+VK_IMAGE_ASPECT_PLANE_1_BIT_KHR = VK_IMAGE_ASPECT_PLANE_1_BIT
+VK_IMAGE_ASPECT_PLANE_2_BIT_KHR = VK_IMAGE_ASPECT_PLANE_2_BIT
+VK_IMAGE_ASPECT_MEMORY_PLANE_0_BIT_EXT = VkImageAspectFlagBits(128)
+VK_IMAGE_ASPECT_MEMORY_PLANE_1_BIT_EXT = VkImageAspectFlagBits(256)
+VK_IMAGE_ASPECT_MEMORY_PLANE_2_BIT_EXT = VkImageAspectFlagBits(512)
+VK_IMAGE_ASPECT_MEMORY_PLANE_3_BIT_EXT = VkImageAspectFlagBits(1024)
+
+VkImageCreateFlagBits = type('VkImageCreateFlagBits', (ctypes.c_int,), dict())
+VK_IMAGE_CREATE_SPARSE_BINDING_BIT = VkImageCreateFlagBits(1)
+VK_IMAGE_CREATE_SPARSE_RESIDENCY_BIT = VkImageCreateFlagBits(2)
+VK_IMAGE_CREATE_SPARSE_ALIASED_BIT = VkImageCreateFlagBits(4)
+VK_IMAGE_CREATE_MUTABLE_FORMAT_BIT = VkImageCreateFlagBits(8)
+VK_IMAGE_CREATE_CUBE_COMPATIBLE_BIT = VkImageCreateFlagBits(16)
+VK_IMAGE_CREATE_ALIAS_BIT = VkImageCreateFlagBits(1024)
+VK_IMAGE_CREATE_SPLIT_INSTANCE_BIND_REGIONS_BIT = VkImageCreateFlagBits(64)
+VK_IMAGE_CREATE_2D_ARRAY_COMPATIBLE_BIT = VkImageCreateFlagBits(32)
+VK_IMAGE_CREATE_BLOCK_TEXEL_VIEW_COMPATIBLE_BIT = VkImageCreateFlagBits(128)
+VK_IMAGE_CREATE_EXTENDED_USAGE_BIT = VkImageCreateFlagBits(256)
+VK_IMAGE_CREATE_PROTECTED_BIT = VkImageCreateFlagBits(2048)
+VK_IMAGE_CREATE_DISJOINT_BIT = VkImageCreateFlagBits(512)
+VK_IMAGE_CREATE_CORNER_SAMPLED_BIT_NV = VkImageCreateFlagBits(8192)
+VK_IMAGE_CREATE_SPLIT_INSTANCE_BIND_REGIONS_BIT_KHR = VK_IMAGE_CREATE_SPLIT_INSTANCE_BIND_REGIONS_BIT
+VK_IMAGE_CREATE_2D_ARRAY_COMPATIBLE_BIT_KHR = VK_IMAGE_CREATE_2D_ARRAY_COMPATIBLE_BIT
+VK_IMAGE_CREATE_BLOCK_TEXEL_VIEW_COMPATIBLE_BIT_KHR = VK_IMAGE_CREATE_BLOCK_TEXEL_VIEW_COMPATIBLE_BIT
+VK_IMAGE_CREATE_EXTENDED_USAGE_BIT_KHR = VK_IMAGE_CREATE_EXTENDED_USAGE_BIT
+VK_IMAGE_CREATE_SAMPLE_LOCATIONS_COMPATIBLE_DEPTH_BIT_EXT = VkImageCreateFlagBits(4096)
+VK_IMAGE_CREATE_DISJOINT_BIT_KHR = VK_IMAGE_CREATE_DISJOINT_BIT
+VK_IMAGE_CREATE_ALIAS_BIT_KHR = VK_IMAGE_CREATE_ALIAS_BIT
+VK_IMAGE_CREATE_SUBSAMPLED_BIT_EXT = VkImageCreateFlagBits(16384)
+
+VkImageLayout = type('VkImageLayout', (ctypes.c_int,), dict())
+VK_IMAGE_LAYOUT_UNDEFINED = VkImageLayout(0)
+VK_IMAGE_LAYOUT_GENERAL = VkImageLayout(1)
+VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL = VkImageLayout(2)
+VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL = VkImageLayout(3)
+VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL = VkImageLayout(4)
+VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL = VkImageLayout(5)
+VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL = VkImageLayout(6)
+VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL = VkImageLayout(7)
+VK_IMAGE_LAYOUT_PREINITIALIZED = VkImageLayout(8)
+VK_IMAGE_LAYOUT_DEPTH_READ_ONLY_STENCIL_ATTACHMENT_OPTIMAL = VkImageLayout(1000117000)
+VK_IMAGE_LAYOUT_DEPTH_ATTACHMENT_STENCIL_READ_ONLY_OPTIMAL = VkImageLayout(1000117001)
+VK_IMAGE_LAYOUT_DEPTH_ATTACHMENT_OPTIMAL = VkImageLayout(1000241000)
+VK_IMAGE_LAYOUT_DEPTH_READ_ONLY_OPTIMAL = VkImageLayout(1000241001)
+VK_IMAGE_LAYOUT_STENCIL_ATTACHMENT_OPTIMAL = VkImageLayout(1000241002)
+VK_IMAGE_LAYOUT_STENCIL_READ_ONLY_OPTIMAL = VkImageLayout(1000241003)
+VK_IMAGE_LAYOUT_PRESENT_SRC_KHR = VkImageLayout(1000001002)
+VK_IMAGE_LAYOUT_SHARED_PRESENT_KHR = VkImageLayout(1000111000)
+VK_IMAGE_LAYOUT_DEPTH_READ_ONLY_STENCIL_ATTACHMENT_OPTIMAL_KHR = VK_IMAGE_LAYOUT_DEPTH_READ_ONLY_STENCIL_ATTACHMENT_OPTIMAL
+VK_IMAGE_LAYOUT_DEPTH_ATTACHMENT_STENCIL_READ_ONLY_OPTIMAL_KHR = VK_IMAGE_LAYOUT_DEPTH_ATTACHMENT_STENCIL_READ_ONLY_OPTIMAL
+VK_IMAGE_LAYOUT_SHADING_RATE_OPTIMAL_NV = VkImageLayout(1000164003)
+VK_IMAGE_LAYOUT_FRAGMENT_DENSITY_MAP_OPTIMAL_EXT = VkImageLayout(1000218000)
+VK_IMAGE_LAYOUT_FRAGMENT_SHADING_RATE_ATTACHMENT_OPTIMAL_KHR = VK_IMAGE_LAYOUT_SHADING_RATE_OPTIMAL_NV
+VK_IMAGE_LAYOUT_DEPTH_ATTACHMENT_OPTIMAL_KHR = VK_IMAGE_LAYOUT_DEPTH_ATTACHMENT_OPTIMAL
+VK_IMAGE_LAYOUT_DEPTH_READ_ONLY_OPTIMAL_KHR = VK_IMAGE_LAYOUT_DEPTH_READ_ONLY_OPTIMAL
+VK_IMAGE_LAYOUT_STENCIL_ATTACHMENT_OPTIMAL_KHR = VK_IMAGE_LAYOUT_STENCIL_ATTACHMENT_OPTIMAL
+VK_IMAGE_LAYOUT_STENCIL_READ_ONLY_OPTIMAL_KHR = VK_IMAGE_LAYOUT_STENCIL_READ_ONLY_OPTIMAL
+
+VkImageTiling = type('VkImageTiling', (ctypes.c_int,), dict())
+VK_IMAGE_TILING_OPTIMAL = VkImageTiling(0)
+VK_IMAGE_TILING_LINEAR = VkImageTiling(1)
+VK_IMAGE_TILING_DRM_FORMAT_MODIFIER_EXT = VkImageTiling(1000158000)
+
+VkImageType = type('VkImageType', (ctypes.c_int,), dict())
+VK_IMAGE_TYPE_1D = VkImageType(0)
+VK_IMAGE_TYPE_2D = VkImageType(1)
+VK_IMAGE_TYPE_3D = VkImageType(2)
+
+VkImageUsageFlagBits = type('VkImageUsageFlagBits', (ctypes.c_int,), dict())
+VK_IMAGE_USAGE_TRANSFER_SRC_BIT = VkImageUsageFlagBits(1)
+VK_IMAGE_USAGE_TRANSFER_DST_BIT = VkImageUsageFlagBits(2)
+VK_IMAGE_USAGE_SAMPLED_BIT = VkImageUsageFlagBits(4)
+VK_IMAGE_USAGE_STORAGE_BIT = VkImageUsageFlagBits(8)
+VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT = VkImageUsageFlagBits(16)
+VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT = VkImageUsageFlagBits(32)
+VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT = VkImageUsageFlagBits(64)
+VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT = VkImageUsageFlagBits(128)
+VK_IMAGE_USAGE_SHADING_RATE_IMAGE_BIT_NV = VkImageUsageFlagBits(256)
+VK_IMAGE_USAGE_FRAGMENT_DENSITY_MAP_BIT_EXT = VkImageUsageFlagBits(512)
+VK_IMAGE_USAGE_FRAGMENT_SHADING_RATE_ATTACHMENT_BIT_KHR = VK_IMAGE_USAGE_SHADING_RATE_IMAGE_BIT_NV
+
+VkImageViewCreateFlagBits = type('VkImageViewCreateFlagBits', (ctypes.c_int,), dict())
+VK_IMAGE_VIEW_CREATE_FRAGMENT_DENSITY_MAP_DYNAMIC_BIT_EXT = VkImageViewCreateFlagBits(1)
+VK_IMAGE_VIEW_CREATE_FRAGMENT_DENSITY_MAP_DEFERRED_BIT_EXT = VkImageViewCreateFlagBits(2)
+
+VkImageViewType = type('VkImageViewType', (ctypes.c_int,), dict())
+VK_IMAGE_VIEW_TYPE_1D = VkImageViewType(0)
+VK_IMAGE_VIEW_TYPE_2D = VkImageViewType(1)
+VK_IMAGE_VIEW_TYPE_3D = VkImageViewType(2)
+VK_IMAGE_VIEW_TYPE_CUBE = VkImageViewType(3)
+VK_IMAGE_VIEW_TYPE_1D_ARRAY = VkImageViewType(4)
+VK_IMAGE_VIEW_TYPE_2D_ARRAY = VkImageViewType(5)
+VK_IMAGE_VIEW_TYPE_CUBE_ARRAY = VkImageViewType(6)
+
+VkSharingMode = type('VkSharingMode', (ctypes.c_int,), dict())
+VK_SHARING_MODE_EXCLUSIVE = VkSharingMode(0)
+VK_SHARING_MODE_CONCURRENT = VkSharingMode(1)
+
+VkIndexType = type('VkIndexType', (ctypes.c_int,), dict())
+VK_INDEX_TYPE_UINT16 = VkIndexType(0)
+VK_INDEX_TYPE_UINT32 = VkIndexType(1)
+VK_INDEX_TYPE_NONE_KHR = VkIndexType(1000165000)
+VK_INDEX_TYPE_NONE_NV = VK_INDEX_TYPE_NONE_KHR
+VK_INDEX_TYPE_UINT8_EXT = VkIndexType(1000265000)
+
+VkLogicOp = type('VkLogicOp', (ctypes.c_int,), dict())
+VK_LOGIC_OP_CLEAR = VkLogicOp(0)
+VK_LOGIC_OP_AND = VkLogicOp(1)
+VK_LOGIC_OP_AND_REVERSE = VkLogicOp(2)
+VK_LOGIC_OP_COPY = VkLogicOp(3)
+VK_LOGIC_OP_AND_INVERTED = VkLogicOp(4)
+VK_LOGIC_OP_NO_OP = VkLogicOp(5)
+VK_LOGIC_OP_XOR = VkLogicOp(6)
+VK_LOGIC_OP_OR = VkLogicOp(7)
+VK_LOGIC_OP_NOR = VkLogicOp(8)
+VK_LOGIC_OP_EQUIVALENT = VkLogicOp(9)
+VK_LOGIC_OP_INVERT = VkLogicOp(10)
+VK_LOGIC_OP_OR_REVERSE = VkLogicOp(11)
+VK_LOGIC_OP_COPY_INVERTED = VkLogicOp(12)
+VK_LOGIC_OP_OR_INVERTED = VkLogicOp(13)
+VK_LOGIC_OP_NAND = VkLogicOp(14)
+VK_LOGIC_OP_SET = VkLogicOp(15)
+
+VkMemoryHeapFlagBits = type('VkMemoryHeapFlagBits', (ctypes.c_int,), dict())
+VK_MEMORY_HEAP_DEVICE_LOCAL_BIT = VkMemoryHeapFlagBits(1)
+VK_MEMORY_HEAP_MULTI_INSTANCE_BIT = VkMemoryHeapFlagBits(2)
+VK_MEMORY_HEAP_MULTI_INSTANCE_BIT_KHR = VK_MEMORY_HEAP_MULTI_INSTANCE_BIT
+
+VkAccessFlagBits = type('VkAccessFlagBits', (ctypes.c_int,), dict())
+VK_ACCESS_INDIRECT_COMMAND_READ_BIT = VkAccessFlagBits(1)
+VK_ACCESS_INDEX_READ_BIT = VkAccessFlagBits(2)
+VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT = VkAccessFlagBits(4)
+VK_ACCESS_UNIFORM_READ_BIT = VkAccessFlagBits(8)
+VK_ACCESS_INPUT_ATTACHMENT_READ_BIT = VkAccessFlagBits(16)
+VK_ACCESS_SHADER_READ_BIT = VkAccessFlagBits(32)
+VK_ACCESS_SHADER_WRITE_BIT = VkAccessFlagBits(64)
+VK_ACCESS_COLOR_ATTACHMENT_READ_BIT = VkAccessFlagBits(128)
+VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT = VkAccessFlagBits(256)
+VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_READ_BIT = VkAccessFlagBits(512)
+VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT = VkAccessFlagBits(1024)
+VK_ACCESS_TRANSFER_READ_BIT = VkAccessFlagBits(2048)
+VK_ACCESS_TRANSFER_WRITE_BIT = VkAccessFlagBits(4096)
+VK_ACCESS_HOST_READ_BIT = VkAccessFlagBits(8192)
+VK_ACCESS_HOST_WRITE_BIT = VkAccessFlagBits(16384)
+VK_ACCESS_MEMORY_READ_BIT = VkAccessFlagBits(32768)
+VK_ACCESS_MEMORY_WRITE_BIT = VkAccessFlagBits(65536)
+VK_ACCESS_TRANSFORM_FEEDBACK_WRITE_BIT_EXT = VkAccessFlagBits(33554432)
+VK_ACCESS_TRANSFORM_FEEDBACK_COUNTER_READ_BIT_EXT = VkAccessFlagBits(67108864)
+VK_ACCESS_TRANSFORM_FEEDBACK_COUNTER_WRITE_BIT_EXT = VkAccessFlagBits(134217728)
+VK_ACCESS_CONDITIONAL_RENDERING_READ_BIT_EXT = VkAccessFlagBits(1048576)
+VK_ACCESS_COLOR_ATTACHMENT_READ_NONCOHERENT_BIT_EXT = VkAccessFlagBits(524288)
+VK_ACCESS_ACCELERATION_STRUCTURE_READ_BIT_KHR = VkAccessFlagBits(2097152)
+VK_ACCESS_ACCELERATION_STRUCTURE_WRITE_BIT_KHR = VkAccessFlagBits(4194304)
+VK_ACCESS_SHADING_RATE_IMAGE_READ_BIT_NV = VkAccessFlagBits(8388608)
+VK_ACCESS_ACCELERATION_STRUCTURE_READ_BIT_NV = VK_ACCESS_ACCELERATION_STRUCTURE_READ_BIT_KHR
+VK_ACCESS_ACCELERATION_STRUCTURE_WRITE_BIT_NV = VK_ACCESS_ACCELERATION_STRUCTURE_WRITE_BIT_KHR
+VK_ACCESS_FRAGMENT_DENSITY_MAP_READ_BIT_EXT = VkAccessFlagBits(16777216)
+VK_ACCESS_FRAGMENT_SHADING_RATE_ATTACHMENT_READ_BIT_KHR = VK_ACCESS_SHADING_RATE_IMAGE_READ_BIT_NV
+VK_ACCESS_COMMAND_PREPROCESS_READ_BIT_NV = VkAccessFlagBits(131072)
+VK_ACCESS_COMMAND_PREPROCESS_WRITE_BIT_NV = VkAccessFlagBits(262144)
+
+VkMemoryPropertyFlagBits = type('VkMemoryPropertyFlagBits', (ctypes.c_int,), dict())
+VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT = VkMemoryPropertyFlagBits(1)
+VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT = VkMemoryPropertyFlagBits(2)
+VK_MEMORY_PROPERTY_HOST_COHERENT_BIT = VkMemoryPropertyFlagBits(4)
+VK_MEMORY_PROPERTY_HOST_CACHED_BIT = VkMemoryPropertyFlagBits(8)
+VK_MEMORY_PROPERTY_LAZILY_ALLOCATED_BIT = VkMemoryPropertyFlagBits(16)
+VK_MEMORY_PROPERTY_PROTECTED_BIT = VkMemoryPropertyFlagBits(32)
+VK_MEMORY_PROPERTY_DEVICE_COHERENT_BIT_AMD = VkMemoryPropertyFlagBits(64)
+VK_MEMORY_PROPERTY_DEVICE_UNCACHED_BIT_AMD = VkMemoryPropertyFlagBits(128)
+
+VkPhysicalDeviceType = type('VkPhysicalDeviceType', (ctypes.c_int,), dict())
+VK_PHYSICAL_DEVICE_TYPE_OTHER = VkPhysicalDeviceType(0)
+VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU = VkPhysicalDeviceType(1)
+VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU = VkPhysicalDeviceType(2)
+VK_PHYSICAL_DEVICE_TYPE_VIRTUAL_GPU = VkPhysicalDeviceType(3)
+VK_PHYSICAL_DEVICE_TYPE_CPU = VkPhysicalDeviceType(4)
+
+VkPipelineBindPoint = type('VkPipelineBindPoint', (ctypes.c_int,), dict())
+VK_PIPELINE_BIND_POINT_GRAPHICS = VkPipelineBindPoint(0)
+VK_PIPELINE_BIND_POINT_COMPUTE = VkPipelineBindPoint(1)
+VK_PIPELINE_BIND_POINT_RAY_TRACING_KHR = VkPipelineBindPoint(1000165000)
+VK_PIPELINE_BIND_POINT_RAY_TRACING_NV = VK_PIPELINE_BIND_POINT_RAY_TRACING_KHR
+
+VkPipelineCreateFlagBits = type('VkPipelineCreateFlagBits', (ctypes.c_int,), dict())
+VK_PIPELINE_CREATE_DISABLE_OPTIMIZATION_BIT = VkPipelineCreateFlagBits(1)
+VK_PIPELINE_CREATE_ALLOW_DERIVATIVES_BIT = VkPipelineCreateFlagBits(2)
+VK_PIPELINE_CREATE_DERIVATIVE_BIT = VkPipelineCreateFlagBits(4)
+VK_PIPELINE_CREATE_VIEW_INDEX_FROM_DEVICE_INDEX_BIT = VkPipelineCreateFlagBits(8)
+VK_PIPELINE_CREATE_DISPATCH_BASE_BIT = VkPipelineCreateFlagBits(16)
+VK_PIPELINE_CREATE_DISPATCH_BASE = VK_PIPELINE_CREATE_DISPATCH_BASE_BIT
+VK_PIPELINE_CREATE_VIEW_INDEX_FROM_DEVICE_INDEX_BIT_KHR = VK_PIPELINE_CREATE_VIEW_INDEX_FROM_DEVICE_INDEX_BIT
+VK_PIPELINE_CREATE_DISPATCH_BASE_KHR = VK_PIPELINE_CREATE_DISPATCH_BASE
+VK_PIPELINE_CREATE_RAY_TRACING_NO_NULL_ANY_HIT_SHADERS_BIT_KHR = VkPipelineCreateFlagBits(16384)
+VK_PIPELINE_CREATE_RAY_TRACING_NO_NULL_CLOSEST_HIT_SHADERS_BIT_KHR = VkPipelineCreateFlagBits(32768)
+VK_PIPELINE_CREATE_RAY_TRACING_NO_NULL_MISS_SHADERS_BIT_KHR = VkPipelineCreateFlagBits(65536)
+VK_PIPELINE_CREATE_RAY_TRACING_NO_NULL_INTERSECTION_SHADERS_BIT_KHR = VkPipelineCreateFlagBits(131072)
+VK_PIPELINE_CREATE_RAY_TRACING_SKIP_TRIANGLES_BIT_KHR = VkPipelineCreateFlagBits(4096)
+VK_PIPELINE_CREATE_RAY_TRACING_SKIP_AABBS_BIT_KHR = VkPipelineCreateFlagBits(8192)
+VK_PIPELINE_CREATE_RAY_TRACING_SHADER_GROUP_HANDLE_CAPTURE_REPLAY_BIT_KHR = VkPipelineCreateFlagBits(524288)
+VK_PIPELINE_CREATE_DEFER_COMPILE_BIT_NV = VkPipelineCreateFlagBits(32)
+VK_PIPELINE_CREATE_CAPTURE_STATISTICS_BIT_KHR = VkPipelineCreateFlagBits(64)
+VK_PIPELINE_CREATE_CAPTURE_INTERNAL_REPRESENTATIONS_BIT_KHR = VkPipelineCreateFlagBits(128)
+VK_PIPELINE_CREATE_INDIRECT_BINDABLE_BIT_NV = VkPipelineCreateFlagBits(262144)
+VK_PIPELINE_CREATE_LIBRARY_BIT_KHR = VkPipelineCreateFlagBits(2048)
+VK_PIPELINE_CREATE_FAIL_ON_PIPELINE_COMPILE_REQUIRED_BIT_EXT = VkPipelineCreateFlagBits(256)
+VK_PIPELINE_CREATE_EARLY_RETURN_ON_FAILURE_BIT_EXT = VkPipelineCreateFlagBits(512)
+
+VkPrimitiveTopology = type('VkPrimitiveTopology', (ctypes.c_int,), dict())
+VK_PRIMITIVE_TOPOLOGY_POINT_LIST = VkPrimitiveTopology(0)
+VK_PRIMITIVE_TOPOLOGY_LINE_LIST = VkPrimitiveTopology(1)
+VK_PRIMITIVE_TOPOLOGY_LINE_STRIP = VkPrimitiveTopology(2)
+VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST = VkPrimitiveTopology(3)
+VK_PRIMITIVE_TOPOLOGY_TRIANGLE_STRIP = VkPrimitiveTopology(4)
+VK_PRIMITIVE_TOPOLOGY_TRIANGLE_FAN = VkPrimitiveTopology(5)
+VK_PRIMITIVE_TOPOLOGY_LINE_LIST_WITH_ADJACENCY = VkPrimitiveTopology(6)
+VK_PRIMITIVE_TOPOLOGY_LINE_STRIP_WITH_ADJACENCY = VkPrimitiveTopology(7)
+VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST_WITH_ADJACENCY = VkPrimitiveTopology(8)
+VK_PRIMITIVE_TOPOLOGY_TRIANGLE_STRIP_WITH_ADJACENCY = VkPrimitiveTopology(9)
+VK_PRIMITIVE_TOPOLOGY_PATCH_LIST = VkPrimitiveTopology(10)
+
+VkQueryControlFlagBits = type('VkQueryControlFlagBits', (ctypes.c_int,), dict())
+VK_QUERY_CONTROL_PRECISE_BIT = VkQueryControlFlagBits(1)
+
+VkQueryPipelineStatisticFlagBits = type('VkQueryPipelineStatisticFlagBits', (ctypes.c_int,), dict())
+VK_QUERY_PIPELINE_STATISTIC_INPUT_ASSEMBLY_VERTICES_BIT = VkQueryPipelineStatisticFlagBits(1)
+VK_QUERY_PIPELINE_STATISTIC_INPUT_ASSEMBLY_PRIMITIVES_BIT = VkQueryPipelineStatisticFlagBits(2)
+VK_QUERY_PIPELINE_STATISTIC_VERTEX_SHADER_INVOCATIONS_BIT = VkQueryPipelineStatisticFlagBits(4)
+VK_QUERY_PIPELINE_STATISTIC_GEOMETRY_SHADER_INVOCATIONS_BIT = VkQueryPipelineStatisticFlagBits(8)
+VK_QUERY_PIPELINE_STATISTIC_GEOMETRY_SHADER_PRIMITIVES_BIT = VkQueryPipelineStatisticFlagBits(16)
+VK_QUERY_PIPELINE_STATISTIC_CLIPPING_INVOCATIONS_BIT = VkQueryPipelineStatisticFlagBits(32)
+VK_QUERY_PIPELINE_STATISTIC_CLIPPING_PRIMITIVES_BIT = VkQueryPipelineStatisticFlagBits(64)
+VK_QUERY_PIPELINE_STATISTIC_FRAGMENT_SHADER_INVOCATIONS_BIT = VkQueryPipelineStatisticFlagBits(128)
+VK_QUERY_PIPELINE_STATISTIC_TESSELLATION_CONTROL_SHADER_PATCHES_BIT = VkQueryPipelineStatisticFlagBits(256)
+VK_QUERY_PIPELINE_STATISTIC_TESSELLATION_EVALUATION_SHADER_INVOCATIONS_BIT = VkQueryPipelineStatisticFlagBits(512)
+VK_QUERY_PIPELINE_STATISTIC_COMPUTE_SHADER_INVOCATIONS_BIT = VkQueryPipelineStatisticFlagBits(1024)
+
+VkQueryResultFlagBits = type('VkQueryResultFlagBits', (ctypes.c_int,), dict())
+VK_QUERY_RESULT_64_BIT = VkQueryResultFlagBits(1)
+VK_QUERY_RESULT_WAIT_BIT = VkQueryResultFlagBits(2)
+VK_QUERY_RESULT_WITH_AVAILABILITY_BIT = VkQueryResultFlagBits(4)
+VK_QUERY_RESULT_PARTIAL_BIT = VkQueryResultFlagBits(8)
+
+VkQueryType = type('VkQueryType', (ctypes.c_int,), dict())
+VK_QUERY_TYPE_OCCLUSION = VkQueryType(0)
+VK_QUERY_TYPE_PIPELINE_STATISTICS = VkQueryType(1)
+VK_QUERY_TYPE_TIMESTAMP = VkQueryType(2)
+VK_QUERY_TYPE_TRANSFORM_FEEDBACK_STREAM_EXT = VkQueryType(1000028004)
+VK_QUERY_TYPE_PERFORMANCE_QUERY_KHR = VkQueryType(1000116000)
+VK_QUERY_TYPE_ACCELERATION_STRUCTURE_COMPACTED_SIZE_KHR = VkQueryType(1000150000)
+VK_QUERY_TYPE_ACCELERATION_STRUCTURE_SERIALIZATION_SIZE_KHR = VkQueryType(1000150001)
+VK_QUERY_TYPE_ACCELERATION_STRUCTURE_COMPACTED_SIZE_NV = VkQueryType(1000165000)
+VK_QUERY_TYPE_PERFORMANCE_QUERY_INTEL = VkQueryType(1000210000)
+
+VkQueueFlagBits = type('VkQueueFlagBits', (ctypes.c_int,), dict())
+VK_QUEUE_GRAPHICS_BIT = VkQueueFlagBits(1)
+VK_QUEUE_COMPUTE_BIT = VkQueueFlagBits(2)
+VK_QUEUE_TRANSFER_BIT = VkQueueFlagBits(4)
+VK_QUEUE_SPARSE_BINDING_BIT = VkQueueFlagBits(8)
+VK_QUEUE_PROTECTED_BIT = VkQueueFlagBits(16)
+
+VkSubpassContents = type('VkSubpassContents', (ctypes.c_int,), dict())
+VK_SUBPASS_CONTENTS_INLINE = VkSubpassContents(0)
+VK_SUBPASS_CONTENTS_SECONDARY_COMMAND_BUFFERS = VkSubpassContents(1)
+
+VkResult = type('VkResult', (ctypes.c_int,), dict())
+VK_SUCCESS = VkResult(0)
+VK_NOT_READY = VkResult(1)
+VK_TIMEOUT = VkResult(2)
+VK_EVENT_SET = VkResult(3)
+VK_EVENT_RESET = VkResult(4)
+VK_INCOMPLETE = VkResult(5)
+VK_ERROR_OUT_OF_HOST_MEMORY = VkResult(-1)
+VK_ERROR_OUT_OF_DEVICE_MEMORY = VkResult(-2)
+VK_ERROR_INITIALIZATION_FAILED = VkResult(-3)
+VK_ERROR_DEVICE_LOST = VkResult(-4)
+VK_ERROR_MEMORY_MAP_FAILED = VkResult(-5)
+VK_ERROR_LAYER_NOT_PRESENT = VkResult(-6)
+VK_ERROR_EXTENSION_NOT_PRESENT = VkResult(-7)
+VK_ERROR_FEATURE_NOT_PRESENT = VkResult(-8)
+VK_ERROR_INCOMPATIBLE_DRIVER = VkResult(-9)
+VK_ERROR_TOO_MANY_OBJECTS = VkResult(-10)
+VK_ERROR_FORMAT_NOT_SUPPORTED = VkResult(-11)
+VK_ERROR_FRAGMENTED_POOL = VkResult(-12)
+VK_ERROR_UNKNOWN = VkResult(-13)
+VK_ERROR_OUT_OF_POOL_MEMORY = VkResult(-1000069000)
+VK_ERROR_INVALID_EXTERNAL_HANDLE = VkResult(-1000072003)
+VK_ERROR_FRAGMENTATION = VkResult(-1000161000)
+VK_ERROR_INVALID_OPAQUE_CAPTURE_ADDRESS = VkResult(-1000257000)
+VK_ERROR_SURFACE_LOST_KHR = VkResult(-1000000000)
+VK_ERROR_NATIVE_WINDOW_IN_USE_KHR = VkResult(-1000000001)
+VK_SUBOPTIMAL_KHR = VkResult(1000001003)
+VK_ERROR_OUT_OF_DATE_KHR = VkResult(-1000001004)
+VK_ERROR_INCOMPATIBLE_DISPLAY_KHR = VkResult(-1000003001)
+VK_ERROR_VALIDATION_FAILED_EXT = VkResult(-1000011001)
+VK_ERROR_INVALID_SHADER_NV = VkResult(-1000012000)
+VK_ERROR_OUT_OF_POOL_MEMORY_KHR = VK_ERROR_OUT_OF_POOL_MEMORY
+VK_ERROR_INVALID_EXTERNAL_HANDLE_KHR = VK_ERROR_INVALID_EXTERNAL_HANDLE
+VK_ERROR_INVALID_DRM_FORMAT_MODIFIER_PLANE_LAYOUT_EXT = VkResult(-1000158000)
+VK_ERROR_FRAGMENTATION_EXT = VK_ERROR_FRAGMENTATION
+VK_ERROR_NOT_PERMITTED_EXT = VkResult(-1000174001)
+VK_ERROR_INVALID_DEVICE_ADDRESS_EXT = VK_ERROR_INVALID_OPAQUE_CAPTURE_ADDRESS
+VK_ERROR_FULL_SCREEN_EXCLUSIVE_MODE_LOST_EXT = VkResult(-1000255000)
+VK_ERROR_INVALID_OPAQUE_CAPTURE_ADDRESS_KHR = VK_ERROR_INVALID_OPAQUE_CAPTURE_ADDRESS
+VK_THREAD_IDLE_KHR = VkResult(1000268000)
+VK_THREAD_DONE_KHR = VkResult(1000268001)
+VK_OPERATION_DEFERRED_KHR = VkResult(1000268002)
+VK_OPERATION_NOT_DEFERRED_KHR = VkResult(1000268003)
+VK_PIPELINE_COMPILE_REQUIRED_EXT = VkResult(1000297000)
+VK_ERROR_PIPELINE_COMPILE_REQUIRED_EXT = VK_PIPELINE_COMPILE_REQUIRED_EXT
+
+VkShaderStageFlagBits = type('VkShaderStageFlagBits', (ctypes.c_int,), dict())
+VK_SHADER_STAGE_VERTEX_BIT = VkShaderStageFlagBits(1)
+VK_SHADER_STAGE_TESSELLATION_CONTROL_BIT = VkShaderStageFlagBits(2)
+VK_SHADER_STAGE_TESSELLATION_EVALUATION_BIT = VkShaderStageFlagBits(4)
+VK_SHADER_STAGE_GEOMETRY_BIT = VkShaderStageFlagBits(8)
+VK_SHADER_STAGE_FRAGMENT_BIT = VkShaderStageFlagBits(16)
+VK_SHADER_STAGE_COMPUTE_BIT = VkShaderStageFlagBits(32)
+VK_SHADER_STAGE_ALL_GRAPHICS = VkShaderStageFlagBits(0x0000001F)
+VK_SHADER_STAGE_ALL = VkShaderStageFlagBits(0x7FFFFFFF)
+VK_SHADER_STAGE_RAYGEN_BIT_KHR = VkShaderStageFlagBits(256)
+VK_SHADER_STAGE_ANY_HIT_BIT_KHR = VkShaderStageFlagBits(512)
+VK_SHADER_STAGE_CLOSEST_HIT_BIT_KHR = VkShaderStageFlagBits(1024)
+VK_SHADER_STAGE_MISS_BIT_KHR = VkShaderStageFlagBits(2048)
+VK_SHADER_STAGE_INTERSECTION_BIT_KHR = VkShaderStageFlagBits(4096)
+VK_SHADER_STAGE_CALLABLE_BIT_KHR = VkShaderStageFlagBits(8192)
+VK_SHADER_STAGE_RAYGEN_BIT_NV = VK_SHADER_STAGE_RAYGEN_BIT_KHR
+VK_SHADER_STAGE_ANY_HIT_BIT_NV = VK_SHADER_STAGE_ANY_HIT_BIT_KHR
+VK_SHADER_STAGE_CLOSEST_HIT_BIT_NV = VK_SHADER_STAGE_CLOSEST_HIT_BIT_KHR
+VK_SHADER_STAGE_MISS_BIT_NV = VK_SHADER_STAGE_MISS_BIT_KHR
+VK_SHADER_STAGE_INTERSECTION_BIT_NV = VK_SHADER_STAGE_INTERSECTION_BIT_KHR
+VK_SHADER_STAGE_CALLABLE_BIT_NV = VK_SHADER_STAGE_CALLABLE_BIT_KHR
+VK_SHADER_STAGE_TASK_BIT_NV = VkShaderStageFlagBits(64)
+VK_SHADER_STAGE_MESH_BIT_NV = VkShaderStageFlagBits(128)
+
+VkSparseMemoryBindFlagBits = type('VkSparseMemoryBindFlagBits', (ctypes.c_int,), dict())
+VK_SPARSE_MEMORY_BIND_METADATA_BIT = VkSparseMemoryBindFlagBits(1)
+
+VkStencilFaceFlagBits = type('VkStencilFaceFlagBits', (ctypes.c_int,), dict())
+VK_STENCIL_FACE_FRONT_BIT = VkStencilFaceFlagBits(1)
+VK_STENCIL_FACE_BACK_BIT = VkStencilFaceFlagBits(2)
+VK_STENCIL_FACE_FRONT_AND_BACK = VkStencilFaceFlagBits(0x00000003)
+VK_STENCIL_FRONT_AND_BACK = VK_STENCIL_FACE_FRONT_AND_BACK
+
+VkStencilOp = type('VkStencilOp', (ctypes.c_int,), dict())
+VK_STENCIL_OP_KEEP = VkStencilOp(0)
+VK_STENCIL_OP_ZERO = VkStencilOp(1)
+VK_STENCIL_OP_REPLACE = VkStencilOp(2)
+VK_STENCIL_OP_INCREMENT_AND_CLAMP = VkStencilOp(3)
+VK_STENCIL_OP_DECREMENT_AND_CLAMP = VkStencilOp(4)
+VK_STENCIL_OP_INVERT = VkStencilOp(5)
+VK_STENCIL_OP_INCREMENT_AND_WRAP = VkStencilOp(6)
+VK_STENCIL_OP_DECREMENT_AND_WRAP = VkStencilOp(7)
+
+VkStructureType = type('VkStructureType', (ctypes.c_int,), dict())
 VK_STRUCTURE_TYPE_APPLICATION_INFO = VkStructureType(0)
 VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO = VkStructureType(1)
 VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO = VkStructureType(2)
@@ -954,52 +1253,645 @@ VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER = VkStructureType(45)
 VK_STRUCTURE_TYPE_MEMORY_BARRIER = VkStructureType(46)
 VK_STRUCTURE_TYPE_LOADER_INSTANCE_CREATE_INFO = VkStructureType(47)
 VK_STRUCTURE_TYPE_LOADER_DEVICE_CREATE_INFO = VkStructureType(48)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SUBGROUP_PROPERTIES = VkStructureType(1000094000)
+VK_STRUCTURE_TYPE_BIND_BUFFER_MEMORY_INFO = VkStructureType(1000157000)
+VK_STRUCTURE_TYPE_BIND_IMAGE_MEMORY_INFO = VkStructureType(1000157001)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_16BIT_STORAGE_FEATURES = VkStructureType(1000083000)
+VK_STRUCTURE_TYPE_MEMORY_DEDICATED_REQUIREMENTS = VkStructureType(1000127000)
+VK_STRUCTURE_TYPE_MEMORY_DEDICATED_ALLOCATE_INFO = VkStructureType(1000127001)
+VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_FLAGS_INFO = VkStructureType(1000060000)
+VK_STRUCTURE_TYPE_DEVICE_GROUP_RENDER_PASS_BEGIN_INFO = VkStructureType(1000060003)
+VK_STRUCTURE_TYPE_DEVICE_GROUP_COMMAND_BUFFER_BEGIN_INFO = VkStructureType(1000060004)
+VK_STRUCTURE_TYPE_DEVICE_GROUP_SUBMIT_INFO = VkStructureType(1000060005)
+VK_STRUCTURE_TYPE_DEVICE_GROUP_BIND_SPARSE_INFO = VkStructureType(1000060006)
+VK_STRUCTURE_TYPE_BIND_BUFFER_MEMORY_DEVICE_GROUP_INFO = VkStructureType(1000060013)
+VK_STRUCTURE_TYPE_BIND_IMAGE_MEMORY_DEVICE_GROUP_INFO = VkStructureType(1000060014)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_GROUP_PROPERTIES = VkStructureType(1000070000)
+VK_STRUCTURE_TYPE_DEVICE_GROUP_DEVICE_CREATE_INFO = VkStructureType(1000070001)
+VK_STRUCTURE_TYPE_BUFFER_MEMORY_REQUIREMENTS_INFO_2 = VkStructureType(1000146000)
+VK_STRUCTURE_TYPE_IMAGE_MEMORY_REQUIREMENTS_INFO_2 = VkStructureType(1000146001)
+VK_STRUCTURE_TYPE_IMAGE_SPARSE_MEMORY_REQUIREMENTS_INFO_2 = VkStructureType(1000146002)
+VK_STRUCTURE_TYPE_MEMORY_REQUIREMENTS_2 = VkStructureType(1000146003)
+VK_STRUCTURE_TYPE_SPARSE_IMAGE_MEMORY_REQUIREMENTS_2 = VkStructureType(1000146004)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FEATURES_2 = VkStructureType(1000059000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PROPERTIES_2 = VkStructureType(1000059001)
+VK_STRUCTURE_TYPE_FORMAT_PROPERTIES_2 = VkStructureType(1000059002)
+VK_STRUCTURE_TYPE_IMAGE_FORMAT_PROPERTIES_2 = VkStructureType(1000059003)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_IMAGE_FORMAT_INFO_2 = VkStructureType(1000059004)
+VK_STRUCTURE_TYPE_QUEUE_FAMILY_PROPERTIES_2 = VkStructureType(1000059005)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MEMORY_PROPERTIES_2 = VkStructureType(1000059006)
+VK_STRUCTURE_TYPE_SPARSE_IMAGE_FORMAT_PROPERTIES_2 = VkStructureType(1000059007)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SPARSE_IMAGE_FORMAT_INFO_2 = VkStructureType(1000059008)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_POINT_CLIPPING_PROPERTIES = VkStructureType(1000117000)
+VK_STRUCTURE_TYPE_RENDER_PASS_INPUT_ATTACHMENT_ASPECT_CREATE_INFO = VkStructureType(1000117001)
+VK_STRUCTURE_TYPE_IMAGE_VIEW_USAGE_CREATE_INFO = VkStructureType(1000117002)
+VK_STRUCTURE_TYPE_PIPELINE_TESSELLATION_DOMAIN_ORIGIN_STATE_CREATE_INFO = VkStructureType(1000117003)
+VK_STRUCTURE_TYPE_RENDER_PASS_MULTIVIEW_CREATE_INFO = VkStructureType(1000053000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MULTIVIEW_FEATURES = VkStructureType(1000053001)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MULTIVIEW_PROPERTIES = VkStructureType(1000053002)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VARIABLE_POINTERS_FEATURES = VkStructureType(1000120000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VARIABLE_POINTER_FEATURES = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VARIABLE_POINTERS_FEATURES
+VK_STRUCTURE_TYPE_PROTECTED_SUBMIT_INFO = VkStructureType(1000145000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PROTECTED_MEMORY_FEATURES = VkStructureType(1000145001)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PROTECTED_MEMORY_PROPERTIES = VkStructureType(1000145002)
+VK_STRUCTURE_TYPE_DEVICE_QUEUE_INFO_2 = VkStructureType(1000145003)
+VK_STRUCTURE_TYPE_SAMPLER_YCBCR_CONVERSION_CREATE_INFO = VkStructureType(1000156000)
+VK_STRUCTURE_TYPE_SAMPLER_YCBCR_CONVERSION_INFO = VkStructureType(1000156001)
+VK_STRUCTURE_TYPE_BIND_IMAGE_PLANE_MEMORY_INFO = VkStructureType(1000156002)
+VK_STRUCTURE_TYPE_IMAGE_PLANE_MEMORY_REQUIREMENTS_INFO = VkStructureType(1000156003)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SAMPLER_YCBCR_CONVERSION_FEATURES = VkStructureType(1000156004)
+VK_STRUCTURE_TYPE_SAMPLER_YCBCR_CONVERSION_IMAGE_FORMAT_PROPERTIES = VkStructureType(1000156005)
+VK_STRUCTURE_TYPE_DESCRIPTOR_UPDATE_TEMPLATE_CREATE_INFO = VkStructureType(1000085000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_IMAGE_FORMAT_INFO = VkStructureType(1000071000)
+VK_STRUCTURE_TYPE_EXTERNAL_IMAGE_FORMAT_PROPERTIES = VkStructureType(1000071001)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_BUFFER_INFO = VkStructureType(1000071002)
+VK_STRUCTURE_TYPE_EXTERNAL_BUFFER_PROPERTIES = VkStructureType(1000071003)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_ID_PROPERTIES = VkStructureType(1000071004)
+VK_STRUCTURE_TYPE_EXTERNAL_MEMORY_BUFFER_CREATE_INFO = VkStructureType(1000072000)
+VK_STRUCTURE_TYPE_EXTERNAL_MEMORY_IMAGE_CREATE_INFO = VkStructureType(1000072001)
+VK_STRUCTURE_TYPE_EXPORT_MEMORY_ALLOCATE_INFO = VkStructureType(1000072002)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_FENCE_INFO = VkStructureType(1000112000)
+VK_STRUCTURE_TYPE_EXTERNAL_FENCE_PROPERTIES = VkStructureType(1000112001)
+VK_STRUCTURE_TYPE_EXPORT_FENCE_CREATE_INFO = VkStructureType(1000113000)
+VK_STRUCTURE_TYPE_EXPORT_SEMAPHORE_CREATE_INFO = VkStructureType(1000077000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_SEMAPHORE_INFO = VkStructureType(1000076000)
+VK_STRUCTURE_TYPE_EXTERNAL_SEMAPHORE_PROPERTIES = VkStructureType(1000076001)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MAINTENANCE_3_PROPERTIES = VkStructureType(1000168000)
+VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_SUPPORT = VkStructureType(1000168001)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_DRAW_PARAMETERS_FEATURES = VkStructureType(1000063000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_DRAW_PARAMETER_FEATURES = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_DRAW_PARAMETERS_FEATURES
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VULKAN_1_1_FEATURES = VkStructureType(49)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VULKAN_1_1_PROPERTIES = VkStructureType(50)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VULKAN_1_2_FEATURES = VkStructureType(51)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VULKAN_1_2_PROPERTIES = VkStructureType(52)
+VK_STRUCTURE_TYPE_IMAGE_FORMAT_LIST_CREATE_INFO = VkStructureType(1000147000)
+VK_STRUCTURE_TYPE_ATTACHMENT_DESCRIPTION_2 = VkStructureType(1000109000)
+VK_STRUCTURE_TYPE_ATTACHMENT_REFERENCE_2 = VkStructureType(1000109001)
+VK_STRUCTURE_TYPE_SUBPASS_DESCRIPTION_2 = VkStructureType(1000109002)
+VK_STRUCTURE_TYPE_SUBPASS_DEPENDENCY_2 = VkStructureType(1000109003)
+VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO_2 = VkStructureType(1000109004)
+VK_STRUCTURE_TYPE_SUBPASS_BEGIN_INFO = VkStructureType(1000109005)
+VK_STRUCTURE_TYPE_SUBPASS_END_INFO = VkStructureType(1000109006)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_8BIT_STORAGE_FEATURES = VkStructureType(1000177000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DRIVER_PROPERTIES = VkStructureType(1000196000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_ATOMIC_INT64_FEATURES = VkStructureType(1000180000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_FLOAT16_INT8_FEATURES = VkStructureType(1000082000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FLOAT_CONTROLS_PROPERTIES = VkStructureType(1000197000)
+VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_BINDING_FLAGS_CREATE_INFO = VkStructureType(1000161000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_FEATURES = VkStructureType(1000161001)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_PROPERTIES = VkStructureType(1000161002)
+VK_STRUCTURE_TYPE_DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_ALLOCATE_INFO = VkStructureType(1000161003)
+VK_STRUCTURE_TYPE_DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_LAYOUT_SUPPORT = VkStructureType(1000161004)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DEPTH_STENCIL_RESOLVE_PROPERTIES = VkStructureType(1000199000)
+VK_STRUCTURE_TYPE_SUBPASS_DESCRIPTION_DEPTH_STENCIL_RESOLVE = VkStructureType(1000199001)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SCALAR_BLOCK_LAYOUT_FEATURES = VkStructureType(1000221000)
+VK_STRUCTURE_TYPE_IMAGE_STENCIL_USAGE_CREATE_INFO = VkStructureType(1000246000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SAMPLER_FILTER_MINMAX_PROPERTIES = VkStructureType(1000130000)
+VK_STRUCTURE_TYPE_SAMPLER_REDUCTION_MODE_CREATE_INFO = VkStructureType(1000130001)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VULKAN_MEMORY_MODEL_FEATURES = VkStructureType(1000211000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_IMAGELESS_FRAMEBUFFER_FEATURES = VkStructureType(1000108000)
+VK_STRUCTURE_TYPE_FRAMEBUFFER_ATTACHMENTS_CREATE_INFO = VkStructureType(1000108001)
+VK_STRUCTURE_TYPE_FRAMEBUFFER_ATTACHMENT_IMAGE_INFO = VkStructureType(1000108002)
+VK_STRUCTURE_TYPE_RENDER_PASS_ATTACHMENT_BEGIN_INFO = VkStructureType(1000108003)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_UNIFORM_BUFFER_STANDARD_LAYOUT_FEATURES = VkStructureType(1000253000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_SUBGROUP_EXTENDED_TYPES_FEATURES = VkStructureType(1000175000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SEPARATE_DEPTH_STENCIL_LAYOUTS_FEATURES = VkStructureType(1000241000)
+VK_STRUCTURE_TYPE_ATTACHMENT_REFERENCE_STENCIL_LAYOUT = VkStructureType(1000241001)
+VK_STRUCTURE_TYPE_ATTACHMENT_DESCRIPTION_STENCIL_LAYOUT = VkStructureType(1000241002)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_HOST_QUERY_RESET_FEATURES = VkStructureType(1000261000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_TIMELINE_SEMAPHORE_FEATURES = VkStructureType(1000207000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_TIMELINE_SEMAPHORE_PROPERTIES = VkStructureType(1000207001)
+VK_STRUCTURE_TYPE_SEMAPHORE_TYPE_CREATE_INFO = VkStructureType(1000207002)
+VK_STRUCTURE_TYPE_TIMELINE_SEMAPHORE_SUBMIT_INFO = VkStructureType(1000207003)
+VK_STRUCTURE_TYPE_SEMAPHORE_WAIT_INFO = VkStructureType(1000207004)
+VK_STRUCTURE_TYPE_SEMAPHORE_SIGNAL_INFO = VkStructureType(1000207005)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_BUFFER_DEVICE_ADDRESS_FEATURES = VkStructureType(1000257000)
+VK_STRUCTURE_TYPE_BUFFER_DEVICE_ADDRESS_INFO = VkStructureType(1000244001)
+VK_STRUCTURE_TYPE_BUFFER_OPAQUE_CAPTURE_ADDRESS_CREATE_INFO = VkStructureType(1000257002)
+VK_STRUCTURE_TYPE_MEMORY_OPAQUE_CAPTURE_ADDRESS_ALLOCATE_INFO = VkStructureType(1000257003)
+VK_STRUCTURE_TYPE_DEVICE_MEMORY_OPAQUE_CAPTURE_ADDRESS_INFO = VkStructureType(1000257004)
+VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR = VkStructureType(1000001000)
+VK_STRUCTURE_TYPE_PRESENT_INFO_KHR = VkStructureType(1000001001)
+VK_STRUCTURE_TYPE_DEVICE_GROUP_PRESENT_CAPABILITIES_KHR = VkStructureType(1000060007)
+VK_STRUCTURE_TYPE_IMAGE_SWAPCHAIN_CREATE_INFO_KHR = VkStructureType(1000060008)
+VK_STRUCTURE_TYPE_BIND_IMAGE_MEMORY_SWAPCHAIN_INFO_KHR = VkStructureType(1000060009)
+VK_STRUCTURE_TYPE_ACQUIRE_NEXT_IMAGE_INFO_KHR = VkStructureType(1000060010)
+VK_STRUCTURE_TYPE_DEVICE_GROUP_PRESENT_INFO_KHR = VkStructureType(1000060011)
+VK_STRUCTURE_TYPE_DEVICE_GROUP_SWAPCHAIN_CREATE_INFO_KHR = VkStructureType(1000060012)
+VK_STRUCTURE_TYPE_DISPLAY_MODE_CREATE_INFO_KHR = VkStructureType(1000002000)
+VK_STRUCTURE_TYPE_DISPLAY_SURFACE_CREATE_INFO_KHR = VkStructureType(1000002001)
+VK_STRUCTURE_TYPE_DISPLAY_PRESENT_INFO_KHR = VkStructureType(1000003000)
+VK_STRUCTURE_TYPE_XLIB_SURFACE_CREATE_INFO_KHR = VkStructureType(1000004000)
+VK_STRUCTURE_TYPE_XCB_SURFACE_CREATE_INFO_KHR = VkStructureType(1000005000)
+VK_STRUCTURE_TYPE_WAYLAND_SURFACE_CREATE_INFO_KHR = VkStructureType(1000006000)
+VK_STRUCTURE_TYPE_ANDROID_SURFACE_CREATE_INFO_KHR = VkStructureType(1000008000)
+VK_STRUCTURE_TYPE_WIN32_SURFACE_CREATE_INFO_KHR = VkStructureType(1000009000)
+VK_STRUCTURE_TYPE_DEBUG_REPORT_CALLBACK_CREATE_INFO_EXT = VkStructureType(1000011000)
+VK_STRUCTURE_TYPE_DEBUG_REPORT_CREATE_INFO_EXT = VK_STRUCTURE_TYPE_DEBUG_REPORT_CALLBACK_CREATE_INFO_EXT
+VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_RASTERIZATION_ORDER_AMD = VkStructureType(1000018000)
+VK_STRUCTURE_TYPE_DEBUG_MARKER_OBJECT_NAME_INFO_EXT = VkStructureType(1000022000)
+VK_STRUCTURE_TYPE_DEBUG_MARKER_OBJECT_TAG_INFO_EXT = VkStructureType(1000022001)
+VK_STRUCTURE_TYPE_DEBUG_MARKER_MARKER_INFO_EXT = VkStructureType(1000022002)
+VK_STRUCTURE_TYPE_DEDICATED_ALLOCATION_IMAGE_CREATE_INFO_NV = VkStructureType(1000026000)
+VK_STRUCTURE_TYPE_DEDICATED_ALLOCATION_BUFFER_CREATE_INFO_NV = VkStructureType(1000026001)
+VK_STRUCTURE_TYPE_DEDICATED_ALLOCATION_MEMORY_ALLOCATE_INFO_NV = VkStructureType(1000026002)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_TRANSFORM_FEEDBACK_FEATURES_EXT = VkStructureType(1000028000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_TRANSFORM_FEEDBACK_PROPERTIES_EXT = VkStructureType(1000028001)
+VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_STREAM_CREATE_INFO_EXT = VkStructureType(1000028002)
+VK_STRUCTURE_TYPE_IMAGE_VIEW_HANDLE_INFO_NVX = VkStructureType(1000030000)
+VK_STRUCTURE_TYPE_IMAGE_VIEW_ADDRESS_PROPERTIES_NVX = VkStructureType(1000030001)
+VK_STRUCTURE_TYPE_TEXTURE_LOD_GATHER_FORMAT_PROPERTIES_AMD = VkStructureType(1000041000)
+VK_STRUCTURE_TYPE_STREAM_DESCRIPTOR_SURFACE_CREATE_INFO_GGP = VkStructureType(1000049000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_CORNER_SAMPLED_IMAGE_FEATURES_NV = VkStructureType(1000050000)
+VK_STRUCTURE_TYPE_RENDER_PASS_MULTIVIEW_CREATE_INFO_KHR = VK_STRUCTURE_TYPE_RENDER_PASS_MULTIVIEW_CREATE_INFO
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MULTIVIEW_FEATURES_KHR = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MULTIVIEW_FEATURES
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MULTIVIEW_PROPERTIES_KHR = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MULTIVIEW_PROPERTIES
+VK_STRUCTURE_TYPE_EXTERNAL_MEMORY_IMAGE_CREATE_INFO_NV = VkStructureType(1000056000)
+VK_STRUCTURE_TYPE_EXPORT_MEMORY_ALLOCATE_INFO_NV = VkStructureType(1000056001)
+VK_STRUCTURE_TYPE_IMPORT_MEMORY_WIN32_HANDLE_INFO_NV = VkStructureType(1000057000)
+VK_STRUCTURE_TYPE_EXPORT_MEMORY_WIN32_HANDLE_INFO_NV = VkStructureType(1000057001)
+VK_STRUCTURE_TYPE_WIN32_KEYED_MUTEX_ACQUIRE_RELEASE_INFO_NV = VkStructureType(1000058000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FEATURES_2_KHR = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FEATURES_2
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PROPERTIES_2_KHR = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PROPERTIES_2
+VK_STRUCTURE_TYPE_FORMAT_PROPERTIES_2_KHR = VK_STRUCTURE_TYPE_FORMAT_PROPERTIES_2
+VK_STRUCTURE_TYPE_IMAGE_FORMAT_PROPERTIES_2_KHR = VK_STRUCTURE_TYPE_IMAGE_FORMAT_PROPERTIES_2
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_IMAGE_FORMAT_INFO_2_KHR = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_IMAGE_FORMAT_INFO_2
+VK_STRUCTURE_TYPE_QUEUE_FAMILY_PROPERTIES_2_KHR = VK_STRUCTURE_TYPE_QUEUE_FAMILY_PROPERTIES_2
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MEMORY_PROPERTIES_2_KHR = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MEMORY_PROPERTIES_2
+VK_STRUCTURE_TYPE_SPARSE_IMAGE_FORMAT_PROPERTIES_2_KHR = VK_STRUCTURE_TYPE_SPARSE_IMAGE_FORMAT_PROPERTIES_2
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SPARSE_IMAGE_FORMAT_INFO_2_KHR = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SPARSE_IMAGE_FORMAT_INFO_2
+VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_FLAGS_INFO_KHR = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_FLAGS_INFO
+VK_STRUCTURE_TYPE_DEVICE_GROUP_RENDER_PASS_BEGIN_INFO_KHR = VK_STRUCTURE_TYPE_DEVICE_GROUP_RENDER_PASS_BEGIN_INFO
+VK_STRUCTURE_TYPE_DEVICE_GROUP_COMMAND_BUFFER_BEGIN_INFO_KHR = VK_STRUCTURE_TYPE_DEVICE_GROUP_COMMAND_BUFFER_BEGIN_INFO
+VK_STRUCTURE_TYPE_DEVICE_GROUP_SUBMIT_INFO_KHR = VK_STRUCTURE_TYPE_DEVICE_GROUP_SUBMIT_INFO
+VK_STRUCTURE_TYPE_DEVICE_GROUP_BIND_SPARSE_INFO_KHR = VK_STRUCTURE_TYPE_DEVICE_GROUP_BIND_SPARSE_INFO
+VK_STRUCTURE_TYPE_BIND_BUFFER_MEMORY_DEVICE_GROUP_INFO_KHR = VK_STRUCTURE_TYPE_BIND_BUFFER_MEMORY_DEVICE_GROUP_INFO
+VK_STRUCTURE_TYPE_BIND_IMAGE_MEMORY_DEVICE_GROUP_INFO_KHR = VK_STRUCTURE_TYPE_BIND_IMAGE_MEMORY_DEVICE_GROUP_INFO
+VK_STRUCTURE_TYPE_DEVICE_GROUP_PRESENT_CAPABILITIES_KHR = VkStructureType(1000060007)
+VK_STRUCTURE_TYPE_IMAGE_SWAPCHAIN_CREATE_INFO_KHR = VkStructureType(1000060008)
+VK_STRUCTURE_TYPE_BIND_IMAGE_MEMORY_SWAPCHAIN_INFO_KHR = VkStructureType(1000060009)
+VK_STRUCTURE_TYPE_ACQUIRE_NEXT_IMAGE_INFO_KHR = VkStructureType(1000060010)
+VK_STRUCTURE_TYPE_DEVICE_GROUP_PRESENT_INFO_KHR = VkStructureType(1000060011)
+VK_STRUCTURE_TYPE_DEVICE_GROUP_SWAPCHAIN_CREATE_INFO_KHR = VkStructureType(1000060012)
+VK_STRUCTURE_TYPE_VALIDATION_FLAGS_EXT = VkStructureType(1000061000)
+VK_STRUCTURE_TYPE_VI_SURFACE_CREATE_INFO_NN = VkStructureType(1000062000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_TEXTURE_COMPRESSION_ASTC_HDR_FEATURES_EXT = VkStructureType(1000066000)
+VK_STRUCTURE_TYPE_IMAGE_VIEW_ASTC_DECODE_MODE_EXT = VkStructureType(1000067000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_ASTC_DECODE_FEATURES_EXT = VkStructureType(1000067001)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_GROUP_PROPERTIES_KHR = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_GROUP_PROPERTIES
+VK_STRUCTURE_TYPE_DEVICE_GROUP_DEVICE_CREATE_INFO_KHR = VK_STRUCTURE_TYPE_DEVICE_GROUP_DEVICE_CREATE_INFO
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_IMAGE_FORMAT_INFO_KHR = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_IMAGE_FORMAT_INFO
+VK_STRUCTURE_TYPE_EXTERNAL_IMAGE_FORMAT_PROPERTIES_KHR = VK_STRUCTURE_TYPE_EXTERNAL_IMAGE_FORMAT_PROPERTIES
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_BUFFER_INFO_KHR = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_BUFFER_INFO
+VK_STRUCTURE_TYPE_EXTERNAL_BUFFER_PROPERTIES_KHR = VK_STRUCTURE_TYPE_EXTERNAL_BUFFER_PROPERTIES
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_ID_PROPERTIES_KHR = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_ID_PROPERTIES
+VK_STRUCTURE_TYPE_EXTERNAL_MEMORY_BUFFER_CREATE_INFO_KHR = VK_STRUCTURE_TYPE_EXTERNAL_MEMORY_BUFFER_CREATE_INFO
+VK_STRUCTURE_TYPE_EXTERNAL_MEMORY_IMAGE_CREATE_INFO_KHR = VK_STRUCTURE_TYPE_EXTERNAL_MEMORY_IMAGE_CREATE_INFO
+VK_STRUCTURE_TYPE_EXPORT_MEMORY_ALLOCATE_INFO_KHR = VK_STRUCTURE_TYPE_EXPORT_MEMORY_ALLOCATE_INFO
+VK_STRUCTURE_TYPE_IMPORT_MEMORY_WIN32_HANDLE_INFO_KHR = VkStructureType(1000073000)
+VK_STRUCTURE_TYPE_EXPORT_MEMORY_WIN32_HANDLE_INFO_KHR = VkStructureType(1000073001)
+VK_STRUCTURE_TYPE_MEMORY_WIN32_HANDLE_PROPERTIES_KHR = VkStructureType(1000073002)
+VK_STRUCTURE_TYPE_MEMORY_GET_WIN32_HANDLE_INFO_KHR = VkStructureType(1000073003)
+VK_STRUCTURE_TYPE_IMPORT_MEMORY_FD_INFO_KHR = VkStructureType(1000074000)
+VK_STRUCTURE_TYPE_MEMORY_FD_PROPERTIES_KHR = VkStructureType(1000074001)
+VK_STRUCTURE_TYPE_MEMORY_GET_FD_INFO_KHR = VkStructureType(1000074002)
+VK_STRUCTURE_TYPE_WIN32_KEYED_MUTEX_ACQUIRE_RELEASE_INFO_KHR = VkStructureType(1000075000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_SEMAPHORE_INFO_KHR = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_SEMAPHORE_INFO
+VK_STRUCTURE_TYPE_EXTERNAL_SEMAPHORE_PROPERTIES_KHR = VK_STRUCTURE_TYPE_EXTERNAL_SEMAPHORE_PROPERTIES
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_ID_PROPERTIES_KHR = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_ID_PROPERTIES
+VK_STRUCTURE_TYPE_EXPORT_SEMAPHORE_CREATE_INFO_KHR = VK_STRUCTURE_TYPE_EXPORT_SEMAPHORE_CREATE_INFO
+VK_STRUCTURE_TYPE_IMPORT_SEMAPHORE_WIN32_HANDLE_INFO_KHR = VkStructureType(1000078000)
+VK_STRUCTURE_TYPE_EXPORT_SEMAPHORE_WIN32_HANDLE_INFO_KHR = VkStructureType(1000078001)
+VK_STRUCTURE_TYPE_D3D12_FENCE_SUBMIT_INFO_KHR = VkStructureType(1000078002)
+VK_STRUCTURE_TYPE_SEMAPHORE_GET_WIN32_HANDLE_INFO_KHR = VkStructureType(1000078003)
+VK_STRUCTURE_TYPE_IMPORT_SEMAPHORE_FD_INFO_KHR = VkStructureType(1000079000)
+VK_STRUCTURE_TYPE_SEMAPHORE_GET_FD_INFO_KHR = VkStructureType(1000079001)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PUSH_DESCRIPTOR_PROPERTIES_KHR = VkStructureType(1000080000)
+VK_STRUCTURE_TYPE_COMMAND_BUFFER_INHERITANCE_CONDITIONAL_RENDERING_INFO_EXT = VkStructureType(1000081000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_CONDITIONAL_RENDERING_FEATURES_EXT = VkStructureType(1000081001)
+VK_STRUCTURE_TYPE_CONDITIONAL_RENDERING_BEGIN_INFO_EXT = VkStructureType(1000081002)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_FLOAT16_INT8_FEATURES_KHR = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_FLOAT16_INT8_FEATURES
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FLOAT16_INT8_FEATURES_KHR = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_FLOAT16_INT8_FEATURES
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_16BIT_STORAGE_FEATURES_KHR = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_16BIT_STORAGE_FEATURES
+VK_STRUCTURE_TYPE_PRESENT_REGIONS_KHR = VkStructureType(1000084000)
+VK_STRUCTURE_TYPE_DESCRIPTOR_UPDATE_TEMPLATE_CREATE_INFO_KHR = VK_STRUCTURE_TYPE_DESCRIPTOR_UPDATE_TEMPLATE_CREATE_INFO
+VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_W_SCALING_STATE_CREATE_INFO_NV = VkStructureType(1000087000)
+VK_STRUCTURE_TYPE_SURFACE_CAPABILITIES_2_EXT = VkStructureType(1000090000)
+VK_STRUCTURE_TYPE_SURFACE_CAPABILITIES2_EXT = VK_STRUCTURE_TYPE_SURFACE_CAPABILITIES_2_EXT
+VK_STRUCTURE_TYPE_DISPLAY_POWER_INFO_EXT = VkStructureType(1000091000)
+VK_STRUCTURE_TYPE_DEVICE_EVENT_INFO_EXT = VkStructureType(1000091001)
+VK_STRUCTURE_TYPE_DISPLAY_EVENT_INFO_EXT = VkStructureType(1000091002)
+VK_STRUCTURE_TYPE_SWAPCHAIN_COUNTER_CREATE_INFO_EXT = VkStructureType(1000091003)
+VK_STRUCTURE_TYPE_PRESENT_TIMES_INFO_GOOGLE = VkStructureType(1000092000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MULTIVIEW_PER_VIEW_ATTRIBUTES_PROPERTIES_NVX = VkStructureType(1000097000)
+VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_SWIZZLE_STATE_CREATE_INFO_NV = VkStructureType(1000098000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DISCARD_RECTANGLE_PROPERTIES_EXT = VkStructureType(1000099000)
+VK_STRUCTURE_TYPE_PIPELINE_DISCARD_RECTANGLE_STATE_CREATE_INFO_EXT = VkStructureType(1000099001)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_CONSERVATIVE_RASTERIZATION_PROPERTIES_EXT = VkStructureType(1000101000)
+VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_CONSERVATIVE_STATE_CREATE_INFO_EXT = VkStructureType(1000101001)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DEPTH_CLIP_ENABLE_FEATURES_EXT = VkStructureType(1000102000)
+VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_DEPTH_CLIP_STATE_CREATE_INFO_EXT = VkStructureType(1000102001)
+VK_STRUCTURE_TYPE_HDR_METADATA_EXT = VkStructureType(1000105000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_IMAGELESS_FRAMEBUFFER_FEATURES_KHR = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_IMAGELESS_FRAMEBUFFER_FEATURES
+VK_STRUCTURE_TYPE_FRAMEBUFFER_ATTACHMENTS_CREATE_INFO_KHR = VK_STRUCTURE_TYPE_FRAMEBUFFER_ATTACHMENTS_CREATE_INFO
+VK_STRUCTURE_TYPE_FRAMEBUFFER_ATTACHMENT_IMAGE_INFO_KHR = VK_STRUCTURE_TYPE_FRAMEBUFFER_ATTACHMENT_IMAGE_INFO
+VK_STRUCTURE_TYPE_RENDER_PASS_ATTACHMENT_BEGIN_INFO_KHR = VK_STRUCTURE_TYPE_RENDER_PASS_ATTACHMENT_BEGIN_INFO
+VK_STRUCTURE_TYPE_ATTACHMENT_DESCRIPTION_2_KHR = VK_STRUCTURE_TYPE_ATTACHMENT_DESCRIPTION_2
+VK_STRUCTURE_TYPE_ATTACHMENT_REFERENCE_2_KHR = VK_STRUCTURE_TYPE_ATTACHMENT_REFERENCE_2
+VK_STRUCTURE_TYPE_SUBPASS_DESCRIPTION_2_KHR = VK_STRUCTURE_TYPE_SUBPASS_DESCRIPTION_2
+VK_STRUCTURE_TYPE_SUBPASS_DEPENDENCY_2_KHR = VK_STRUCTURE_TYPE_SUBPASS_DEPENDENCY_2
+VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO_2_KHR = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO_2
+VK_STRUCTURE_TYPE_SUBPASS_BEGIN_INFO_KHR = VK_STRUCTURE_TYPE_SUBPASS_BEGIN_INFO
+VK_STRUCTURE_TYPE_SUBPASS_END_INFO_KHR = VK_STRUCTURE_TYPE_SUBPASS_END_INFO
+VK_STRUCTURE_TYPE_SHARED_PRESENT_SURFACE_CAPABILITIES_KHR = VkStructureType(1000111000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_FENCE_INFO_KHR = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_FENCE_INFO
+VK_STRUCTURE_TYPE_EXTERNAL_FENCE_PROPERTIES_KHR = VK_STRUCTURE_TYPE_EXTERNAL_FENCE_PROPERTIES
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_ID_PROPERTIES_KHR = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_ID_PROPERTIES
+VK_STRUCTURE_TYPE_EXPORT_FENCE_CREATE_INFO_KHR = VK_STRUCTURE_TYPE_EXPORT_FENCE_CREATE_INFO
+VK_STRUCTURE_TYPE_IMPORT_FENCE_WIN32_HANDLE_INFO_KHR = VkStructureType(1000114000)
+VK_STRUCTURE_TYPE_EXPORT_FENCE_WIN32_HANDLE_INFO_KHR = VkStructureType(1000114001)
+VK_STRUCTURE_TYPE_FENCE_GET_WIN32_HANDLE_INFO_KHR = VkStructureType(1000114002)
+VK_STRUCTURE_TYPE_IMPORT_FENCE_FD_INFO_KHR = VkStructureType(1000115000)
+VK_STRUCTURE_TYPE_FENCE_GET_FD_INFO_KHR = VkStructureType(1000115001)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PERFORMANCE_QUERY_FEATURES_KHR = VkStructureType(1000116000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PERFORMANCE_QUERY_PROPERTIES_KHR = VkStructureType(1000116001)
+VK_STRUCTURE_TYPE_QUERY_POOL_PERFORMANCE_CREATE_INFO_KHR = VkStructureType(1000116002)
+VK_STRUCTURE_TYPE_PERFORMANCE_QUERY_SUBMIT_INFO_KHR = VkStructureType(1000116003)
+VK_STRUCTURE_TYPE_ACQUIRE_PROFILING_LOCK_INFO_KHR = VkStructureType(1000116004)
+VK_STRUCTURE_TYPE_PERFORMANCE_COUNTER_KHR = VkStructureType(1000116005)
+VK_STRUCTURE_TYPE_PERFORMANCE_COUNTER_DESCRIPTION_KHR = VkStructureType(1000116006)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_POINT_CLIPPING_PROPERTIES_KHR = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_POINT_CLIPPING_PROPERTIES
+VK_STRUCTURE_TYPE_RENDER_PASS_INPUT_ATTACHMENT_ASPECT_CREATE_INFO_KHR = VK_STRUCTURE_TYPE_RENDER_PASS_INPUT_ATTACHMENT_ASPECT_CREATE_INFO
+VK_STRUCTURE_TYPE_IMAGE_VIEW_USAGE_CREATE_INFO_KHR = VK_STRUCTURE_TYPE_IMAGE_VIEW_USAGE_CREATE_INFO
+VK_STRUCTURE_TYPE_PIPELINE_TESSELLATION_DOMAIN_ORIGIN_STATE_CREATE_INFO_KHR = VK_STRUCTURE_TYPE_PIPELINE_TESSELLATION_DOMAIN_ORIGIN_STATE_CREATE_INFO
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SURFACE_INFO_2_KHR = VkStructureType(1000119000)
+VK_STRUCTURE_TYPE_SURFACE_CAPABILITIES_2_KHR = VkStructureType(1000119001)
+VK_STRUCTURE_TYPE_SURFACE_FORMAT_2_KHR = VkStructureType(1000119002)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VARIABLE_POINTERS_FEATURES_KHR = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VARIABLE_POINTERS_FEATURES
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VARIABLE_POINTER_FEATURES_KHR = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VARIABLE_POINTERS_FEATURES_KHR
+VK_STRUCTURE_TYPE_DISPLAY_PROPERTIES_2_KHR = VkStructureType(1000121000)
+VK_STRUCTURE_TYPE_DISPLAY_PLANE_PROPERTIES_2_KHR = VkStructureType(1000121001)
+VK_STRUCTURE_TYPE_DISPLAY_MODE_PROPERTIES_2_KHR = VkStructureType(1000121002)
+VK_STRUCTURE_TYPE_DISPLAY_PLANE_INFO_2_KHR = VkStructureType(1000121003)
+VK_STRUCTURE_TYPE_DISPLAY_PLANE_CAPABILITIES_2_KHR = VkStructureType(1000121004)
+VK_STRUCTURE_TYPE_IOS_SURFACE_CREATE_INFO_MVK = VkStructureType(1000122000)
+VK_STRUCTURE_TYPE_MACOS_SURFACE_CREATE_INFO_MVK = VkStructureType(1000123000)
+VK_STRUCTURE_TYPE_MEMORY_DEDICATED_REQUIREMENTS_KHR = VK_STRUCTURE_TYPE_MEMORY_DEDICATED_REQUIREMENTS
+VK_STRUCTURE_TYPE_MEMORY_DEDICATED_ALLOCATE_INFO_KHR = VK_STRUCTURE_TYPE_MEMORY_DEDICATED_ALLOCATE_INFO
+VK_STRUCTURE_TYPE_DEBUG_UTILS_OBJECT_NAME_INFO_EXT = VkStructureType(1000128000)
+VK_STRUCTURE_TYPE_DEBUG_UTILS_OBJECT_TAG_INFO_EXT = VkStructureType(1000128001)
+VK_STRUCTURE_TYPE_DEBUG_UTILS_LABEL_EXT = VkStructureType(1000128002)
+VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CALLBACK_DATA_EXT = VkStructureType(1000128003)
+VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT = VkStructureType(1000128004)
+VK_STRUCTURE_TYPE_ANDROID_HARDWARE_BUFFER_USAGE_ANDROID = VkStructureType(1000129000)
+VK_STRUCTURE_TYPE_ANDROID_HARDWARE_BUFFER_PROPERTIES_ANDROID = VkStructureType(1000129001)
+VK_STRUCTURE_TYPE_ANDROID_HARDWARE_BUFFER_FORMAT_PROPERTIES_ANDROID = VkStructureType(1000129002)
+VK_STRUCTURE_TYPE_IMPORT_ANDROID_HARDWARE_BUFFER_INFO_ANDROID = VkStructureType(1000129003)
+VK_STRUCTURE_TYPE_MEMORY_GET_ANDROID_HARDWARE_BUFFER_INFO_ANDROID = VkStructureType(1000129004)
+VK_STRUCTURE_TYPE_EXTERNAL_FORMAT_ANDROID = VkStructureType(1000129005)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SAMPLER_FILTER_MINMAX_PROPERTIES_EXT = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SAMPLER_FILTER_MINMAX_PROPERTIES
+VK_STRUCTURE_TYPE_SAMPLER_REDUCTION_MODE_CREATE_INFO_EXT = VK_STRUCTURE_TYPE_SAMPLER_REDUCTION_MODE_CREATE_INFO
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_INLINE_UNIFORM_BLOCK_FEATURES_EXT = VkStructureType(1000138000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_INLINE_UNIFORM_BLOCK_PROPERTIES_EXT = VkStructureType(1000138001)
+VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET_INLINE_UNIFORM_BLOCK_EXT = VkStructureType(1000138002)
+VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_INLINE_UNIFORM_BLOCK_CREATE_INFO_EXT = VkStructureType(1000138003)
+VK_STRUCTURE_TYPE_SAMPLE_LOCATIONS_INFO_EXT = VkStructureType(1000143000)
+VK_STRUCTURE_TYPE_RENDER_PASS_SAMPLE_LOCATIONS_BEGIN_INFO_EXT = VkStructureType(1000143001)
+VK_STRUCTURE_TYPE_PIPELINE_SAMPLE_LOCATIONS_STATE_CREATE_INFO_EXT = VkStructureType(1000143002)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SAMPLE_LOCATIONS_PROPERTIES_EXT = VkStructureType(1000143003)
+VK_STRUCTURE_TYPE_MULTISAMPLE_PROPERTIES_EXT = VkStructureType(1000143004)
+VK_STRUCTURE_TYPE_BUFFER_MEMORY_REQUIREMENTS_INFO_2_KHR = VK_STRUCTURE_TYPE_BUFFER_MEMORY_REQUIREMENTS_INFO_2
+VK_STRUCTURE_TYPE_IMAGE_MEMORY_REQUIREMENTS_INFO_2_KHR = VK_STRUCTURE_TYPE_IMAGE_MEMORY_REQUIREMENTS_INFO_2
+VK_STRUCTURE_TYPE_IMAGE_SPARSE_MEMORY_REQUIREMENTS_INFO_2_KHR = VK_STRUCTURE_TYPE_IMAGE_SPARSE_MEMORY_REQUIREMENTS_INFO_2
+VK_STRUCTURE_TYPE_MEMORY_REQUIREMENTS_2_KHR = VK_STRUCTURE_TYPE_MEMORY_REQUIREMENTS_2
+VK_STRUCTURE_TYPE_SPARSE_IMAGE_MEMORY_REQUIREMENTS_2_KHR = VK_STRUCTURE_TYPE_SPARSE_IMAGE_MEMORY_REQUIREMENTS_2
+VK_STRUCTURE_TYPE_IMAGE_FORMAT_LIST_CREATE_INFO_KHR = VK_STRUCTURE_TYPE_IMAGE_FORMAT_LIST_CREATE_INFO
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_BLEND_OPERATION_ADVANCED_FEATURES_EXT = VkStructureType(1000148000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_BLEND_OPERATION_ADVANCED_PROPERTIES_EXT = VkStructureType(1000148001)
+VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_ADVANCED_STATE_CREATE_INFO_EXT = VkStructureType(1000148002)
+VK_STRUCTURE_TYPE_PIPELINE_COVERAGE_TO_COLOR_STATE_CREATE_INFO_NV = VkStructureType(1000149000)
+VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET_ACCELERATION_STRUCTURE_KHR = VkStructureType(1000150007)
+VK_STRUCTURE_TYPE_ACCELERATION_STRUCTURE_BUILD_GEOMETRY_INFO_KHR = VkStructureType(1000150000)
+VK_STRUCTURE_TYPE_ACCELERATION_STRUCTURE_DEVICE_ADDRESS_INFO_KHR = VkStructureType(1000150002)
+VK_STRUCTURE_TYPE_ACCELERATION_STRUCTURE_GEOMETRY_AABBS_DATA_KHR = VkStructureType(1000150003)
+VK_STRUCTURE_TYPE_ACCELERATION_STRUCTURE_GEOMETRY_INSTANCES_DATA_KHR = VkStructureType(1000150004)
+VK_STRUCTURE_TYPE_ACCELERATION_STRUCTURE_GEOMETRY_TRIANGLES_DATA_KHR = VkStructureType(1000150005)
+VK_STRUCTURE_TYPE_ACCELERATION_STRUCTURE_GEOMETRY_KHR = VkStructureType(1000150006)
+VK_STRUCTURE_TYPE_ACCELERATION_STRUCTURE_VERSION_INFO_KHR = VkStructureType(1000150009)
+VK_STRUCTURE_TYPE_COPY_ACCELERATION_STRUCTURE_INFO_KHR = VkStructureType(1000150010)
+VK_STRUCTURE_TYPE_COPY_ACCELERATION_STRUCTURE_TO_MEMORY_INFO_KHR = VkStructureType(1000150011)
+VK_STRUCTURE_TYPE_COPY_MEMORY_TO_ACCELERATION_STRUCTURE_INFO_KHR = VkStructureType(1000150012)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_ACCELERATION_STRUCTURE_FEATURES_KHR = VkStructureType(1000150013)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_ACCELERATION_STRUCTURE_PROPERTIES_KHR = VkStructureType(1000150014)
+VK_STRUCTURE_TYPE_ACCELERATION_STRUCTURE_CREATE_INFO_KHR = VkStructureType(1000150017)
+VK_STRUCTURE_TYPE_ACCELERATION_STRUCTURE_BUILD_SIZES_INFO_KHR = VkStructureType(1000150020)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_RAY_TRACING_PIPELINE_FEATURES_KHR = VkStructureType(1000347000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_RAY_TRACING_PIPELINE_PROPERTIES_KHR = VkStructureType(1000347001)
+VK_STRUCTURE_TYPE_RAY_TRACING_PIPELINE_CREATE_INFO_KHR = VkStructureType(1000150015)
+VK_STRUCTURE_TYPE_RAY_TRACING_SHADER_GROUP_CREATE_INFO_KHR = VkStructureType(1000150016)
+VK_STRUCTURE_TYPE_RAY_TRACING_PIPELINE_INTERFACE_CREATE_INFO_KHR = VkStructureType(1000150018)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_RAY_QUERY_FEATURES_KHR = VkStructureType(1000348013)
+VK_STRUCTURE_TYPE_PIPELINE_COVERAGE_MODULATION_STATE_CREATE_INFO_NV = VkStructureType(1000152000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_SM_BUILTINS_FEATURES_NV = VkStructureType(1000154000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_SM_BUILTINS_PROPERTIES_NV = VkStructureType(1000154001)
+VK_STRUCTURE_TYPE_SAMPLER_YCBCR_CONVERSION_CREATE_INFO_KHR = VK_STRUCTURE_TYPE_SAMPLER_YCBCR_CONVERSION_CREATE_INFO
+VK_STRUCTURE_TYPE_SAMPLER_YCBCR_CONVERSION_INFO_KHR = VK_STRUCTURE_TYPE_SAMPLER_YCBCR_CONVERSION_INFO
+VK_STRUCTURE_TYPE_BIND_IMAGE_PLANE_MEMORY_INFO_KHR = VK_STRUCTURE_TYPE_BIND_IMAGE_PLANE_MEMORY_INFO
+VK_STRUCTURE_TYPE_IMAGE_PLANE_MEMORY_REQUIREMENTS_INFO_KHR = VK_STRUCTURE_TYPE_IMAGE_PLANE_MEMORY_REQUIREMENTS_INFO
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SAMPLER_YCBCR_CONVERSION_FEATURES_KHR = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SAMPLER_YCBCR_CONVERSION_FEATURES
+VK_STRUCTURE_TYPE_SAMPLER_YCBCR_CONVERSION_IMAGE_FORMAT_PROPERTIES_KHR = VK_STRUCTURE_TYPE_SAMPLER_YCBCR_CONVERSION_IMAGE_FORMAT_PROPERTIES
+VK_STRUCTURE_TYPE_BIND_BUFFER_MEMORY_INFO_KHR = VK_STRUCTURE_TYPE_BIND_BUFFER_MEMORY_INFO
+VK_STRUCTURE_TYPE_BIND_IMAGE_MEMORY_INFO_KHR = VK_STRUCTURE_TYPE_BIND_IMAGE_MEMORY_INFO
+VK_STRUCTURE_TYPE_DRM_FORMAT_MODIFIER_PROPERTIES_LIST_EXT = VkStructureType(1000158000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_IMAGE_DRM_FORMAT_MODIFIER_INFO_EXT = VkStructureType(1000158002)
+VK_STRUCTURE_TYPE_IMAGE_DRM_FORMAT_MODIFIER_LIST_CREATE_INFO_EXT = VkStructureType(1000158003)
+VK_STRUCTURE_TYPE_IMAGE_DRM_FORMAT_MODIFIER_EXPLICIT_CREATE_INFO_EXT = VkStructureType(1000158004)
+VK_STRUCTURE_TYPE_IMAGE_DRM_FORMAT_MODIFIER_PROPERTIES_EXT = VkStructureType(1000158005)
+VK_STRUCTURE_TYPE_VALIDATION_CACHE_CREATE_INFO_EXT = VkStructureType(1000160000)
+VK_STRUCTURE_TYPE_SHADER_MODULE_VALIDATION_CACHE_CREATE_INFO_EXT = VkStructureType(1000160001)
+VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_BINDING_FLAGS_CREATE_INFO_EXT = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_BINDING_FLAGS_CREATE_INFO
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_FEATURES_EXT = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_FEATURES
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_PROPERTIES_EXT = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_PROPERTIES
+VK_STRUCTURE_TYPE_DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_ALLOCATE_INFO_EXT = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_ALLOCATE_INFO
+VK_STRUCTURE_TYPE_DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_LAYOUT_SUPPORT_EXT = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_LAYOUT_SUPPORT
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PORTABILITY_SUBSET_FEATURES_KHR = VkStructureType(1000163000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PORTABILITY_SUBSET_PROPERTIES_KHR = VkStructureType(1000163001)
+VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_SHADING_RATE_IMAGE_STATE_CREATE_INFO_NV = VkStructureType(1000164000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADING_RATE_IMAGE_FEATURES_NV = VkStructureType(1000164001)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADING_RATE_IMAGE_PROPERTIES_NV = VkStructureType(1000164002)
+VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_COARSE_SAMPLE_ORDER_STATE_CREATE_INFO_NV = VkStructureType(1000164005)
+VK_STRUCTURE_TYPE_RAY_TRACING_PIPELINE_CREATE_INFO_NV = VkStructureType(1000165000)
+VK_STRUCTURE_TYPE_ACCELERATION_STRUCTURE_CREATE_INFO_NV = VkStructureType(1000165001)
+VK_STRUCTURE_TYPE_GEOMETRY_NV = VkStructureType(1000165003)
+VK_STRUCTURE_TYPE_GEOMETRY_TRIANGLES_NV = VkStructureType(1000165004)
+VK_STRUCTURE_TYPE_GEOMETRY_AABB_NV = VkStructureType(1000165005)
+VK_STRUCTURE_TYPE_BIND_ACCELERATION_STRUCTURE_MEMORY_INFO_NV = VkStructureType(1000165006)
+VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET_ACCELERATION_STRUCTURE_NV = VkStructureType(1000165007)
+VK_STRUCTURE_TYPE_ACCELERATION_STRUCTURE_MEMORY_REQUIREMENTS_INFO_NV = VkStructureType(1000165008)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_RAY_TRACING_PROPERTIES_NV = VkStructureType(1000165009)
+VK_STRUCTURE_TYPE_RAY_TRACING_SHADER_GROUP_CREATE_INFO_NV = VkStructureType(1000165011)
+VK_STRUCTURE_TYPE_ACCELERATION_STRUCTURE_INFO_NV = VkStructureType(1000165012)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_REPRESENTATIVE_FRAGMENT_TEST_FEATURES_NV = VkStructureType(1000166000)
+VK_STRUCTURE_TYPE_PIPELINE_REPRESENTATIVE_FRAGMENT_TEST_STATE_CREATE_INFO_NV = VkStructureType(1000166001)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MAINTENANCE_3_PROPERTIES_KHR = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MAINTENANCE_3_PROPERTIES
+VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_SUPPORT_KHR = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_SUPPORT
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_IMAGE_VIEW_IMAGE_FORMAT_INFO_EXT = VkStructureType(1000170000)
+VK_STRUCTURE_TYPE_FILTER_CUBIC_IMAGE_VIEW_IMAGE_FORMAT_PROPERTIES_EXT = VkStructureType(1000170001)
+VK_STRUCTURE_TYPE_DEVICE_QUEUE_GLOBAL_PRIORITY_CREATE_INFO_EXT = VkStructureType(1000174000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_SUBGROUP_EXTENDED_TYPES_FEATURES_KHR = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_SUBGROUP_EXTENDED_TYPES_FEATURES
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_8BIT_STORAGE_FEATURES_KHR = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_8BIT_STORAGE_FEATURES
+VK_STRUCTURE_TYPE_IMPORT_MEMORY_HOST_POINTER_INFO_EXT = VkStructureType(1000178000)
+VK_STRUCTURE_TYPE_MEMORY_HOST_POINTER_PROPERTIES_EXT = VkStructureType(1000178001)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_MEMORY_HOST_PROPERTIES_EXT = VkStructureType(1000178002)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_ATOMIC_INT64_FEATURES_KHR = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_ATOMIC_INT64_FEATURES
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_CLOCK_FEATURES_KHR = VkStructureType(1000181000)
+VK_STRUCTURE_TYPE_PIPELINE_COMPILER_CONTROL_CREATE_INFO_AMD = VkStructureType(1000183000)
+VK_STRUCTURE_TYPE_CALIBRATED_TIMESTAMP_INFO_EXT = VkStructureType(1000184000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_AMD = VkStructureType(1000185000)
+VK_STRUCTURE_TYPE_DEVICE_MEMORY_OVERALLOCATION_CREATE_INFO_AMD = VkStructureType(1000189000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_PROPERTIES_EXT = VkStructureType(1000190000)
+VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_DIVISOR_STATE_CREATE_INFO_EXT = VkStructureType(1000190001)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_FEATURES_EXT = VkStructureType(1000190002)
+VK_STRUCTURE_TYPE_PRESENT_FRAME_TOKEN_GGP = VkStructureType(1000191000)
+VK_STRUCTURE_TYPE_PIPELINE_CREATION_FEEDBACK_CREATE_INFO_EXT = VkStructureType(1000192000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DRIVER_PROPERTIES_KHR = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DRIVER_PROPERTIES
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FLOAT_CONTROLS_PROPERTIES_KHR = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FLOAT_CONTROLS_PROPERTIES
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DEPTH_STENCIL_RESOLVE_PROPERTIES_KHR = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DEPTH_STENCIL_RESOLVE_PROPERTIES
+VK_STRUCTURE_TYPE_SUBPASS_DESCRIPTION_DEPTH_STENCIL_RESOLVE_KHR = VK_STRUCTURE_TYPE_SUBPASS_DESCRIPTION_DEPTH_STENCIL_RESOLVE
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_COMPUTE_SHADER_DERIVATIVES_FEATURES_NV = VkStructureType(1000201000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MESH_SHADER_FEATURES_NV = VkStructureType(1000202000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MESH_SHADER_PROPERTIES_NV = VkStructureType(1000202001)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FRAGMENT_SHADER_BARYCENTRIC_FEATURES_NV = VkStructureType(1000203000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_IMAGE_FOOTPRINT_FEATURES_NV = VkStructureType(1000204000)
+VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_EXCLUSIVE_SCISSOR_STATE_CREATE_INFO_NV = VkStructureType(1000205000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXCLUSIVE_SCISSOR_FEATURES_NV = VkStructureType(1000205002)
+VK_STRUCTURE_TYPE_CHECKPOINT_DATA_NV = VkStructureType(1000206000)
+VK_STRUCTURE_TYPE_QUEUE_FAMILY_CHECKPOINT_PROPERTIES_NV = VkStructureType(1000206001)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_TIMELINE_SEMAPHORE_FEATURES_KHR = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_TIMELINE_SEMAPHORE_FEATURES
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_TIMELINE_SEMAPHORE_PROPERTIES_KHR = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_TIMELINE_SEMAPHORE_PROPERTIES
+VK_STRUCTURE_TYPE_SEMAPHORE_TYPE_CREATE_INFO_KHR = VK_STRUCTURE_TYPE_SEMAPHORE_TYPE_CREATE_INFO
+VK_STRUCTURE_TYPE_TIMELINE_SEMAPHORE_SUBMIT_INFO_KHR = VK_STRUCTURE_TYPE_TIMELINE_SEMAPHORE_SUBMIT_INFO
+VK_STRUCTURE_TYPE_SEMAPHORE_WAIT_INFO_KHR = VK_STRUCTURE_TYPE_SEMAPHORE_WAIT_INFO
+VK_STRUCTURE_TYPE_SEMAPHORE_SIGNAL_INFO_KHR = VK_STRUCTURE_TYPE_SEMAPHORE_SIGNAL_INFO
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_INTEGER_FUNCTIONS_2_FEATURES_INTEL = VkStructureType(1000209000)
+VK_STRUCTURE_TYPE_QUERY_POOL_PERFORMANCE_QUERY_CREATE_INFO_INTEL = VkStructureType(1000210000)
+VK_STRUCTURE_TYPE_QUERY_POOL_CREATE_INFO_INTEL = VK_STRUCTURE_TYPE_QUERY_POOL_PERFORMANCE_QUERY_CREATE_INFO_INTEL
+VK_STRUCTURE_TYPE_INITIALIZE_PERFORMANCE_API_INFO_INTEL = VkStructureType(1000210001)
+VK_STRUCTURE_TYPE_PERFORMANCE_MARKER_INFO_INTEL = VkStructureType(1000210002)
+VK_STRUCTURE_TYPE_PERFORMANCE_STREAM_MARKER_INFO_INTEL = VkStructureType(1000210003)
+VK_STRUCTURE_TYPE_PERFORMANCE_OVERRIDE_INFO_INTEL = VkStructureType(1000210004)
+VK_STRUCTURE_TYPE_PERFORMANCE_CONFIGURATION_ACQUIRE_INFO_INTEL = VkStructureType(1000210005)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VULKAN_MEMORY_MODEL_FEATURES_KHR = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VULKAN_MEMORY_MODEL_FEATURES
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PCI_BUS_INFO_PROPERTIES_EXT = VkStructureType(1000212000)
+VK_STRUCTURE_TYPE_DISPLAY_NATIVE_HDR_SURFACE_CAPABILITIES_AMD = VkStructureType(1000213000)
+VK_STRUCTURE_TYPE_SWAPCHAIN_DISPLAY_NATIVE_HDR_CREATE_INFO_AMD = VkStructureType(1000213001)
+VK_STRUCTURE_TYPE_IMAGEPIPE_SURFACE_CREATE_INFO_FUCHSIA = VkStructureType(1000214000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_TERMINATE_INVOCATION_FEATURES_KHR = VkStructureType(1000215000)
+VK_STRUCTURE_TYPE_METAL_SURFACE_CREATE_INFO_EXT = VkStructureType(1000217000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_FEATURES_EXT = VkStructureType(1000218000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_PROPERTIES_EXT = VkStructureType(1000218001)
+VK_STRUCTURE_TYPE_RENDER_PASS_FRAGMENT_DENSITY_MAP_CREATE_INFO_EXT = VkStructureType(1000218002)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SCALAR_BLOCK_LAYOUT_FEATURES_EXT = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SCALAR_BLOCK_LAYOUT_FEATURES
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SUBGROUP_SIZE_CONTROL_PROPERTIES_EXT = VkStructureType(1000225000)
+VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_REQUIRED_SUBGROUP_SIZE_CREATE_INFO_EXT = VkStructureType(1000225001)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SUBGROUP_SIZE_CONTROL_FEATURES_EXT = VkStructureType(1000225002)
+VK_STRUCTURE_TYPE_FRAGMENT_SHADING_RATE_ATTACHMENT_INFO_KHR = VkStructureType(1000226000)
+VK_STRUCTURE_TYPE_PIPELINE_FRAGMENT_SHADING_RATE_STATE_CREATE_INFO_KHR = VkStructureType(1000226001)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FRAGMENT_SHADING_RATE_PROPERTIES_KHR = VkStructureType(1000226002)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FRAGMENT_SHADING_RATE_FEATURES_KHR = VkStructureType(1000226003)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FRAGMENT_SHADING_RATE_KHR = VkStructureType(1000226004)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_2_AMD = VkStructureType(1000227000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_COHERENT_MEMORY_FEATURES_AMD = VkStructureType(1000229000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_IMAGE_ATOMIC_INT64_FEATURES_EXT = VkStructureType(1000234000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MEMORY_BUDGET_PROPERTIES_EXT = VkStructureType(1000237000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MEMORY_PRIORITY_FEATURES_EXT = VkStructureType(1000238000)
+VK_STRUCTURE_TYPE_MEMORY_PRIORITY_ALLOCATE_INFO_EXT = VkStructureType(1000238001)
+VK_STRUCTURE_TYPE_SURFACE_PROTECTED_CAPABILITIES_KHR = VkStructureType(1000239000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DEDICATED_ALLOCATION_IMAGE_ALIASING_FEATURES_NV = VkStructureType(1000240000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SEPARATE_DEPTH_STENCIL_LAYOUTS_FEATURES_KHR = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SEPARATE_DEPTH_STENCIL_LAYOUTS_FEATURES
+VK_STRUCTURE_TYPE_ATTACHMENT_REFERENCE_STENCIL_LAYOUT_KHR = VK_STRUCTURE_TYPE_ATTACHMENT_REFERENCE_STENCIL_LAYOUT
+VK_STRUCTURE_TYPE_ATTACHMENT_DESCRIPTION_STENCIL_LAYOUT_KHR = VK_STRUCTURE_TYPE_ATTACHMENT_DESCRIPTION_STENCIL_LAYOUT
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_BUFFER_DEVICE_ADDRESS_FEATURES_EXT = VkStructureType(1000244000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_BUFFER_ADDRESS_FEATURES_EXT = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_BUFFER_DEVICE_ADDRESS_FEATURES_EXT
+VK_STRUCTURE_TYPE_BUFFER_DEVICE_ADDRESS_INFO_EXT = VK_STRUCTURE_TYPE_BUFFER_DEVICE_ADDRESS_INFO
+VK_STRUCTURE_TYPE_BUFFER_DEVICE_ADDRESS_CREATE_INFO_EXT = VkStructureType(1000244002)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_TOOL_PROPERTIES_EXT = VkStructureType(1000245000)
+VK_STRUCTURE_TYPE_IMAGE_STENCIL_USAGE_CREATE_INFO_EXT = VK_STRUCTURE_TYPE_IMAGE_STENCIL_USAGE_CREATE_INFO
+VK_STRUCTURE_TYPE_VALIDATION_FEATURES_EXT = VkStructureType(1000247000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_COOPERATIVE_MATRIX_FEATURES_NV = VkStructureType(1000249000)
+VK_STRUCTURE_TYPE_COOPERATIVE_MATRIX_PROPERTIES_NV = VkStructureType(1000249001)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_COOPERATIVE_MATRIX_PROPERTIES_NV = VkStructureType(1000249002)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_COVERAGE_REDUCTION_MODE_FEATURES_NV = VkStructureType(1000250000)
+VK_STRUCTURE_TYPE_PIPELINE_COVERAGE_REDUCTION_STATE_CREATE_INFO_NV = VkStructureType(1000250001)
+VK_STRUCTURE_TYPE_FRAMEBUFFER_MIXED_SAMPLES_COMBINATION_NV = VkStructureType(1000250002)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FRAGMENT_SHADER_INTERLOCK_FEATURES_EXT = VkStructureType(1000251000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_YCBCR_IMAGE_ARRAYS_FEATURES_EXT = VkStructureType(1000252000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_UNIFORM_BUFFER_STANDARD_LAYOUT_FEATURES_KHR = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_UNIFORM_BUFFER_STANDARD_LAYOUT_FEATURES
+VK_STRUCTURE_TYPE_SURFACE_FULL_SCREEN_EXCLUSIVE_INFO_EXT = VkStructureType(1000255000)
+VK_STRUCTURE_TYPE_SURFACE_CAPABILITIES_FULL_SCREEN_EXCLUSIVE_EXT = VkStructureType(1000255002)
+VK_STRUCTURE_TYPE_SURFACE_FULL_SCREEN_EXCLUSIVE_WIN32_INFO_EXT = VkStructureType(1000255001)
+VK_STRUCTURE_TYPE_HEADLESS_SURFACE_CREATE_INFO_EXT = VkStructureType(1000256000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_BUFFER_DEVICE_ADDRESS_FEATURES_KHR = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_BUFFER_DEVICE_ADDRESS_FEATURES
+VK_STRUCTURE_TYPE_BUFFER_DEVICE_ADDRESS_INFO_KHR = VK_STRUCTURE_TYPE_BUFFER_DEVICE_ADDRESS_INFO
+VK_STRUCTURE_TYPE_BUFFER_OPAQUE_CAPTURE_ADDRESS_CREATE_INFO_KHR = VK_STRUCTURE_TYPE_BUFFER_OPAQUE_CAPTURE_ADDRESS_CREATE_INFO
+VK_STRUCTURE_TYPE_MEMORY_OPAQUE_CAPTURE_ADDRESS_ALLOCATE_INFO_KHR = VK_STRUCTURE_TYPE_MEMORY_OPAQUE_CAPTURE_ADDRESS_ALLOCATE_INFO
+VK_STRUCTURE_TYPE_DEVICE_MEMORY_OPAQUE_CAPTURE_ADDRESS_INFO_KHR = VK_STRUCTURE_TYPE_DEVICE_MEMORY_OPAQUE_CAPTURE_ADDRESS_INFO
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_LINE_RASTERIZATION_FEATURES_EXT = VkStructureType(1000259000)
+VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_LINE_STATE_CREATE_INFO_EXT = VkStructureType(1000259001)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_LINE_RASTERIZATION_PROPERTIES_EXT = VkStructureType(1000259002)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT_FEATURES_EXT = VkStructureType(1000260000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_HOST_QUERY_RESET_FEATURES_EXT = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_HOST_QUERY_RESET_FEATURES
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_INDEX_TYPE_UINT8_FEATURES_EXT = VkStructureType(1000265000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_FEATURES_EXT = VkStructureType(1000267000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PIPELINE_EXECUTABLE_PROPERTIES_FEATURES_KHR = VkStructureType(1000269000)
+VK_STRUCTURE_TYPE_PIPELINE_INFO_KHR = VkStructureType(1000269001)
+VK_STRUCTURE_TYPE_PIPELINE_EXECUTABLE_PROPERTIES_KHR = VkStructureType(1000269002)
+VK_STRUCTURE_TYPE_PIPELINE_EXECUTABLE_INFO_KHR = VkStructureType(1000269003)
+VK_STRUCTURE_TYPE_PIPELINE_EXECUTABLE_STATISTIC_KHR = VkStructureType(1000269004)
+VK_STRUCTURE_TYPE_PIPELINE_EXECUTABLE_INTERNAL_REPRESENTATION_KHR = VkStructureType(1000269005)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_DEMOTE_TO_HELPER_INVOCATION_FEATURES_EXT = VkStructureType(1000276000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DEVICE_GENERATED_COMMANDS_PROPERTIES_NV = VkStructureType(1000277000)
+VK_STRUCTURE_TYPE_GRAPHICS_SHADER_GROUP_CREATE_INFO_NV = VkStructureType(1000277001)
+VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_SHADER_GROUPS_CREATE_INFO_NV = VkStructureType(1000277002)
+VK_STRUCTURE_TYPE_INDIRECT_COMMANDS_LAYOUT_TOKEN_NV = VkStructureType(1000277003)
+VK_STRUCTURE_TYPE_INDIRECT_COMMANDS_LAYOUT_CREATE_INFO_NV = VkStructureType(1000277004)
+VK_STRUCTURE_TYPE_GENERATED_COMMANDS_INFO_NV = VkStructureType(1000277005)
+VK_STRUCTURE_TYPE_GENERATED_COMMANDS_MEMORY_REQUIREMENTS_INFO_NV = VkStructureType(1000277006)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DEVICE_GENERATED_COMMANDS_FEATURES_NV = VkStructureType(1000277007)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_TEXEL_BUFFER_ALIGNMENT_FEATURES_EXT = VkStructureType(1000281000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_TEXEL_BUFFER_ALIGNMENT_PROPERTIES_EXT = VkStructureType(1000281001)
+VK_STRUCTURE_TYPE_COMMAND_BUFFER_INHERITANCE_RENDER_PASS_TRANSFORM_INFO_QCOM = VkStructureType(1000282000)
+VK_STRUCTURE_TYPE_RENDER_PASS_TRANSFORM_BEGIN_INFO_QCOM = VkStructureType(1000282001)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DEVICE_MEMORY_REPORT_FEATURES_EXT = VkStructureType(1000284000)
+VK_STRUCTURE_TYPE_DEVICE_DEVICE_MEMORY_REPORT_CREATE_INFO_EXT = VkStructureType(1000284001)
+VK_STRUCTURE_TYPE_DEVICE_MEMORY_REPORT_CALLBACK_DATA_EXT = VkStructureType(1000284002)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_ROBUSTNESS_2_FEATURES_EXT = VkStructureType(1000286000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_ROBUSTNESS_2_PROPERTIES_EXT = VkStructureType(1000286001)
+VK_STRUCTURE_TYPE_SAMPLER_CUSTOM_BORDER_COLOR_CREATE_INFO_EXT = VkStructureType(1000287000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_CUSTOM_BORDER_COLOR_PROPERTIES_EXT = VkStructureType(1000287001)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_CUSTOM_BORDER_COLOR_FEATURES_EXT = VkStructureType(1000287002)
+VK_STRUCTURE_TYPE_PIPELINE_LIBRARY_CREATE_INFO_KHR = VkStructureType(1000290000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PRIVATE_DATA_FEATURES_EXT = VkStructureType(1000295000)
+VK_STRUCTURE_TYPE_DEVICE_PRIVATE_DATA_CREATE_INFO_EXT = VkStructureType(1000295001)
+VK_STRUCTURE_TYPE_PRIVATE_DATA_SLOT_CREATE_INFO_EXT = VkStructureType(1000295002)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PIPELINE_CREATION_CACHE_CONTROL_FEATURES_EXT = VkStructureType(1000297000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DIAGNOSTICS_CONFIG_FEATURES_NV = VkStructureType(1000300000)
+VK_STRUCTURE_TYPE_DEVICE_DIAGNOSTICS_CONFIG_CREATE_INFO_NV = VkStructureType(1000300001)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FRAGMENT_SHADING_RATE_ENUMS_PROPERTIES_NV = VkStructureType(1000326000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FRAGMENT_SHADING_RATE_ENUMS_FEATURES_NV = VkStructureType(1000326001)
+VK_STRUCTURE_TYPE_PIPELINE_FRAGMENT_SHADING_RATE_ENUM_STATE_CREATE_INFO_NV = VkStructureType(1000326002)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_2_FEATURES_EXT = VkStructureType(1000332000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_2_PROPERTIES_EXT = VkStructureType(1000332001)
+VK_STRUCTURE_TYPE_COPY_COMMAND_TRANSFORM_INFO_QCOM = VkStructureType(1000333000)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_IMAGE_ROBUSTNESS_FEATURES_EXT = VkStructureType(1000335000)
+VK_STRUCTURE_TYPE_COPY_BUFFER_INFO_2_KHR = VkStructureType(1000337000)
+VK_STRUCTURE_TYPE_COPY_IMAGE_INFO_2_KHR = VkStructureType(1000337001)
+VK_STRUCTURE_TYPE_COPY_BUFFER_TO_IMAGE_INFO_2_KHR = VkStructureType(1000337002)
+VK_STRUCTURE_TYPE_COPY_IMAGE_TO_BUFFER_INFO_2_KHR = VkStructureType(1000337003)
+VK_STRUCTURE_TYPE_BLIT_IMAGE_INFO_2_KHR = VkStructureType(1000337004)
+VK_STRUCTURE_TYPE_RESOLVE_IMAGE_INFO_2_KHR = VkStructureType(1000337005)
+VK_STRUCTURE_TYPE_BUFFER_COPY_2_KHR = VkStructureType(1000337006)
+VK_STRUCTURE_TYPE_IMAGE_COPY_2_KHR = VkStructureType(1000337007)
+VK_STRUCTURE_TYPE_IMAGE_BLIT_2_KHR = VkStructureType(1000337008)
+VK_STRUCTURE_TYPE_BUFFER_IMAGE_COPY_2_KHR = VkStructureType(1000337009)
+VK_STRUCTURE_TYPE_IMAGE_RESOLVE_2_KHR = VkStructureType(1000337010)
+VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_4444_FORMATS_FEATURES_EXT = VkStructureType(1000340000)
+VK_STRUCTURE_TYPE_DIRECTFB_SURFACE_CREATE_INFO_EXT = VkStructureType(1000346000)
 
+VkSystemAllocationScope = type('VkSystemAllocationScope', (ctypes.c_int,), dict())
+VK_SYSTEM_ALLOCATION_SCOPE_COMMAND = VkSystemAllocationScope(0)
+VK_SYSTEM_ALLOCATION_SCOPE_OBJECT = VkSystemAllocationScope(1)
+VK_SYSTEM_ALLOCATION_SCOPE_CACHE = VkSystemAllocationScope(2)
+VK_SYSTEM_ALLOCATION_SCOPE_DEVICE = VkSystemAllocationScope(3)
+VK_SYSTEM_ALLOCATION_SCOPE_INSTANCE = VkSystemAllocationScope(4)
 
-# ENUM VkSubpassContents
-VK_SUBPASS_CONTENTS_INLINE = VkSubpassContents(0)
-VK_SUBPASS_CONTENTS_SECONDARY_COMMAND_BUFFERS = VkSubpassContents(1)
+VkInternalAllocationType = type('VkInternalAllocationType', (ctypes.c_int,), dict())
+VK_INTERNAL_ALLOCATION_TYPE_EXECUTABLE = VkInternalAllocationType(0)
 
+VkSamplerAddressMode = type('VkSamplerAddressMode', (ctypes.c_int,), dict())
+VK_SAMPLER_ADDRESS_MODE_REPEAT = VkSamplerAddressMode(0)
+VK_SAMPLER_ADDRESS_MODE_MIRRORED_REPEAT = VkSamplerAddressMode(1)
+VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE = VkSamplerAddressMode(2)
+VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_BORDER = VkSamplerAddressMode(3)
+VK_SAMPLER_ADDRESS_MODE_MIRROR_CLAMP_TO_EDGE = VkSamplerAddressMode(4)
+VK_SAMPLER_ADDRESS_MODE_MIRROR_CLAMP_TO_EDGE = VkSamplerAddressMode(4)
+VK_SAMPLER_ADDRESS_MODE_MIRROR_CLAMP_TO_EDGE_KHR = VK_SAMPLER_ADDRESS_MODE_MIRROR_CLAMP_TO_EDGE
 
-# ENUM VkResult
-VK_SUCCESS = VkResult(0)
-VK_NOT_READY = VkResult(1)
-VK_TIMEOUT = VkResult(2)
-VK_EVENT_SET = VkResult(3)
-VK_EVENT_RESET = VkResult(4)
-VK_INCOMPLETE = VkResult(5)
-VK_ERROR_OUT_OF_HOST_MEMORY = VkResult(-1)
-VK_ERROR_OUT_OF_DEVICE_MEMORY = VkResult(-2)
-VK_ERROR_INITIALIZATION_FAILED = VkResult(-3)
-VK_ERROR_DEVICE_LOST = VkResult(-4)
-VK_ERROR_MEMORY_MAP_FAILED = VkResult(-5)
-VK_ERROR_LAYER_NOT_PRESENT = VkResult(-6)
-VK_ERROR_EXTENSION_NOT_PRESENT = VkResult(-7)
-VK_ERROR_FEATURE_NOT_PRESENT = VkResult(-8)
-VK_ERROR_INCOMPATIBLE_DRIVER = VkResult(-9)
-VK_ERROR_TOO_MANY_OBJECTS = VkResult(-10)
-VK_ERROR_FORMAT_NOT_SUPPORTED = VkResult(-11)
-VK_ERROR_FRAGMENTED_POOL = VkResult(-12)
-VK_ERROR_UNKNOWN = VkResult(-13)
+VkFilter = type('VkFilter', (ctypes.c_int,), dict())
+VK_FILTER_NEAREST = VkFilter(0)
+VK_FILTER_LINEAR = VkFilter(1)
+VK_FILTER_CUBIC_IMG = VkFilter(1000015000)
+VK_FILTER_CUBIC_EXT = VK_FILTER_CUBIC_IMG
 
+VkSamplerMipmapMode = type('VkSamplerMipmapMode', (ctypes.c_int,), dict())
+VK_SAMPLER_MIPMAP_MODE_NEAREST = VkSamplerMipmapMode(0)
+VK_SAMPLER_MIPMAP_MODE_LINEAR = VkSamplerMipmapMode(1)
 
-# ENUM VkDynamicState
-VK_DYNAMIC_STATE_VIEWPORT = VkDynamicState(0)
-VK_DYNAMIC_STATE_SCISSOR = VkDynamicState(1)
-VK_DYNAMIC_STATE_LINE_WIDTH = VkDynamicState(2)
-VK_DYNAMIC_STATE_DEPTH_BIAS = VkDynamicState(3)
-VK_DYNAMIC_STATE_BLEND_CONSTANTS = VkDynamicState(4)
-VK_DYNAMIC_STATE_DEPTH_BOUNDS = VkDynamicState(5)
-VK_DYNAMIC_STATE_STENCIL_COMPARE_MASK = VkDynamicState(6)
-VK_DYNAMIC_STATE_STENCIL_WRITE_MASK = VkDynamicState(7)
-VK_DYNAMIC_STATE_STENCIL_REFERENCE = VkDynamicState(8)
+VkVertexInputRate = type('VkVertexInputRate', (ctypes.c_int,), dict())
+VK_VERTEX_INPUT_RATE_VERTEX = VkVertexInputRate(0)
+VK_VERTEX_INPUT_RATE_INSTANCE = VkVertexInputRate(1)
 
+VkPipelineStageFlagBits = type('VkPipelineStageFlagBits', (ctypes.c_int,), dict())
+VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT = VkPipelineStageFlagBits(1)
+VK_PIPELINE_STAGE_DRAW_INDIRECT_BIT = VkPipelineStageFlagBits(2)
+VK_PIPELINE_STAGE_VERTEX_INPUT_BIT = VkPipelineStageFlagBits(4)
+VK_PIPELINE_STAGE_VERTEX_SHADER_BIT = VkPipelineStageFlagBits(8)
+VK_PIPELINE_STAGE_TESSELLATION_CONTROL_SHADER_BIT = VkPipelineStageFlagBits(16)
+VK_PIPELINE_STAGE_TESSELLATION_EVALUATION_SHADER_BIT = VkPipelineStageFlagBits(32)
+VK_PIPELINE_STAGE_GEOMETRY_SHADER_BIT = VkPipelineStageFlagBits(64)
+VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT = VkPipelineStageFlagBits(128)
+VK_PIPELINE_STAGE_EARLY_FRAGMENT_TESTS_BIT = VkPipelineStageFlagBits(256)
+VK_PIPELINE_STAGE_LATE_FRAGMENT_TESTS_BIT = VkPipelineStageFlagBits(512)
+VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT = VkPipelineStageFlagBits(1024)
+VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT = VkPipelineStageFlagBits(2048)
+VK_PIPELINE_STAGE_TRANSFER_BIT = VkPipelineStageFlagBits(4096)
+VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT = VkPipelineStageFlagBits(8192)
+VK_PIPELINE_STAGE_HOST_BIT = VkPipelineStageFlagBits(16384)
+VK_PIPELINE_STAGE_ALL_GRAPHICS_BIT = VkPipelineStageFlagBits(32768)
+VK_PIPELINE_STAGE_ALL_COMMANDS_BIT = VkPipelineStageFlagBits(65536)
+VK_PIPELINE_STAGE_TRANSFORM_FEEDBACK_BIT_EXT = VkPipelineStageFlagBits(16777216)
+VK_PIPELINE_STAGE_CONDITIONAL_RENDERING_BIT_EXT = VkPipelineStageFlagBits(262144)
+VK_PIPELINE_STAGE_ACCELERATION_STRUCTURE_BUILD_BIT_KHR = VkPipelineStageFlagBits(33554432)
+VK_PIPELINE_STAGE_RAY_TRACING_SHADER_BIT_KHR = VkPipelineStageFlagBits(2097152)
+VK_PIPELINE_STAGE_SHADING_RATE_IMAGE_BIT_NV = VkPipelineStageFlagBits(4194304)
+VK_PIPELINE_STAGE_RAY_TRACING_SHADER_BIT_NV = VK_PIPELINE_STAGE_RAY_TRACING_SHADER_BIT_KHR
+VK_PIPELINE_STAGE_ACCELERATION_STRUCTURE_BUILD_BIT_NV = VK_PIPELINE_STAGE_ACCELERATION_STRUCTURE_BUILD_BIT_KHR
+VK_PIPELINE_STAGE_TASK_SHADER_BIT_NV = VkPipelineStageFlagBits(524288)
+VK_PIPELINE_STAGE_MESH_SHADER_BIT_NV = VkPipelineStageFlagBits(1048576)
+VK_PIPELINE_STAGE_FRAGMENT_DENSITY_PROCESS_BIT_EXT = VkPipelineStageFlagBits(8388608)
+VK_PIPELINE_STAGE_FRAGMENT_SHADING_RATE_ATTACHMENT_BIT_KHR = VK_PIPELINE_STAGE_SHADING_RATE_IMAGE_BIT_NV
+VK_PIPELINE_STAGE_COMMAND_PREPROCESS_BIT_NV = VkPipelineStageFlagBits(131072)
 
-# ENUM VkDescriptorUpdateTemplateType
-VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_DESCRIPTOR_SET = VkDescriptorUpdateTemplateType(0)
+VkSparseImageFormatFlagBits = type('VkSparseImageFormatFlagBits', (ctypes.c_int,), dict())
+VK_SPARSE_IMAGE_FORMAT_SINGLE_MIPTAIL_BIT = VkSparseImageFormatFlagBits(1)
+VK_SPARSE_IMAGE_FORMAT_ALIGNED_MIP_SIZE_BIT = VkSparseImageFormatFlagBits(2)
+VK_SPARSE_IMAGE_FORMAT_NONSTANDARD_BLOCK_SIZE_BIT = VkSparseImageFormatFlagBits(4)
 
+VkSampleCountFlagBits = type('VkSampleCountFlagBits', (ctypes.c_int,), dict())
+VK_SAMPLE_COUNT_1_BIT = VkSampleCountFlagBits(1)
+VK_SAMPLE_COUNT_2_BIT = VkSampleCountFlagBits(2)
+VK_SAMPLE_COUNT_4_BIT = VkSampleCountFlagBits(4)
+VK_SAMPLE_COUNT_8_BIT = VkSampleCountFlagBits(8)
+VK_SAMPLE_COUNT_16_BIT = VkSampleCountFlagBits(16)
+VK_SAMPLE_COUNT_32_BIT = VkSampleCountFlagBits(32)
+VK_SAMPLE_COUNT_64_BIT = VkSampleCountFlagBits(64)
 
-# ENUM VkObjectType
+VkAttachmentDescriptionFlagBits = type('VkAttachmentDescriptionFlagBits', (ctypes.c_int,), dict())
+VK_ATTACHMENT_DESCRIPTION_MAY_ALIAS_BIT = VkAttachmentDescriptionFlagBits(1)
+
+VkDescriptorPoolCreateFlagBits = type('VkDescriptorPoolCreateFlagBits', (ctypes.c_int,), dict())
+VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT = VkDescriptorPoolCreateFlagBits(1)
+VK_DESCRIPTOR_POOL_CREATE_UPDATE_AFTER_BIND_BIT = VkDescriptorPoolCreateFlagBits(2)
+VK_DESCRIPTOR_POOL_CREATE_UPDATE_AFTER_BIND_BIT_EXT = VK_DESCRIPTOR_POOL_CREATE_UPDATE_AFTER_BIND_BIT
+
+VkDependencyFlagBits = type('VkDependencyFlagBits', (ctypes.c_int,), dict())
+VK_DEPENDENCY_BY_REGION_BIT = VkDependencyFlagBits(1)
+VK_DEPENDENCY_DEVICE_GROUP_BIT = VkDependencyFlagBits(4)
+VK_DEPENDENCY_VIEW_LOCAL_BIT = VkDependencyFlagBits(2)
+VK_DEPENDENCY_VIEW_LOCAL_BIT_KHR = VK_DEPENDENCY_VIEW_LOCAL_BIT
+VK_DEPENDENCY_DEVICE_GROUP_BIT_KHR = VK_DEPENDENCY_DEVICE_GROUP_BIT
+
+VkObjectType = type('VkObjectType', (ctypes.c_int,), dict())
 VK_OBJECT_TYPE_UNKNOWN = VkObjectType(0)
 VK_OBJECT_TYPE_INSTANCE = VkObjectType(1)
 VK_OBJECT_TYPE_PHYSICAL_DEVICE = VkObjectType(2)
@@ -1026,296 +1918,432 @@ VK_OBJECT_TYPE_DESCRIPTOR_POOL = VkObjectType(22)
 VK_OBJECT_TYPE_DESCRIPTOR_SET = VkObjectType(23)
 VK_OBJECT_TYPE_FRAMEBUFFER = VkObjectType(24)
 VK_OBJECT_TYPE_COMMAND_POOL = VkObjectType(25)
-
-
-# ENUM VkQueueFlagBits
-VK_QUEUE_GRAPHICS_BIT = VkQueueFlagBits(1)
-VK_QUEUE_COMPUTE_BIT = VkQueueFlagBits(2)
-VK_QUEUE_TRANSFER_BIT = VkQueueFlagBits(4)
-VK_QUEUE_SPARSE_BINDING_BIT = VkQueueFlagBits(8)
-
-
-# ENUM VkCullModeFlagBits
-VK_CULL_MODE_NONE = VkCullModeFlagBits(0)
-VK_CULL_MODE_FRONT_BIT = VkCullModeFlagBits(1)
-VK_CULL_MODE_BACK_BIT = VkCullModeFlagBits(2)
-VK_CULL_MODE_FRONT_AND_BACK = VkCullModeFlagBits(0x00000003)
-
-
-# ENUM VkRenderPassCreateFlagBits
-
-
-# ENUM VkDeviceQueueCreateFlagBits
-
-
-# ENUM VkMemoryPropertyFlagBits
-VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT = VkMemoryPropertyFlagBits(1)
-VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT = VkMemoryPropertyFlagBits(2)
-VK_MEMORY_PROPERTY_HOST_COHERENT_BIT = VkMemoryPropertyFlagBits(4)
-VK_MEMORY_PROPERTY_HOST_CACHED_BIT = VkMemoryPropertyFlagBits(8)
-VK_MEMORY_PROPERTY_LAZILY_ALLOCATED_BIT = VkMemoryPropertyFlagBits(16)
-
-
-# ENUM VkMemoryHeapFlagBits
-VK_MEMORY_HEAP_DEVICE_LOCAL_BIT = VkMemoryHeapFlagBits(1)
-
-
-# ENUM VkAccessFlagBits
-VK_ACCESS_INDIRECT_COMMAND_READ_BIT = VkAccessFlagBits(1)
-VK_ACCESS_INDEX_READ_BIT = VkAccessFlagBits(2)
-VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT = VkAccessFlagBits(4)
-VK_ACCESS_UNIFORM_READ_BIT = VkAccessFlagBits(8)
-VK_ACCESS_INPUT_ATTACHMENT_READ_BIT = VkAccessFlagBits(16)
-VK_ACCESS_SHADER_READ_BIT = VkAccessFlagBits(32)
-VK_ACCESS_SHADER_WRITE_BIT = VkAccessFlagBits(64)
-VK_ACCESS_COLOR_ATTACHMENT_READ_BIT = VkAccessFlagBits(128)
-VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT = VkAccessFlagBits(256)
-VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_READ_BIT = VkAccessFlagBits(512)
-VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT = VkAccessFlagBits(1024)
-VK_ACCESS_TRANSFER_READ_BIT = VkAccessFlagBits(2048)
-VK_ACCESS_TRANSFER_WRITE_BIT = VkAccessFlagBits(4096)
-VK_ACCESS_HOST_READ_BIT = VkAccessFlagBits(8192)
-VK_ACCESS_HOST_WRITE_BIT = VkAccessFlagBits(16384)
-VK_ACCESS_MEMORY_READ_BIT = VkAccessFlagBits(32768)
-VK_ACCESS_MEMORY_WRITE_BIT = VkAccessFlagBits(65536)
-
-
-# ENUM VkBufferUsageFlagBits
-VK_BUFFER_USAGE_TRANSFER_SRC_BIT = VkBufferUsageFlagBits(1)
-VK_BUFFER_USAGE_TRANSFER_DST_BIT = VkBufferUsageFlagBits(2)
-VK_BUFFER_USAGE_UNIFORM_TEXEL_BUFFER_BIT = VkBufferUsageFlagBits(4)
-VK_BUFFER_USAGE_STORAGE_TEXEL_BUFFER_BIT = VkBufferUsageFlagBits(8)
-VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT = VkBufferUsageFlagBits(16)
-VK_BUFFER_USAGE_STORAGE_BUFFER_BIT = VkBufferUsageFlagBits(32)
-VK_BUFFER_USAGE_INDEX_BUFFER_BIT = VkBufferUsageFlagBits(64)
-VK_BUFFER_USAGE_VERTEX_BUFFER_BIT = VkBufferUsageFlagBits(128)
-VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT = VkBufferUsageFlagBits(256)
-
-
-# ENUM VkBufferCreateFlagBits
-VK_BUFFER_CREATE_SPARSE_BINDING_BIT = VkBufferCreateFlagBits(1)
-VK_BUFFER_CREATE_SPARSE_RESIDENCY_BIT = VkBufferCreateFlagBits(2)
-VK_BUFFER_CREATE_SPARSE_ALIASED_BIT = VkBufferCreateFlagBits(4)
-
-
-# ENUM VkShaderStageFlagBits
-VK_SHADER_STAGE_VERTEX_BIT = VkShaderStageFlagBits(1)
-VK_SHADER_STAGE_TESSELLATION_CONTROL_BIT = VkShaderStageFlagBits(2)
-VK_SHADER_STAGE_TESSELLATION_EVALUATION_BIT = VkShaderStageFlagBits(4)
-VK_SHADER_STAGE_GEOMETRY_BIT = VkShaderStageFlagBits(8)
-VK_SHADER_STAGE_FRAGMENT_BIT = VkShaderStageFlagBits(16)
-VK_SHADER_STAGE_COMPUTE_BIT = VkShaderStageFlagBits(32)
-VK_SHADER_STAGE_ALL_GRAPHICS = VkShaderStageFlagBits(0x0000001F)
-VK_SHADER_STAGE_ALL = VkShaderStageFlagBits(0x7FFFFFFF)
-
-
-# ENUM VkImageUsageFlagBits
-VK_IMAGE_USAGE_TRANSFER_SRC_BIT = VkImageUsageFlagBits(1)
-VK_IMAGE_USAGE_TRANSFER_DST_BIT = VkImageUsageFlagBits(2)
-VK_IMAGE_USAGE_SAMPLED_BIT = VkImageUsageFlagBits(4)
-VK_IMAGE_USAGE_STORAGE_BIT = VkImageUsageFlagBits(8)
-VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT = VkImageUsageFlagBits(16)
-VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT = VkImageUsageFlagBits(32)
-VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT = VkImageUsageFlagBits(64)
-VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT = VkImageUsageFlagBits(128)
-
-
-# ENUM VkImageCreateFlagBits
-VK_IMAGE_CREATE_SPARSE_BINDING_BIT = VkImageCreateFlagBits(1)
-VK_IMAGE_CREATE_SPARSE_RESIDENCY_BIT = VkImageCreateFlagBits(2)
-VK_IMAGE_CREATE_SPARSE_ALIASED_BIT = VkImageCreateFlagBits(4)
-VK_IMAGE_CREATE_MUTABLE_FORMAT_BIT = VkImageCreateFlagBits(8)
-VK_IMAGE_CREATE_CUBE_COMPATIBLE_BIT = VkImageCreateFlagBits(16)
-
-
-# ENUM VkImageViewCreateFlagBits
-
-
-# ENUM VkSamplerCreateFlagBits
-
-
-# ENUM VkPipelineCreateFlagBits
-VK_PIPELINE_CREATE_DISABLE_OPTIMIZATION_BIT = VkPipelineCreateFlagBits(1)
-VK_PIPELINE_CREATE_ALLOW_DERIVATIVES_BIT = VkPipelineCreateFlagBits(2)
-VK_PIPELINE_CREATE_DERIVATIVE_BIT = VkPipelineCreateFlagBits(4)
-
-
-# ENUM VkPipelineShaderStageCreateFlagBits
-
-
-# ENUM VkColorComponentFlagBits
-VK_COLOR_COMPONENT_R_BIT = VkColorComponentFlagBits(1)
-VK_COLOR_COMPONENT_G_BIT = VkColorComponentFlagBits(2)
-VK_COLOR_COMPONENT_B_BIT = VkColorComponentFlagBits(4)
-VK_COLOR_COMPONENT_A_BIT = VkColorComponentFlagBits(8)
-
-
-# ENUM VkFenceCreateFlagBits
-VK_FENCE_CREATE_SIGNALED_BIT = VkFenceCreateFlagBits(1)
-
-
-# ENUM VkFormatFeatureFlagBits
-VK_FORMAT_FEATURE_SAMPLED_IMAGE_BIT = VkFormatFeatureFlagBits(1)
-VK_FORMAT_FEATURE_STORAGE_IMAGE_BIT = VkFormatFeatureFlagBits(2)
-VK_FORMAT_FEATURE_STORAGE_IMAGE_ATOMIC_BIT = VkFormatFeatureFlagBits(4)
-VK_FORMAT_FEATURE_UNIFORM_TEXEL_BUFFER_BIT = VkFormatFeatureFlagBits(8)
-VK_FORMAT_FEATURE_STORAGE_TEXEL_BUFFER_BIT = VkFormatFeatureFlagBits(16)
-VK_FORMAT_FEATURE_STORAGE_TEXEL_BUFFER_ATOMIC_BIT = VkFormatFeatureFlagBits(32)
-VK_FORMAT_FEATURE_VERTEX_BUFFER_BIT = VkFormatFeatureFlagBits(64)
-VK_FORMAT_FEATURE_COLOR_ATTACHMENT_BIT = VkFormatFeatureFlagBits(128)
-VK_FORMAT_FEATURE_COLOR_ATTACHMENT_BLEND_BIT = VkFormatFeatureFlagBits(256)
-VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT = VkFormatFeatureFlagBits(512)
-VK_FORMAT_FEATURE_BLIT_SRC_BIT = VkFormatFeatureFlagBits(1024)
-VK_FORMAT_FEATURE_BLIT_DST_BIT = VkFormatFeatureFlagBits(2048)
-VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_LINEAR_BIT = VkFormatFeatureFlagBits(4096)
-
-
-# ENUM VkQueryControlFlagBits
-VK_QUERY_CONTROL_PRECISE_BIT = VkQueryControlFlagBits(1)
-
-
-# ENUM VkQueryResultFlagBits
-VK_QUERY_RESULT_64_BIT = VkQueryResultFlagBits(1)
-VK_QUERY_RESULT_WAIT_BIT = VkQueryResultFlagBits(2)
-VK_QUERY_RESULT_WITH_AVAILABILITY_BIT = VkQueryResultFlagBits(4)
-VK_QUERY_RESULT_PARTIAL_BIT = VkQueryResultFlagBits(8)
-
-
-# ENUM VkCommandBufferUsageFlagBits
-VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT = VkCommandBufferUsageFlagBits(1)
-VK_COMMAND_BUFFER_USAGE_RENDER_PASS_CONTINUE_BIT = VkCommandBufferUsageFlagBits(2)
-VK_COMMAND_BUFFER_USAGE_SIMULTANEOUS_USE_BIT = VkCommandBufferUsageFlagBits(4)
-
-
-# ENUM VkQueryPipelineStatisticFlagBits
-VK_QUERY_PIPELINE_STATISTIC_INPUT_ASSEMBLY_VERTICES_BIT = VkQueryPipelineStatisticFlagBits(1)
-VK_QUERY_PIPELINE_STATISTIC_INPUT_ASSEMBLY_PRIMITIVES_BIT = VkQueryPipelineStatisticFlagBits(2)
-VK_QUERY_PIPELINE_STATISTIC_VERTEX_SHADER_INVOCATIONS_BIT = VkQueryPipelineStatisticFlagBits(4)
-VK_QUERY_PIPELINE_STATISTIC_GEOMETRY_SHADER_INVOCATIONS_BIT = VkQueryPipelineStatisticFlagBits(8)
-VK_QUERY_PIPELINE_STATISTIC_GEOMETRY_SHADER_PRIMITIVES_BIT = VkQueryPipelineStatisticFlagBits(16)
-VK_QUERY_PIPELINE_STATISTIC_CLIPPING_INVOCATIONS_BIT = VkQueryPipelineStatisticFlagBits(32)
-VK_QUERY_PIPELINE_STATISTIC_CLIPPING_PRIMITIVES_BIT = VkQueryPipelineStatisticFlagBits(64)
-VK_QUERY_PIPELINE_STATISTIC_FRAGMENT_SHADER_INVOCATIONS_BIT = VkQueryPipelineStatisticFlagBits(128)
-VK_QUERY_PIPELINE_STATISTIC_TESSELLATION_CONTROL_SHADER_PATCHES_BIT = VkQueryPipelineStatisticFlagBits(256)
-VK_QUERY_PIPELINE_STATISTIC_TESSELLATION_EVALUATION_SHADER_INVOCATIONS_BIT = VkQueryPipelineStatisticFlagBits(512)
-VK_QUERY_PIPELINE_STATISTIC_COMPUTE_SHADER_INVOCATIONS_BIT = VkQueryPipelineStatisticFlagBits(1024)
-
-
-# ENUM VkImageAspectFlagBits
-VK_IMAGE_ASPECT_COLOR_BIT = VkImageAspectFlagBits(1)
-VK_IMAGE_ASPECT_DEPTH_BIT = VkImageAspectFlagBits(2)
-VK_IMAGE_ASPECT_STENCIL_BIT = VkImageAspectFlagBits(4)
-VK_IMAGE_ASPECT_METADATA_BIT = VkImageAspectFlagBits(8)
-
-
-# ENUM VkSparseImageFormatFlagBits
-VK_SPARSE_IMAGE_FORMAT_SINGLE_MIPTAIL_BIT = VkSparseImageFormatFlagBits(1)
-VK_SPARSE_IMAGE_FORMAT_ALIGNED_MIP_SIZE_BIT = VkSparseImageFormatFlagBits(2)
-VK_SPARSE_IMAGE_FORMAT_NONSTANDARD_BLOCK_SIZE_BIT = VkSparseImageFormatFlagBits(4)
-
-
-# ENUM VkSparseMemoryBindFlagBits
-VK_SPARSE_MEMORY_BIND_METADATA_BIT = VkSparseMemoryBindFlagBits(1)
-
-
-# ENUM VkPipelineStageFlagBits
-VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT = VkPipelineStageFlagBits(1)
-VK_PIPELINE_STAGE_DRAW_INDIRECT_BIT = VkPipelineStageFlagBits(2)
-VK_PIPELINE_STAGE_VERTEX_INPUT_BIT = VkPipelineStageFlagBits(4)
-VK_PIPELINE_STAGE_VERTEX_SHADER_BIT = VkPipelineStageFlagBits(8)
-VK_PIPELINE_STAGE_TESSELLATION_CONTROL_SHADER_BIT = VkPipelineStageFlagBits(16)
-VK_PIPELINE_STAGE_TESSELLATION_EVALUATION_SHADER_BIT = VkPipelineStageFlagBits(32)
-VK_PIPELINE_STAGE_GEOMETRY_SHADER_BIT = VkPipelineStageFlagBits(64)
-VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT = VkPipelineStageFlagBits(128)
-VK_PIPELINE_STAGE_EARLY_FRAGMENT_TESTS_BIT = VkPipelineStageFlagBits(256)
-VK_PIPELINE_STAGE_LATE_FRAGMENT_TESTS_BIT = VkPipelineStageFlagBits(512)
-VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT = VkPipelineStageFlagBits(1024)
-VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT = VkPipelineStageFlagBits(2048)
-VK_PIPELINE_STAGE_TRANSFER_BIT = VkPipelineStageFlagBits(4096)
-VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT = VkPipelineStageFlagBits(8192)
-VK_PIPELINE_STAGE_HOST_BIT = VkPipelineStageFlagBits(16384)
-VK_PIPELINE_STAGE_ALL_GRAPHICS_BIT = VkPipelineStageFlagBits(32768)
-VK_PIPELINE_STAGE_ALL_COMMANDS_BIT = VkPipelineStageFlagBits(65536)
-
-
-# ENUM VkCommandPoolCreateFlagBits
-VK_COMMAND_POOL_CREATE_TRANSIENT_BIT = VkCommandPoolCreateFlagBits(1)
-VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT = VkCommandPoolCreateFlagBits(2)
-
-
-# ENUM VkCommandPoolResetFlagBits
-VK_COMMAND_POOL_RESET_RELEASE_RESOURCES_BIT = VkCommandPoolResetFlagBits(1)
-
-
-# ENUM VkCommandBufferResetFlagBits
-VK_COMMAND_BUFFER_RESET_RELEASE_RESOURCES_BIT = VkCommandBufferResetFlagBits(1)
-
-
-# ENUM VkSampleCountFlagBits
-VK_SAMPLE_COUNT_1_BIT = VkSampleCountFlagBits(1)
-VK_SAMPLE_COUNT_2_BIT = VkSampleCountFlagBits(2)
-VK_SAMPLE_COUNT_4_BIT = VkSampleCountFlagBits(4)
-VK_SAMPLE_COUNT_8_BIT = VkSampleCountFlagBits(8)
-VK_SAMPLE_COUNT_16_BIT = VkSampleCountFlagBits(16)
-VK_SAMPLE_COUNT_32_BIT = VkSampleCountFlagBits(32)
-VK_SAMPLE_COUNT_64_BIT = VkSampleCountFlagBits(64)
-
-
-# ENUM VkAttachmentDescriptionFlagBits
-VK_ATTACHMENT_DESCRIPTION_MAY_ALIAS_BIT = VkAttachmentDescriptionFlagBits(1)
-
-
-# ENUM VkStencilFaceFlagBits
-VK_STENCIL_FACE_FRONT_BIT = VkStencilFaceFlagBits(1)
-VK_STENCIL_FACE_BACK_BIT = VkStencilFaceFlagBits(2)
-VK_STENCIL_FACE_FRONT_AND_BACK = VkStencilFaceFlagBits(0x00000003)
-VK_STENCIL_FRONT_AND_BACK = VK_STENCIL_FACE_FRONT_AND_BACK
-
-
-# ENUM VkDescriptorPoolCreateFlagBits
-VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT = VkDescriptorPoolCreateFlagBits(1)
-
-
-# ENUM VkDependencyFlagBits
-VK_DEPENDENCY_BY_REGION_BIT = VkDependencyFlagBits(1)
-
-
-# ENUM VkSemaphoreType
+VK_OBJECT_TYPE_SAMPLER_YCBCR_CONVERSION = VkObjectType(1000156000)
+VK_OBJECT_TYPE_DESCRIPTOR_UPDATE_TEMPLATE = VkObjectType(1000085000)
+VK_OBJECT_TYPE_SURFACE_KHR = VkObjectType(1000000000)
+VK_OBJECT_TYPE_SWAPCHAIN_KHR = VkObjectType(1000001000)
+VK_OBJECT_TYPE_DISPLAY_KHR = VkObjectType(1000002000)
+VK_OBJECT_TYPE_DISPLAY_MODE_KHR = VkObjectType(1000002001)
+VK_OBJECT_TYPE_DEBUG_REPORT_CALLBACK_EXT = VkObjectType(1000011000)
+VK_OBJECT_TYPE_DESCRIPTOR_UPDATE_TEMPLATE_KHR = VK_OBJECT_TYPE_DESCRIPTOR_UPDATE_TEMPLATE
+VK_OBJECT_TYPE_DEBUG_UTILS_MESSENGER_EXT = VkObjectType(1000128000)
+VK_OBJECT_TYPE_ACCELERATION_STRUCTURE_KHR = VkObjectType(1000150000)
+VK_OBJECT_TYPE_SAMPLER_YCBCR_CONVERSION_KHR = VK_OBJECT_TYPE_SAMPLER_YCBCR_CONVERSION
+VK_OBJECT_TYPE_VALIDATION_CACHE_EXT = VkObjectType(1000160000)
+VK_OBJECT_TYPE_ACCELERATION_STRUCTURE_NV = VkObjectType(1000165000)
+VK_OBJECT_TYPE_PERFORMANCE_CONFIGURATION_INTEL = VkObjectType(1000210000)
+VK_OBJECT_TYPE_DEFERRED_OPERATION_KHR = VkObjectType(1000268000)
+VK_OBJECT_TYPE_INDIRECT_COMMANDS_LAYOUT_NV = VkObjectType(1000277000)
+VK_OBJECT_TYPE_PRIVATE_DATA_SLOT_EXT = VkObjectType(1000295000)
+
+VkIndirectCommandsLayoutUsageFlagBitsNV = type('VkIndirectCommandsLayoutUsageFlagBitsNV', (ctypes.c_int,), dict())
+VK_INDIRECT_COMMANDS_LAYOUT_USAGE_EXPLICIT_PREPROCESS_BIT_NV = VkIndirectCommandsLayoutUsageFlagBitsNV(1)
+VK_INDIRECT_COMMANDS_LAYOUT_USAGE_INDEXED_SEQUENCES_BIT_NV = VkIndirectCommandsLayoutUsageFlagBitsNV(2)
+VK_INDIRECT_COMMANDS_LAYOUT_USAGE_UNORDERED_SEQUENCES_BIT_NV = VkIndirectCommandsLayoutUsageFlagBitsNV(4)
+
+VkIndirectCommandsTokenTypeNV = type('VkIndirectCommandsTokenTypeNV', (ctypes.c_int,), dict())
+VK_INDIRECT_COMMANDS_TOKEN_TYPE_SHADER_GROUP_NV = VkIndirectCommandsTokenTypeNV(0)
+VK_INDIRECT_COMMANDS_TOKEN_TYPE_STATE_FLAGS_NV = VkIndirectCommandsTokenTypeNV(1)
+VK_INDIRECT_COMMANDS_TOKEN_TYPE_INDEX_BUFFER_NV = VkIndirectCommandsTokenTypeNV(2)
+VK_INDIRECT_COMMANDS_TOKEN_TYPE_VERTEX_BUFFER_NV = VkIndirectCommandsTokenTypeNV(3)
+VK_INDIRECT_COMMANDS_TOKEN_TYPE_PUSH_CONSTANT_NV = VkIndirectCommandsTokenTypeNV(4)
+VK_INDIRECT_COMMANDS_TOKEN_TYPE_DRAW_INDEXED_NV = VkIndirectCommandsTokenTypeNV(5)
+VK_INDIRECT_COMMANDS_TOKEN_TYPE_DRAW_NV = VkIndirectCommandsTokenTypeNV(6)
+VK_INDIRECT_COMMANDS_TOKEN_TYPE_DRAW_TASKS_NV = VkIndirectCommandsTokenTypeNV(7)
+
+VkIndirectStateFlagBitsNV = type('VkIndirectStateFlagBitsNV', (ctypes.c_int,), dict())
+VK_INDIRECT_STATE_FLAG_FRONTFACE_BIT_NV = VkIndirectStateFlagBitsNV(1)
+
+VkPrivateDataSlotCreateFlagBitsEXT = type('VkPrivateDataSlotCreateFlagBitsEXT', (ctypes.c_int,), dict())
+
+VkDescriptorUpdateTemplateType = type('VkDescriptorUpdateTemplateType', (ctypes.c_int,), dict())
+VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_DESCRIPTOR_SET = VkDescriptorUpdateTemplateType(0)
+VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_PUSH_DESCRIPTORS_KHR = VkDescriptorUpdateTemplateType(1)
+VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_PUSH_DESCRIPTORS_KHR = VkDescriptorUpdateTemplateType(1)
+VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_DESCRIPTOR_SET_KHR = VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_DESCRIPTOR_SET
+VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_PUSH_DESCRIPTORS_KHR = VkDescriptorUpdateTemplateType(1)
+
+VkDescriptorUpdateTemplateTypeKHR = VkDescriptorUpdateTemplateType
+
+VkViewportCoordinateSwizzleNV = type('VkViewportCoordinateSwizzleNV', (ctypes.c_int,), dict())
+VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_X_NV = VkViewportCoordinateSwizzleNV(0)
+VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_X_NV = VkViewportCoordinateSwizzleNV(1)
+VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_Y_NV = VkViewportCoordinateSwizzleNV(2)
+VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_Y_NV = VkViewportCoordinateSwizzleNV(3)
+VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_Z_NV = VkViewportCoordinateSwizzleNV(4)
+VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_Z_NV = VkViewportCoordinateSwizzleNV(5)
+VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_W_NV = VkViewportCoordinateSwizzleNV(6)
+VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_W_NV = VkViewportCoordinateSwizzleNV(7)
+
+VkDiscardRectangleModeEXT = type('VkDiscardRectangleModeEXT', (ctypes.c_int,), dict())
+VK_DISCARD_RECTANGLE_MODE_INCLUSIVE_EXT = VkDiscardRectangleModeEXT(0)
+VK_DISCARD_RECTANGLE_MODE_EXCLUSIVE_EXT = VkDiscardRectangleModeEXT(1)
+
+VkSubpassDescriptionFlagBits = type('VkSubpassDescriptionFlagBits', (ctypes.c_int,), dict())
+VK_SUBPASS_DESCRIPTION_PER_VIEW_ATTRIBUTES_BIT_NVX = VkSubpassDescriptionFlagBits(1)
+VK_SUBPASS_DESCRIPTION_PER_VIEW_POSITION_X_ONLY_BIT_NVX = VkSubpassDescriptionFlagBits(2)
+VK_SUBPASS_DESCRIPTION_FRAGMENT_REGION_BIT_QCOM = VkSubpassDescriptionFlagBits(4)
+VK_SUBPASS_DESCRIPTION_SHADER_RESOLVE_BIT_QCOM = VkSubpassDescriptionFlagBits(8)
+
+VkPointClippingBehavior = type('VkPointClippingBehavior', (ctypes.c_int,), dict())
+VK_POINT_CLIPPING_BEHAVIOR_ALL_CLIP_PLANES = VkPointClippingBehavior(0)
+VK_POINT_CLIPPING_BEHAVIOR_USER_CLIP_PLANES_ONLY = VkPointClippingBehavior(1)
+VK_POINT_CLIPPING_BEHAVIOR_ALL_CLIP_PLANES_KHR = VK_POINT_CLIPPING_BEHAVIOR_ALL_CLIP_PLANES
+VK_POINT_CLIPPING_BEHAVIOR_USER_CLIP_PLANES_ONLY_KHR = VK_POINT_CLIPPING_BEHAVIOR_USER_CLIP_PLANES_ONLY
+
+VkPointClippingBehaviorKHR = VkPointClippingBehavior
+
+VkCoverageModulationModeNV = type('VkCoverageModulationModeNV', (ctypes.c_int,), dict())
+VK_COVERAGE_MODULATION_MODE_NONE_NV = VkCoverageModulationModeNV(0)
+VK_COVERAGE_MODULATION_MODE_RGB_NV = VkCoverageModulationModeNV(1)
+VK_COVERAGE_MODULATION_MODE_ALPHA_NV = VkCoverageModulationModeNV(2)
+VK_COVERAGE_MODULATION_MODE_RGBA_NV = VkCoverageModulationModeNV(3)
+
+VkCoverageReductionModeNV = type('VkCoverageReductionModeNV', (ctypes.c_int,), dict())
+VK_COVERAGE_REDUCTION_MODE_MERGE_NV = VkCoverageReductionModeNV(0)
+VK_COVERAGE_REDUCTION_MODE_TRUNCATE_NV = VkCoverageReductionModeNV(1)
+
+VkValidationCacheHeaderVersionEXT = type('VkValidationCacheHeaderVersionEXT', (ctypes.c_int,), dict())
+VK_VALIDATION_CACHE_HEADER_VERSION_ONE_EXT = VkValidationCacheHeaderVersionEXT(1)
+
+VkShaderInfoTypeAMD = type('VkShaderInfoTypeAMD', (ctypes.c_int,), dict())
+VK_SHADER_INFO_TYPE_STATISTICS_AMD = VkShaderInfoTypeAMD(0)
+VK_SHADER_INFO_TYPE_BINARY_AMD = VkShaderInfoTypeAMD(1)
+VK_SHADER_INFO_TYPE_DISASSEMBLY_AMD = VkShaderInfoTypeAMD(2)
+
+VkQueueGlobalPriorityEXT = type('VkQueueGlobalPriorityEXT', (ctypes.c_int,), dict())
+VK_QUEUE_GLOBAL_PRIORITY_LOW_EXT = VkQueueGlobalPriorityEXT(128)
+VK_QUEUE_GLOBAL_PRIORITY_MEDIUM_EXT = VkQueueGlobalPriorityEXT(256)
+VK_QUEUE_GLOBAL_PRIORITY_HIGH_EXT = VkQueueGlobalPriorityEXT(512)
+VK_QUEUE_GLOBAL_PRIORITY_REALTIME_EXT = VkQueueGlobalPriorityEXT(1024)
+
+VkTimeDomainEXT = type('VkTimeDomainEXT', (ctypes.c_int,), dict())
+VK_TIME_DOMAIN_DEVICE_EXT = VkTimeDomainEXT(0)
+VK_TIME_DOMAIN_CLOCK_MONOTONIC_EXT = VkTimeDomainEXT(1)
+VK_TIME_DOMAIN_CLOCK_MONOTONIC_RAW_EXT = VkTimeDomainEXT(2)
+VK_TIME_DOMAIN_QUERY_PERFORMANCE_COUNTER_EXT = VkTimeDomainEXT(3)
+
+VkConservativeRasterizationModeEXT = type('VkConservativeRasterizationModeEXT', (ctypes.c_int,), dict())
+VK_CONSERVATIVE_RASTERIZATION_MODE_DISABLED_EXT = VkConservativeRasterizationModeEXT(0)
+VK_CONSERVATIVE_RASTERIZATION_MODE_OVERESTIMATE_EXT = VkConservativeRasterizationModeEXT(1)
+VK_CONSERVATIVE_RASTERIZATION_MODE_UNDERESTIMATE_EXT = VkConservativeRasterizationModeEXT(2)
+
+VkResolveModeFlagBits = type('VkResolveModeFlagBits', (ctypes.c_int,), dict())
+VK_RESOLVE_MODE_NONE = VkResolveModeFlagBits(0)
+VK_RESOLVE_MODE_SAMPLE_ZERO_BIT = VkResolveModeFlagBits(1)
+VK_RESOLVE_MODE_AVERAGE_BIT = VkResolveModeFlagBits(2)
+VK_RESOLVE_MODE_MIN_BIT = VkResolveModeFlagBits(4)
+VK_RESOLVE_MODE_MAX_BIT = VkResolveModeFlagBits(8)
+VK_RESOLVE_MODE_NONE_KHR = VK_RESOLVE_MODE_NONE
+VK_RESOLVE_MODE_SAMPLE_ZERO_BIT_KHR = VK_RESOLVE_MODE_SAMPLE_ZERO_BIT
+VK_RESOLVE_MODE_AVERAGE_BIT_KHR = VK_RESOLVE_MODE_AVERAGE_BIT
+VK_RESOLVE_MODE_MIN_BIT_KHR = VK_RESOLVE_MODE_MIN_BIT
+VK_RESOLVE_MODE_MAX_BIT_KHR = VK_RESOLVE_MODE_MAX_BIT
+
+VkResolveModeFlagBitsKHR = VkResolveModeFlagBits
+
+VkDescriptorBindingFlagBits = type('VkDescriptorBindingFlagBits', (ctypes.c_int,), dict())
+VK_DESCRIPTOR_BINDING_UPDATE_AFTER_BIND_BIT = VkDescriptorBindingFlagBits(1)
+VK_DESCRIPTOR_BINDING_UPDATE_UNUSED_WHILE_PENDING_BIT = VkDescriptorBindingFlagBits(2)
+VK_DESCRIPTOR_BINDING_PARTIALLY_BOUND_BIT = VkDescriptorBindingFlagBits(4)
+VK_DESCRIPTOR_BINDING_VARIABLE_DESCRIPTOR_COUNT_BIT = VkDescriptorBindingFlagBits(8)
+VK_DESCRIPTOR_BINDING_UPDATE_AFTER_BIND_BIT_EXT = VK_DESCRIPTOR_BINDING_UPDATE_AFTER_BIND_BIT
+VK_DESCRIPTOR_BINDING_UPDATE_UNUSED_WHILE_PENDING_BIT_EXT = VK_DESCRIPTOR_BINDING_UPDATE_UNUSED_WHILE_PENDING_BIT
+VK_DESCRIPTOR_BINDING_PARTIALLY_BOUND_BIT_EXT = VK_DESCRIPTOR_BINDING_PARTIALLY_BOUND_BIT
+VK_DESCRIPTOR_BINDING_VARIABLE_DESCRIPTOR_COUNT_BIT_EXT = VK_DESCRIPTOR_BINDING_VARIABLE_DESCRIPTOR_COUNT_BIT
+
+VkDescriptorBindingFlagBitsEXT = VkDescriptorBindingFlagBits
+
+VkConditionalRenderingFlagBitsEXT = type('VkConditionalRenderingFlagBitsEXT', (ctypes.c_int,), dict())
+VK_CONDITIONAL_RENDERING_INVERTED_BIT_EXT = VkConditionalRenderingFlagBitsEXT(1)
+
+VkSemaphoreType = type('VkSemaphoreType', (ctypes.c_int,), dict())
 VK_SEMAPHORE_TYPE_BINARY = VkSemaphoreType(0)
 VK_SEMAPHORE_TYPE_TIMELINE = VkSemaphoreType(1)
+VK_SEMAPHORE_TYPE_BINARY_KHR = VK_SEMAPHORE_TYPE_BINARY
+VK_SEMAPHORE_TYPE_TIMELINE_KHR = VK_SEMAPHORE_TYPE_TIMELINE
 
+VkSemaphoreTypeKHR = VkSemaphoreType
 
-# ENUM VkSemaphoreWaitFlagBits
+VkGeometryFlagBitsKHR = type('VkGeometryFlagBitsKHR', (ctypes.c_int,), dict())
+VK_GEOMETRY_OPAQUE_BIT_KHR = VkGeometryFlagBitsKHR(1)
+VK_GEOMETRY_NO_DUPLICATE_ANY_HIT_INVOCATION_BIT_KHR = VkGeometryFlagBitsKHR(2)
+VK_GEOMETRY_OPAQUE_BIT_NV = VK_GEOMETRY_OPAQUE_BIT_KHR
+VK_GEOMETRY_NO_DUPLICATE_ANY_HIT_INVOCATION_BIT_NV = VK_GEOMETRY_NO_DUPLICATE_ANY_HIT_INVOCATION_BIT_KHR
+
+VkGeometryFlagBitsNV = VkGeometryFlagBitsKHR
+
+VkGeometryInstanceFlagBitsKHR = type('VkGeometryInstanceFlagBitsKHR', (ctypes.c_int,), dict())
+VK_GEOMETRY_INSTANCE_TRIANGLE_FACING_CULL_DISABLE_BIT_KHR = VkGeometryInstanceFlagBitsKHR(1)
+VK_GEOMETRY_INSTANCE_TRIANGLE_FRONT_COUNTERCLOCKWISE_BIT_KHR = VkGeometryInstanceFlagBitsKHR(2)
+VK_GEOMETRY_INSTANCE_FORCE_OPAQUE_BIT_KHR = VkGeometryInstanceFlagBitsKHR(4)
+VK_GEOMETRY_INSTANCE_FORCE_NO_OPAQUE_BIT_KHR = VkGeometryInstanceFlagBitsKHR(8)
+VK_GEOMETRY_INSTANCE_TRIANGLE_CULL_DISABLE_BIT_NV = VK_GEOMETRY_INSTANCE_TRIANGLE_FACING_CULL_DISABLE_BIT_KHR
+VK_GEOMETRY_INSTANCE_TRIANGLE_FRONT_COUNTERCLOCKWISE_BIT_NV = VK_GEOMETRY_INSTANCE_TRIANGLE_FRONT_COUNTERCLOCKWISE_BIT_KHR
+VK_GEOMETRY_INSTANCE_FORCE_OPAQUE_BIT_NV = VK_GEOMETRY_INSTANCE_FORCE_OPAQUE_BIT_KHR
+VK_GEOMETRY_INSTANCE_FORCE_NO_OPAQUE_BIT_NV = VK_GEOMETRY_INSTANCE_FORCE_NO_OPAQUE_BIT_KHR
+
+VkGeometryInstanceFlagBitsNV = VkGeometryInstanceFlagBitsKHR
+
+VkBuildAccelerationStructureFlagBitsKHR = type('VkBuildAccelerationStructureFlagBitsKHR', (ctypes.c_int,), dict())
+VK_BUILD_ACCELERATION_STRUCTURE_ALLOW_UPDATE_BIT_KHR = VkBuildAccelerationStructureFlagBitsKHR(1)
+VK_BUILD_ACCELERATION_STRUCTURE_ALLOW_COMPACTION_BIT_KHR = VkBuildAccelerationStructureFlagBitsKHR(2)
+VK_BUILD_ACCELERATION_STRUCTURE_PREFER_FAST_TRACE_BIT_KHR = VkBuildAccelerationStructureFlagBitsKHR(4)
+VK_BUILD_ACCELERATION_STRUCTURE_PREFER_FAST_BUILD_BIT_KHR = VkBuildAccelerationStructureFlagBitsKHR(8)
+VK_BUILD_ACCELERATION_STRUCTURE_LOW_MEMORY_BIT_KHR = VkBuildAccelerationStructureFlagBitsKHR(16)
+VK_BUILD_ACCELERATION_STRUCTURE_ALLOW_UPDATE_BIT_NV = VK_BUILD_ACCELERATION_STRUCTURE_ALLOW_UPDATE_BIT_KHR
+VK_BUILD_ACCELERATION_STRUCTURE_ALLOW_COMPACTION_BIT_NV = VK_BUILD_ACCELERATION_STRUCTURE_ALLOW_COMPACTION_BIT_KHR
+VK_BUILD_ACCELERATION_STRUCTURE_PREFER_FAST_TRACE_BIT_NV = VK_BUILD_ACCELERATION_STRUCTURE_PREFER_FAST_TRACE_BIT_KHR
+VK_BUILD_ACCELERATION_STRUCTURE_PREFER_FAST_BUILD_BIT_NV = VK_BUILD_ACCELERATION_STRUCTURE_PREFER_FAST_BUILD_BIT_KHR
+VK_BUILD_ACCELERATION_STRUCTURE_LOW_MEMORY_BIT_NV = VK_BUILD_ACCELERATION_STRUCTURE_LOW_MEMORY_BIT_KHR
+
+VkBuildAccelerationStructureFlagBitsNV = VkBuildAccelerationStructureFlagBitsKHR
+
+VkAccelerationStructureCreateFlagBitsKHR = type('VkAccelerationStructureCreateFlagBitsKHR', (ctypes.c_int,), dict())
+VK_ACCELERATION_STRUCTURE_CREATE_DEVICE_ADDRESS_CAPTURE_REPLAY_BIT_KHR = VkAccelerationStructureCreateFlagBitsKHR(1)
+
+VkBuildAccelerationStructureModeKHR = type('VkBuildAccelerationStructureModeKHR', (ctypes.c_int,), dict())
+VK_BUILD_ACCELERATION_STRUCTURE_MODE_BUILD_KHR = VkBuildAccelerationStructureModeKHR(0)
+VK_BUILD_ACCELERATION_STRUCTURE_MODE_UPDATE_KHR = VkBuildAccelerationStructureModeKHR(1)
+
+VkCopyAccelerationStructureModeKHR = type('VkCopyAccelerationStructureModeKHR', (ctypes.c_int,), dict())
+VK_COPY_ACCELERATION_STRUCTURE_MODE_CLONE_KHR = VkCopyAccelerationStructureModeKHR(0)
+VK_COPY_ACCELERATION_STRUCTURE_MODE_COMPACT_KHR = VkCopyAccelerationStructureModeKHR(1)
+VK_COPY_ACCELERATION_STRUCTURE_MODE_SERIALIZE_KHR = VkCopyAccelerationStructureModeKHR(2)
+VK_COPY_ACCELERATION_STRUCTURE_MODE_DESERIALIZE_KHR = VkCopyAccelerationStructureModeKHR(3)
+VK_COPY_ACCELERATION_STRUCTURE_MODE_CLONE_NV = VK_COPY_ACCELERATION_STRUCTURE_MODE_CLONE_KHR
+VK_COPY_ACCELERATION_STRUCTURE_MODE_COMPACT_NV = VK_COPY_ACCELERATION_STRUCTURE_MODE_COMPACT_KHR
+
+VkCopyAccelerationStructureModeNV = VkCopyAccelerationStructureModeKHR
+
+VkAccelerationStructureTypeKHR = type('VkAccelerationStructureTypeKHR', (ctypes.c_int,), dict())
+VK_ACCELERATION_STRUCTURE_TYPE_TOP_LEVEL_KHR = VkAccelerationStructureTypeKHR(0)
+VK_ACCELERATION_STRUCTURE_TYPE_BOTTOM_LEVEL_KHR = VkAccelerationStructureTypeKHR(1)
+VK_ACCELERATION_STRUCTURE_TYPE_GENERIC_KHR = VkAccelerationStructureTypeKHR(2)
+VK_ACCELERATION_STRUCTURE_TYPE_TOP_LEVEL_NV = VK_ACCELERATION_STRUCTURE_TYPE_TOP_LEVEL_KHR
+VK_ACCELERATION_STRUCTURE_TYPE_BOTTOM_LEVEL_NV = VK_ACCELERATION_STRUCTURE_TYPE_BOTTOM_LEVEL_KHR
+
+VkAccelerationStructureTypeNV = VkAccelerationStructureTypeKHR
+
+VkGeometryTypeKHR = type('VkGeometryTypeKHR', (ctypes.c_int,), dict())
+VK_GEOMETRY_TYPE_TRIANGLES_KHR = VkGeometryTypeKHR(0)
+VK_GEOMETRY_TYPE_AABBS_KHR = VkGeometryTypeKHR(1)
+VK_GEOMETRY_TYPE_INSTANCES_KHR = VkGeometryTypeKHR(2)
+VK_GEOMETRY_TYPE_TRIANGLES_NV = VK_GEOMETRY_TYPE_TRIANGLES_KHR
+VK_GEOMETRY_TYPE_AABBS_NV = VK_GEOMETRY_TYPE_AABBS_KHR
+
+VkGeometryTypeNV = VkGeometryTypeKHR
+
+VkRayTracingShaderGroupTypeKHR = type('VkRayTracingShaderGroupTypeKHR', (ctypes.c_int,), dict())
+VK_RAY_TRACING_SHADER_GROUP_TYPE_GENERAL_KHR = VkRayTracingShaderGroupTypeKHR(0)
+VK_RAY_TRACING_SHADER_GROUP_TYPE_TRIANGLES_HIT_GROUP_KHR = VkRayTracingShaderGroupTypeKHR(1)
+VK_RAY_TRACING_SHADER_GROUP_TYPE_PROCEDURAL_HIT_GROUP_KHR = VkRayTracingShaderGroupTypeKHR(2)
+VK_RAY_TRACING_SHADER_GROUP_TYPE_GENERAL_NV = VK_RAY_TRACING_SHADER_GROUP_TYPE_GENERAL_KHR
+VK_RAY_TRACING_SHADER_GROUP_TYPE_TRIANGLES_HIT_GROUP_NV = VK_RAY_TRACING_SHADER_GROUP_TYPE_TRIANGLES_HIT_GROUP_KHR
+VK_RAY_TRACING_SHADER_GROUP_TYPE_PROCEDURAL_HIT_GROUP_NV = VK_RAY_TRACING_SHADER_GROUP_TYPE_PROCEDURAL_HIT_GROUP_KHR
+
+VkRayTracingShaderGroupTypeNV = VkRayTracingShaderGroupTypeKHR
+
+VkAccelerationStructureMemoryRequirementsTypeNV = type('VkAccelerationStructureMemoryRequirementsTypeNV', (ctypes.c_int,), dict())
+VK_ACCELERATION_STRUCTURE_MEMORY_REQUIREMENTS_TYPE_OBJECT_NV = VkAccelerationStructureMemoryRequirementsTypeNV(0)
+VK_ACCELERATION_STRUCTURE_MEMORY_REQUIREMENTS_TYPE_BUILD_SCRATCH_NV = VkAccelerationStructureMemoryRequirementsTypeNV(1)
+VK_ACCELERATION_STRUCTURE_MEMORY_REQUIREMENTS_TYPE_UPDATE_SCRATCH_NV = VkAccelerationStructureMemoryRequirementsTypeNV(2)
+
+VkAccelerationStructureBuildTypeKHR = type('VkAccelerationStructureBuildTypeKHR', (ctypes.c_int,), dict())
+VK_ACCELERATION_STRUCTURE_BUILD_TYPE_HOST_KHR = VkAccelerationStructureBuildTypeKHR(0)
+VK_ACCELERATION_STRUCTURE_BUILD_TYPE_DEVICE_KHR = VkAccelerationStructureBuildTypeKHR(1)
+VK_ACCELERATION_STRUCTURE_BUILD_TYPE_HOST_OR_DEVICE_KHR = VkAccelerationStructureBuildTypeKHR(2)
+
+VkAccelerationStructureCompatibilityKHR = type('VkAccelerationStructureCompatibilityKHR', (ctypes.c_int,), dict())
+VK_ACCELERATION_STRUCTURE_COMPATIBILITY_COMPATIBLE_KHR = VkAccelerationStructureCompatibilityKHR(0)
+VK_ACCELERATION_STRUCTURE_COMPATIBILITY_INCOMPATIBLE_KHR = VkAccelerationStructureCompatibilityKHR(1)
+
+VkShaderGroupShaderKHR = type('VkShaderGroupShaderKHR', (ctypes.c_int,), dict())
+VK_SHADER_GROUP_SHADER_GENERAL_KHR = VkShaderGroupShaderKHR(0)
+VK_SHADER_GROUP_SHADER_CLOSEST_HIT_KHR = VkShaderGroupShaderKHR(1)
+VK_SHADER_GROUP_SHADER_ANY_HIT_KHR = VkShaderGroupShaderKHR(2)
+VK_SHADER_GROUP_SHADER_INTERSECTION_KHR = VkShaderGroupShaderKHR(3)
+
+VkMemoryOverallocationBehaviorAMD = type('VkMemoryOverallocationBehaviorAMD', (ctypes.c_int,), dict())
+VK_MEMORY_OVERALLOCATION_BEHAVIOR_DEFAULT_AMD = VkMemoryOverallocationBehaviorAMD(0)
+VK_MEMORY_OVERALLOCATION_BEHAVIOR_ALLOWED_AMD = VkMemoryOverallocationBehaviorAMD(1)
+VK_MEMORY_OVERALLOCATION_BEHAVIOR_DISALLOWED_AMD = VkMemoryOverallocationBehaviorAMD(2)
+
+VkScopeNV = type('VkScopeNV', (ctypes.c_int,), dict())
+VK_SCOPE_DEVICE_NV = VkScopeNV(1)
+VK_SCOPE_WORKGROUP_NV = VkScopeNV(2)
+VK_SCOPE_SUBGROUP_NV = VkScopeNV(3)
+VK_SCOPE_QUEUE_FAMILY_NV = VkScopeNV(5)
+
+VkComponentTypeNV = type('VkComponentTypeNV', (ctypes.c_int,), dict())
+VK_COMPONENT_TYPE_FLOAT16_NV = VkComponentTypeNV(0)
+VK_COMPONENT_TYPE_FLOAT32_NV = VkComponentTypeNV(1)
+VK_COMPONENT_TYPE_FLOAT64_NV = VkComponentTypeNV(2)
+VK_COMPONENT_TYPE_SINT8_NV = VkComponentTypeNV(3)
+VK_COMPONENT_TYPE_SINT16_NV = VkComponentTypeNV(4)
+VK_COMPONENT_TYPE_SINT32_NV = VkComponentTypeNV(5)
+VK_COMPONENT_TYPE_SINT64_NV = VkComponentTypeNV(6)
+VK_COMPONENT_TYPE_UINT8_NV = VkComponentTypeNV(7)
+VK_COMPONENT_TYPE_UINT16_NV = VkComponentTypeNV(8)
+VK_COMPONENT_TYPE_UINT32_NV = VkComponentTypeNV(9)
+VK_COMPONENT_TYPE_UINT64_NV = VkComponentTypeNV(10)
+
+VkDeviceDiagnosticsConfigFlagBitsNV = type('VkDeviceDiagnosticsConfigFlagBitsNV', (ctypes.c_int,), dict())
+VK_DEVICE_DIAGNOSTICS_CONFIG_ENABLE_SHADER_DEBUG_INFO_BIT_NV = VkDeviceDiagnosticsConfigFlagBitsNV(1)
+VK_DEVICE_DIAGNOSTICS_CONFIG_ENABLE_RESOURCE_TRACKING_BIT_NV = VkDeviceDiagnosticsConfigFlagBitsNV(2)
+VK_DEVICE_DIAGNOSTICS_CONFIG_ENABLE_AUTOMATIC_CHECKPOINTS_BIT_NV = VkDeviceDiagnosticsConfigFlagBitsNV(4)
+
+VkPipelineCreationFeedbackFlagBitsEXT = type('VkPipelineCreationFeedbackFlagBitsEXT', (ctypes.c_int,), dict())
+VK_PIPELINE_CREATION_FEEDBACK_VALID_BIT_EXT = VkPipelineCreationFeedbackFlagBitsEXT(1)
+VK_PIPELINE_CREATION_FEEDBACK_APPLICATION_PIPELINE_CACHE_HIT_BIT_EXT = VkPipelineCreationFeedbackFlagBitsEXT(2)
+VK_PIPELINE_CREATION_FEEDBACK_BASE_PIPELINE_ACCELERATION_BIT_EXT = VkPipelineCreationFeedbackFlagBitsEXT(4)
+
+VkPerformanceCounterScopeKHR = type('VkPerformanceCounterScopeKHR', (ctypes.c_int,), dict())
+VK_PERFORMANCE_COUNTER_SCOPE_COMMAND_BUFFER_KHR = VkPerformanceCounterScopeKHR(0)
+VK_PERFORMANCE_COUNTER_SCOPE_RENDER_PASS_KHR = VkPerformanceCounterScopeKHR(1)
+VK_PERFORMANCE_COUNTER_SCOPE_COMMAND_KHR = VkPerformanceCounterScopeKHR(2)
+VK_QUERY_SCOPE_COMMAND_BUFFER_KHR = VK_PERFORMANCE_COUNTER_SCOPE_COMMAND_BUFFER_KHR
+VK_QUERY_SCOPE_RENDER_PASS_KHR = VK_PERFORMANCE_COUNTER_SCOPE_RENDER_PASS_KHR
+VK_QUERY_SCOPE_COMMAND_KHR = VK_PERFORMANCE_COUNTER_SCOPE_COMMAND_KHR
+
+VkPerformanceCounterUnitKHR = type('VkPerformanceCounterUnitKHR', (ctypes.c_int,), dict())
+VK_PERFORMANCE_COUNTER_UNIT_GENERIC_KHR = VkPerformanceCounterUnitKHR(0)
+VK_PERFORMANCE_COUNTER_UNIT_PERCENTAGE_KHR = VkPerformanceCounterUnitKHR(1)
+VK_PERFORMANCE_COUNTER_UNIT_NANOSECONDS_KHR = VkPerformanceCounterUnitKHR(2)
+VK_PERFORMANCE_COUNTER_UNIT_BYTES_KHR = VkPerformanceCounterUnitKHR(3)
+VK_PERFORMANCE_COUNTER_UNIT_BYTES_PER_SECOND_KHR = VkPerformanceCounterUnitKHR(4)
+VK_PERFORMANCE_COUNTER_UNIT_KELVIN_KHR = VkPerformanceCounterUnitKHR(5)
+VK_PERFORMANCE_COUNTER_UNIT_WATTS_KHR = VkPerformanceCounterUnitKHR(6)
+VK_PERFORMANCE_COUNTER_UNIT_VOLTS_KHR = VkPerformanceCounterUnitKHR(7)
+VK_PERFORMANCE_COUNTER_UNIT_AMPS_KHR = VkPerformanceCounterUnitKHR(8)
+VK_PERFORMANCE_COUNTER_UNIT_HERTZ_KHR = VkPerformanceCounterUnitKHR(9)
+VK_PERFORMANCE_COUNTER_UNIT_CYCLES_KHR = VkPerformanceCounterUnitKHR(10)
+
+VkPerformanceCounterStorageKHR = type('VkPerformanceCounterStorageKHR', (ctypes.c_int,), dict())
+VK_PERFORMANCE_COUNTER_STORAGE_INT32_KHR = VkPerformanceCounterStorageKHR(0)
+VK_PERFORMANCE_COUNTER_STORAGE_INT64_KHR = VkPerformanceCounterStorageKHR(1)
+VK_PERFORMANCE_COUNTER_STORAGE_UINT32_KHR = VkPerformanceCounterStorageKHR(2)
+VK_PERFORMANCE_COUNTER_STORAGE_UINT64_KHR = VkPerformanceCounterStorageKHR(3)
+VK_PERFORMANCE_COUNTER_STORAGE_FLOAT32_KHR = VkPerformanceCounterStorageKHR(4)
+VK_PERFORMANCE_COUNTER_STORAGE_FLOAT64_KHR = VkPerformanceCounterStorageKHR(5)
+
+VkPerformanceCounterDescriptionFlagBitsKHR = type('VkPerformanceCounterDescriptionFlagBitsKHR', (ctypes.c_int,), dict())
+VK_PERFORMANCE_COUNTER_DESCRIPTION_PERFORMANCE_IMPACTING_BIT_KHR = VkPerformanceCounterDescriptionFlagBitsKHR(1)
+VK_PERFORMANCE_COUNTER_DESCRIPTION_PERFORMANCE_IMPACTING_KHR = VK_PERFORMANCE_COUNTER_DESCRIPTION_PERFORMANCE_IMPACTING_BIT_KHR
+VK_PERFORMANCE_COUNTER_DESCRIPTION_CONCURRENTLY_IMPACTED_BIT_KHR = VkPerformanceCounterDescriptionFlagBitsKHR(2)
+VK_PERFORMANCE_COUNTER_DESCRIPTION_CONCURRENTLY_IMPACTED_KHR = VK_PERFORMANCE_COUNTER_DESCRIPTION_CONCURRENTLY_IMPACTED_BIT_KHR
+
+VkAcquireProfilingLockFlagBitsKHR = type('VkAcquireProfilingLockFlagBitsKHR', (ctypes.c_int,), dict())
+
+VkSemaphoreWaitFlagBits = type('VkSemaphoreWaitFlagBits', (ctypes.c_int,), dict())
 VK_SEMAPHORE_WAIT_ANY_BIT = VkSemaphoreWaitFlagBits(1)
+VK_SEMAPHORE_WAIT_ANY_BIT_KHR = VK_SEMAPHORE_WAIT_ANY_BIT
 
+VkSemaphoreWaitFlagBitsKHR = VkSemaphoreWaitFlagBits
 
-# ENUM VkPresentModeKHR
-VK_PRESENT_MODE_IMMEDIATE_KHR = VkPresentModeKHR(0)
-VK_PRESENT_MODE_MAILBOX_KHR = VkPresentModeKHR(1)
-VK_PRESENT_MODE_FIFO_KHR = VkPresentModeKHR(2)
-VK_PRESENT_MODE_FIFO_RELAXED_KHR = VkPresentModeKHR(3)
+VkPerformanceConfigurationTypeINTEL = type('VkPerformanceConfigurationTypeINTEL', (ctypes.c_int,), dict())
+VK_PERFORMANCE_CONFIGURATION_TYPE_COMMAND_QUEUE_METRICS_DISCOVERY_ACTIVATED_INTEL = VkPerformanceConfigurationTypeINTEL(0)
 
+VkQueryPoolSamplingModeINTEL = type('VkQueryPoolSamplingModeINTEL', (ctypes.c_int,), dict())
+VK_QUERY_POOL_SAMPLING_MODE_MANUAL_INTEL = VkQueryPoolSamplingModeINTEL(0)
 
-# ENUM VkColorSpaceKHR
+VkPerformanceOverrideTypeINTEL = type('VkPerformanceOverrideTypeINTEL', (ctypes.c_int,), dict())
+VK_PERFORMANCE_OVERRIDE_TYPE_NULL_HARDWARE_INTEL = VkPerformanceOverrideTypeINTEL(0)
+VK_PERFORMANCE_OVERRIDE_TYPE_FLUSH_GPU_CACHES_INTEL = VkPerformanceOverrideTypeINTEL(1)
+
+VkPerformanceParameterTypeINTEL = type('VkPerformanceParameterTypeINTEL', (ctypes.c_int,), dict())
+VK_PERFORMANCE_PARAMETER_TYPE_HW_COUNTERS_SUPPORTED_INTEL = VkPerformanceParameterTypeINTEL(0)
+VK_PERFORMANCE_PARAMETER_TYPE_STREAM_MARKER_VALID_BITS_INTEL = VkPerformanceParameterTypeINTEL(1)
+
+VkPerformanceValueTypeINTEL = type('VkPerformanceValueTypeINTEL', (ctypes.c_int,), dict())
+VK_PERFORMANCE_VALUE_TYPE_UINT32_INTEL = VkPerformanceValueTypeINTEL(0)
+VK_PERFORMANCE_VALUE_TYPE_UINT64_INTEL = VkPerformanceValueTypeINTEL(1)
+VK_PERFORMANCE_VALUE_TYPE_FLOAT_INTEL = VkPerformanceValueTypeINTEL(2)
+VK_PERFORMANCE_VALUE_TYPE_BOOL_INTEL = VkPerformanceValueTypeINTEL(3)
+VK_PERFORMANCE_VALUE_TYPE_STRING_INTEL = VkPerformanceValueTypeINTEL(4)
+
+VkLineRasterizationModeEXT = type('VkLineRasterizationModeEXT', (ctypes.c_int,), dict())
+VK_LINE_RASTERIZATION_MODE_DEFAULT_EXT = VkLineRasterizationModeEXT(0)
+VK_LINE_RASTERIZATION_MODE_RECTANGULAR_EXT = VkLineRasterizationModeEXT(1)
+VK_LINE_RASTERIZATION_MODE_BRESENHAM_EXT = VkLineRasterizationModeEXT(2)
+VK_LINE_RASTERIZATION_MODE_RECTANGULAR_SMOOTH_EXT = VkLineRasterizationModeEXT(3)
+
+VkShaderModuleCreateFlagBits = type('VkShaderModuleCreateFlagBits', (ctypes.c_int,), dict())
+
+VkPipelineCompilerControlFlagBitsAMD = type('VkPipelineCompilerControlFlagBitsAMD', (ctypes.c_int,), dict())
+
+VkShaderCorePropertiesFlagBitsAMD = type('VkShaderCorePropertiesFlagBitsAMD', (ctypes.c_int,), dict())
+
+VkToolPurposeFlagBitsEXT = type('VkToolPurposeFlagBitsEXT', (ctypes.c_int,), dict())
+VK_TOOL_PURPOSE_VALIDATION_BIT_EXT = VkToolPurposeFlagBitsEXT(1)
+VK_TOOL_PURPOSE_PROFILING_BIT_EXT = VkToolPurposeFlagBitsEXT(2)
+VK_TOOL_PURPOSE_TRACING_BIT_EXT = VkToolPurposeFlagBitsEXT(4)
+VK_TOOL_PURPOSE_ADDITIONAL_FEATURES_BIT_EXT = VkToolPurposeFlagBitsEXT(8)
+VK_TOOL_PURPOSE_MODIFYING_FEATURES_BIT_EXT = VkToolPurposeFlagBitsEXT(16)
+VK_TOOL_PURPOSE_DEBUG_REPORTING_BIT_EXT = VkToolPurposeFlagBitsEXT(32)
+VK_TOOL_PURPOSE_DEBUG_MARKERS_BIT_EXT = VkToolPurposeFlagBitsEXT(64)
+VK_TOOL_PURPOSE_DEBUG_REPORTING_BIT_EXT = VkToolPurposeFlagBitsEXT(32)
+VK_TOOL_PURPOSE_DEBUG_MARKERS_BIT_EXT = VkToolPurposeFlagBitsEXT(64)
+
+VkFragmentShadingRateNV = type('VkFragmentShadingRateNV', (ctypes.c_int,), dict())
+VK_FRAGMENT_SHADING_RATE_1_INVOCATION_PER_PIXEL_NV = VkFragmentShadingRateNV(0)
+VK_FRAGMENT_SHADING_RATE_1_INVOCATION_PER_1X2_PIXELS_NV = VkFragmentShadingRateNV(1)
+VK_FRAGMENT_SHADING_RATE_1_INVOCATION_PER_2X1_PIXELS_NV = VkFragmentShadingRateNV(4)
+VK_FRAGMENT_SHADING_RATE_1_INVOCATION_PER_2X2_PIXELS_NV = VkFragmentShadingRateNV(5)
+VK_FRAGMENT_SHADING_RATE_1_INVOCATION_PER_2X4_PIXELS_NV = VkFragmentShadingRateNV(6)
+VK_FRAGMENT_SHADING_RATE_1_INVOCATION_PER_4X2_PIXELS_NV = VkFragmentShadingRateNV(9)
+VK_FRAGMENT_SHADING_RATE_1_INVOCATION_PER_4X4_PIXELS_NV = VkFragmentShadingRateNV(10)
+VK_FRAGMENT_SHADING_RATE_2_INVOCATIONS_PER_PIXEL_NV = VkFragmentShadingRateNV(11)
+VK_FRAGMENT_SHADING_RATE_4_INVOCATIONS_PER_PIXEL_NV = VkFragmentShadingRateNV(12)
+VK_FRAGMENT_SHADING_RATE_8_INVOCATIONS_PER_PIXEL_NV = VkFragmentShadingRateNV(13)
+VK_FRAGMENT_SHADING_RATE_16_INVOCATIONS_PER_PIXEL_NV = VkFragmentShadingRateNV(14)
+VK_FRAGMENT_SHADING_RATE_NO_INVOCATIONS_NV = VkFragmentShadingRateNV(15)
+
+VkFragmentShadingRateTypeNV = type('VkFragmentShadingRateTypeNV', (ctypes.c_int,), dict())
+VK_FRAGMENT_SHADING_RATE_TYPE_FRAGMENT_SIZE_NV = VkFragmentShadingRateTypeNV(0)
+VK_FRAGMENT_SHADING_RATE_TYPE_ENUMS_NV = VkFragmentShadingRateTypeNV(1)
+
+VkColorSpaceKHR = type('VkColorSpaceKHR', (ctypes.c_int,), dict())
 VK_COLOR_SPACE_SRGB_NONLINEAR_KHR = VkColorSpaceKHR(0)
 VK_COLORSPACE_SRGB_NONLINEAR_KHR = VK_COLOR_SPACE_SRGB_NONLINEAR_KHR
+VK_COLOR_SPACE_DISPLAY_P3_NONLINEAR_EXT = VkColorSpaceKHR(1000104001)
+VK_COLOR_SPACE_EXTENDED_SRGB_LINEAR_EXT = VkColorSpaceKHR(1000104002)
+VK_COLOR_SPACE_DISPLAY_P3_LINEAR_EXT = VkColorSpaceKHR(1000104003)
+VK_COLOR_SPACE_DCI_P3_NONLINEAR_EXT = VkColorSpaceKHR(1000104004)
+VK_COLOR_SPACE_BT709_LINEAR_EXT = VkColorSpaceKHR(1000104005)
+VK_COLOR_SPACE_BT709_NONLINEAR_EXT = VkColorSpaceKHR(1000104006)
+VK_COLOR_SPACE_BT2020_LINEAR_EXT = VkColorSpaceKHR(1000104007)
+VK_COLOR_SPACE_HDR10_ST2084_EXT = VkColorSpaceKHR(1000104008)
+VK_COLOR_SPACE_DOLBYVISION_EXT = VkColorSpaceKHR(1000104009)
+VK_COLOR_SPACE_HDR10_HLG_EXT = VkColorSpaceKHR(1000104010)
+VK_COLOR_SPACE_ADOBERGB_LINEAR_EXT = VkColorSpaceKHR(1000104011)
+VK_COLOR_SPACE_ADOBERGB_NONLINEAR_EXT = VkColorSpaceKHR(1000104012)
+VK_COLOR_SPACE_PASS_THROUGH_EXT = VkColorSpaceKHR(1000104013)
+VK_COLOR_SPACE_EXTENDED_SRGB_NONLINEAR_EXT = VkColorSpaceKHR(1000104014)
+VK_COLOR_SPACE_DCI_P3_LINEAR_EXT = VK_COLOR_SPACE_DISPLAY_P3_LINEAR_EXT
+VK_COLOR_SPACE_DISPLAY_NATIVE_AMD = VkColorSpaceKHR(1000213000)
 
-
-# ENUM VkDisplayPlaneAlphaFlagBitsKHR
-VK_DISPLAY_PLANE_ALPHA_OPAQUE_BIT_KHR = VkDisplayPlaneAlphaFlagBitsKHR(1)
-VK_DISPLAY_PLANE_ALPHA_GLOBAL_BIT_KHR = VkDisplayPlaneAlphaFlagBitsKHR(2)
-VK_DISPLAY_PLANE_ALPHA_PER_PIXEL_BIT_KHR = VkDisplayPlaneAlphaFlagBitsKHR(4)
-VK_DISPLAY_PLANE_ALPHA_PER_PIXEL_PREMULTIPLIED_BIT_KHR = VkDisplayPlaneAlphaFlagBitsKHR(8)
-
-
-# ENUM VkCompositeAlphaFlagBitsKHR
+VkCompositeAlphaFlagBitsKHR = type('VkCompositeAlphaFlagBitsKHR', (ctypes.c_int,), dict())
 VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR = VkCompositeAlphaFlagBitsKHR(1)
 VK_COMPOSITE_ALPHA_PRE_MULTIPLIED_BIT_KHR = VkCompositeAlphaFlagBitsKHR(2)
 VK_COMPOSITE_ALPHA_POST_MULTIPLIED_BIT_KHR = VkCompositeAlphaFlagBitsKHR(4)
 VK_COMPOSITE_ALPHA_INHERIT_BIT_KHR = VkCompositeAlphaFlagBitsKHR(8)
 
+VkDisplayPlaneAlphaFlagBitsKHR = type('VkDisplayPlaneAlphaFlagBitsKHR', (ctypes.c_int,), dict())
+VK_DISPLAY_PLANE_ALPHA_OPAQUE_BIT_KHR = VkDisplayPlaneAlphaFlagBitsKHR(1)
+VK_DISPLAY_PLANE_ALPHA_GLOBAL_BIT_KHR = VkDisplayPlaneAlphaFlagBitsKHR(2)
+VK_DISPLAY_PLANE_ALPHA_PER_PIXEL_BIT_KHR = VkDisplayPlaneAlphaFlagBitsKHR(4)
+VK_DISPLAY_PLANE_ALPHA_PER_PIXEL_PREMULTIPLIED_BIT_KHR = VkDisplayPlaneAlphaFlagBitsKHR(8)
 
-# ENUM VkSurfaceTransformFlagBitsKHR
+VkPresentModeKHR = type('VkPresentModeKHR', (ctypes.c_int,), dict())
+VK_PRESENT_MODE_IMMEDIATE_KHR = VkPresentModeKHR(0)
+VK_PRESENT_MODE_MAILBOX_KHR = VkPresentModeKHR(1)
+VK_PRESENT_MODE_FIFO_KHR = VkPresentModeKHR(2)
+VK_PRESENT_MODE_FIFO_RELAXED_KHR = VkPresentModeKHR(3)
+VK_PRESENT_MODE_SHARED_DEMAND_REFRESH_KHR = VkPresentModeKHR(1000111000)
+VK_PRESENT_MODE_SHARED_CONTINUOUS_REFRESH_KHR = VkPresentModeKHR(1000111001)
+
+VkSurfaceTransformFlagBitsKHR = type('VkSurfaceTransformFlagBitsKHR', (ctypes.c_int,), dict())
 VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR = VkSurfaceTransformFlagBitsKHR(1)
 VK_SURFACE_TRANSFORM_ROTATE_90_BIT_KHR = VkSurfaceTransformFlagBitsKHR(2)
 VK_SURFACE_TRANSFORM_ROTATE_180_BIT_KHR = VkSurfaceTransformFlagBitsKHR(4)
@@ -1326,27 +2354,14 @@ VK_SURFACE_TRANSFORM_HORIZONTAL_MIRROR_ROTATE_180_BIT_KHR = VkSurfaceTransformFl
 VK_SURFACE_TRANSFORM_HORIZONTAL_MIRROR_ROTATE_270_BIT_KHR = VkSurfaceTransformFlagBitsKHR(128)
 VK_SURFACE_TRANSFORM_INHERIT_BIT_KHR = VkSurfaceTransformFlagBitsKHR(256)
 
-
-# ENUM VkSwapchainImageUsageFlagBitsANDROID
-VK_SWAPCHAIN_IMAGE_USAGE_SHARED_BIT_ANDROID = VkSwapchainImageUsageFlagBitsANDROID(1)
-
-
-# ENUM VkTimeDomainEXT
-VK_TIME_DOMAIN_DEVICE_EXT = VkTimeDomainEXT(0)
-VK_TIME_DOMAIN_CLOCK_MONOTONIC_EXT = VkTimeDomainEXT(1)
-VK_TIME_DOMAIN_CLOCK_MONOTONIC_RAW_EXT = VkTimeDomainEXT(2)
-VK_TIME_DOMAIN_QUERY_PERFORMANCE_COUNTER_EXT = VkTimeDomainEXT(3)
-
-
-# ENUM VkDebugReportFlagBitsEXT
+VkDebugReportFlagBitsEXT = type('VkDebugReportFlagBitsEXT', (ctypes.c_int,), dict())
 VK_DEBUG_REPORT_INFORMATION_BIT_EXT = VkDebugReportFlagBitsEXT(1)
 VK_DEBUG_REPORT_WARNING_BIT_EXT = VkDebugReportFlagBitsEXT(2)
 VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT = VkDebugReportFlagBitsEXT(4)
 VK_DEBUG_REPORT_ERROR_BIT_EXT = VkDebugReportFlagBitsEXT(8)
 VK_DEBUG_REPORT_DEBUG_BIT_EXT = VkDebugReportFlagBitsEXT(16)
 
-
-# ENUM VkDebugReportObjectTypeEXT
+VkDebugReportObjectTypeEXT = type('VkDebugReportObjectTypeEXT', (ctypes.c_int,), dict())
 VK_DEBUG_REPORT_OBJECT_TYPE_UNKNOWN_EXT = VkDebugReportObjectTypeEXT(0)
 VK_DEBUG_REPORT_OBJECT_TYPE_INSTANCE_EXT = VkDebugReportObjectTypeEXT(1)
 VK_DEBUG_REPORT_OBJECT_TYPE_PHYSICAL_DEVICE_EXT = VkDebugReportObjectTypeEXT(2)
@@ -1381,48 +2396,48 @@ VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_KHR_EXT = VkDebugReportObjectTypeEXT(29)
 VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_MODE_KHR_EXT = VkDebugReportObjectTypeEXT(30)
 VK_DEBUG_REPORT_OBJECT_TYPE_VALIDATION_CACHE_EXT_EXT = VkDebugReportObjectTypeEXT(33)
 VK_DEBUG_REPORT_OBJECT_TYPE_VALIDATION_CACHE_EXT = VK_DEBUG_REPORT_OBJECT_TYPE_VALIDATION_CACHE_EXT_EXT
+VK_DEBUG_REPORT_OBJECT_TYPE_SAMPLER_YCBCR_CONVERSION_EXT = VkDebugReportObjectTypeEXT(1000156000)
+VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_UPDATE_TEMPLATE_EXT = VkDebugReportObjectTypeEXT(1000085000)
+VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_UPDATE_TEMPLATE_KHR_EXT = VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_UPDATE_TEMPLATE_EXT
+VK_DEBUG_REPORT_OBJECT_TYPE_ACCELERATION_STRUCTURE_KHR_EXT = VkDebugReportObjectTypeEXT(1000150000)
+VK_DEBUG_REPORT_OBJECT_TYPE_SAMPLER_YCBCR_CONVERSION_KHR_EXT = VK_DEBUG_REPORT_OBJECT_TYPE_SAMPLER_YCBCR_CONVERSION_EXT
+VK_DEBUG_REPORT_OBJECT_TYPE_SAMPLER_YCBCR_CONVERSION_EXT = VkDebugReportObjectTypeEXT(1000156000)
+VK_DEBUG_REPORT_OBJECT_TYPE_ACCELERATION_STRUCTURE_NV_EXT = VkDebugReportObjectTypeEXT(1000165000)
 
-
-# ENUM VkDeviceMemoryReportEventTypeEXT
+VkDeviceMemoryReportEventTypeEXT = type('VkDeviceMemoryReportEventTypeEXT', (ctypes.c_int,), dict())
 VK_DEVICE_MEMORY_REPORT_EVENT_TYPE_ALLOCATE_EXT = VkDeviceMemoryReportEventTypeEXT(0)
 VK_DEVICE_MEMORY_REPORT_EVENT_TYPE_FREE_EXT = VkDeviceMemoryReportEventTypeEXT(1)
 VK_DEVICE_MEMORY_REPORT_EVENT_TYPE_IMPORT_EXT = VkDeviceMemoryReportEventTypeEXT(2)
 VK_DEVICE_MEMORY_REPORT_EVENT_TYPE_UNIMPORT_EXT = VkDeviceMemoryReportEventTypeEXT(3)
 VK_DEVICE_MEMORY_REPORT_EVENT_TYPE_ALLOCATION_FAILED_EXT = VkDeviceMemoryReportEventTypeEXT(4)
 
-
-# ENUM VkRasterizationOrderAMD
+VkRasterizationOrderAMD = type('VkRasterizationOrderAMD', (ctypes.c_int,), dict())
 VK_RASTERIZATION_ORDER_STRICT_AMD = VkRasterizationOrderAMD(0)
 VK_RASTERIZATION_ORDER_RELAXED_AMD = VkRasterizationOrderAMD(1)
 
-
-# ENUM VkExternalMemoryHandleTypeFlagBitsNV
+VkExternalMemoryHandleTypeFlagBitsNV = type('VkExternalMemoryHandleTypeFlagBitsNV', (ctypes.c_int,), dict())
 VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT_NV = VkExternalMemoryHandleTypeFlagBitsNV(1)
 VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_NV = VkExternalMemoryHandleTypeFlagBitsNV(2)
 VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_BIT_NV = VkExternalMemoryHandleTypeFlagBitsNV(4)
 VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_BIT_NV = VkExternalMemoryHandleTypeFlagBitsNV(8)
 
-
-# ENUM VkExternalMemoryFeatureFlagBitsNV
+VkExternalMemoryFeatureFlagBitsNV = type('VkExternalMemoryFeatureFlagBitsNV', (ctypes.c_int,), dict())
 VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT_NV = VkExternalMemoryFeatureFlagBitsNV(1)
 VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT_NV = VkExternalMemoryFeatureFlagBitsNV(2)
 VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT_NV = VkExternalMemoryFeatureFlagBitsNV(4)
 
-
-# ENUM VkValidationCheckEXT
+VkValidationCheckEXT = type('VkValidationCheckEXT', (ctypes.c_int,), dict())
 VK_VALIDATION_CHECK_ALL_EXT = VkValidationCheckEXT(0)
 VK_VALIDATION_CHECK_SHADERS_EXT = VkValidationCheckEXT(1)
 
-
-# ENUM VkValidationFeatureEnableEXT
+VkValidationFeatureEnableEXT = type('VkValidationFeatureEnableEXT', (ctypes.c_int,), dict())
 VK_VALIDATION_FEATURE_ENABLE_GPU_ASSISTED_EXT = VkValidationFeatureEnableEXT(0)
 VK_VALIDATION_FEATURE_ENABLE_GPU_ASSISTED_RESERVE_BINDING_SLOT_EXT = VkValidationFeatureEnableEXT(1)
 VK_VALIDATION_FEATURE_ENABLE_BEST_PRACTICES_EXT = VkValidationFeatureEnableEXT(2)
 VK_VALIDATION_FEATURE_ENABLE_DEBUG_PRINTF_EXT = VkValidationFeatureEnableEXT(3)
 VK_VALIDATION_FEATURE_ENABLE_SYNCHRONIZATION_VALIDATION_EXT = VkValidationFeatureEnableEXT(4)
 
-
-# ENUM VkValidationFeatureDisableEXT
+VkValidationFeatureDisableEXT = type('VkValidationFeatureDisableEXT', (ctypes.c_int,), dict())
 VK_VALIDATION_FEATURE_DISABLE_ALL_EXT = VkValidationFeatureDisableEXT(0)
 VK_VALIDATION_FEATURE_DISABLE_SHADERS_EXT = VkValidationFeatureDisableEXT(1)
 VK_VALIDATION_FEATURE_DISABLE_THREAD_SAFETY_EXT = VkValidationFeatureDisableEXT(2)
@@ -1431,8 +2446,143 @@ VK_VALIDATION_FEATURE_DISABLE_OBJECT_LIFETIMES_EXT = VkValidationFeatureDisableE
 VK_VALIDATION_FEATURE_DISABLE_CORE_CHECKS_EXT = VkValidationFeatureDisableEXT(5)
 VK_VALIDATION_FEATURE_DISABLE_UNIQUE_HANDLES_EXT = VkValidationFeatureDisableEXT(6)
 
+VkExternalMemoryHandleTypeFlagBits = type('VkExternalMemoryHandleTypeFlagBits', (ctypes.c_int,), dict())
+VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD_BIT = VkExternalMemoryHandleTypeFlagBits(1)
+VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT = VkExternalMemoryHandleTypeFlagBits(2)
+VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT = VkExternalMemoryHandleTypeFlagBits(4)
+VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_BIT = VkExternalMemoryHandleTypeFlagBits(8)
+VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT_BIT = VkExternalMemoryHandleTypeFlagBits(16)
+VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP_BIT = VkExternalMemoryHandleTypeFlagBits(32)
+VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE_BIT = VkExternalMemoryHandleTypeFlagBits(64)
+VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD_BIT_KHR = VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD_BIT
+VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT_KHR = VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT
+VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_KHR = VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT
+VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_BIT_KHR = VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_BIT
+VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT_BIT_KHR = VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT_BIT
+VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP_BIT_KHR = VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP_BIT
+VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE_BIT_KHR = VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE_BIT
+VK_EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF_BIT_EXT = VkExternalMemoryHandleTypeFlagBits(512)
+VK_EXTERNAL_MEMORY_HANDLE_TYPE_ANDROID_HARDWARE_BUFFER_BIT_ANDROID = VkExternalMemoryHandleTypeFlagBits(1024)
+VK_EXTERNAL_MEMORY_HANDLE_TYPE_HOST_ALLOCATION_BIT_EXT = VkExternalMemoryHandleTypeFlagBits(128)
+VK_EXTERNAL_MEMORY_HANDLE_TYPE_HOST_MAPPED_FOREIGN_MEMORY_BIT_EXT = VkExternalMemoryHandleTypeFlagBits(256)
 
-# ENUM VkSubgroupFeatureFlagBits
+VkExternalMemoryHandleTypeFlagBitsKHR = VkExternalMemoryHandleTypeFlagBits
+
+VkExternalMemoryFeatureFlagBits = type('VkExternalMemoryFeatureFlagBits', (ctypes.c_int,), dict())
+VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT = VkExternalMemoryFeatureFlagBits(1)
+VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT = VkExternalMemoryFeatureFlagBits(2)
+VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT = VkExternalMemoryFeatureFlagBits(4)
+VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT_KHR = VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT
+VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT_KHR = VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT
+VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT_KHR = VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT
+
+VkExternalMemoryFeatureFlagBitsKHR = VkExternalMemoryFeatureFlagBits
+
+VkExternalSemaphoreHandleTypeFlagBits = type('VkExternalSemaphoreHandleTypeFlagBits', (ctypes.c_int,), dict())
+VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD_BIT = VkExternalSemaphoreHandleTypeFlagBits(1)
+VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_BIT = VkExternalSemaphoreHandleTypeFlagBits(2)
+VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT = VkExternalSemaphoreHandleTypeFlagBits(4)
+VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE_BIT = VkExternalSemaphoreHandleTypeFlagBits(8)
+VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D11_FENCE_BIT = VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE_BIT
+VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD_BIT = VkExternalSemaphoreHandleTypeFlagBits(16)
+VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD_BIT_KHR = VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD_BIT
+VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_BIT_KHR = VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_BIT
+VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_KHR = VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT
+VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE_BIT_KHR = VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE_BIT
+VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD_BIT_KHR = VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD_BIT
+
+VkExternalSemaphoreHandleTypeFlagBitsKHR = VkExternalSemaphoreHandleTypeFlagBits
+
+VkExternalSemaphoreFeatureFlagBits = type('VkExternalSemaphoreFeatureFlagBits', (ctypes.c_int,), dict())
+VK_EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE_BIT = VkExternalSemaphoreFeatureFlagBits(1)
+VK_EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE_BIT = VkExternalSemaphoreFeatureFlagBits(2)
+VK_EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE_BIT_KHR = VK_EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE_BIT
+VK_EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE_BIT_KHR = VK_EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE_BIT
+
+VkExternalSemaphoreFeatureFlagBitsKHR = VkExternalSemaphoreFeatureFlagBits
+
+VkSemaphoreImportFlagBits = type('VkSemaphoreImportFlagBits', (ctypes.c_int,), dict())
+VK_SEMAPHORE_IMPORT_TEMPORARY_BIT = VkSemaphoreImportFlagBits(1)
+VK_SEMAPHORE_IMPORT_TEMPORARY_BIT_KHR = VK_SEMAPHORE_IMPORT_TEMPORARY_BIT
+
+VkSemaphoreImportFlagBitsKHR = VkSemaphoreImportFlagBits
+
+VkExternalFenceHandleTypeFlagBits = type('VkExternalFenceHandleTypeFlagBits', (ctypes.c_int,), dict())
+VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD_BIT = VkExternalFenceHandleTypeFlagBits(1)
+VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_BIT = VkExternalFenceHandleTypeFlagBits(2)
+VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT = VkExternalFenceHandleTypeFlagBits(4)
+VK_EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD_BIT = VkExternalFenceHandleTypeFlagBits(8)
+VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD_BIT_KHR = VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD_BIT
+VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_BIT_KHR = VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_BIT
+VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_KHR = VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT
+VK_EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD_BIT_KHR = VK_EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD_BIT
+
+VkExternalFenceHandleTypeFlagBitsKHR = VkExternalFenceHandleTypeFlagBits
+
+VkExternalFenceFeatureFlagBits = type('VkExternalFenceFeatureFlagBits', (ctypes.c_int,), dict())
+VK_EXTERNAL_FENCE_FEATURE_EXPORTABLE_BIT = VkExternalFenceFeatureFlagBits(1)
+VK_EXTERNAL_FENCE_FEATURE_IMPORTABLE_BIT = VkExternalFenceFeatureFlagBits(2)
+VK_EXTERNAL_FENCE_FEATURE_EXPORTABLE_BIT_KHR = VK_EXTERNAL_FENCE_FEATURE_EXPORTABLE_BIT
+VK_EXTERNAL_FENCE_FEATURE_IMPORTABLE_BIT_KHR = VK_EXTERNAL_FENCE_FEATURE_IMPORTABLE_BIT
+
+VkExternalFenceFeatureFlagBitsKHR = VkExternalFenceFeatureFlagBits
+
+VkFenceImportFlagBits = type('VkFenceImportFlagBits', (ctypes.c_int,), dict())
+VK_FENCE_IMPORT_TEMPORARY_BIT = VkFenceImportFlagBits(1)
+VK_FENCE_IMPORT_TEMPORARY_BIT_KHR = VK_FENCE_IMPORT_TEMPORARY_BIT
+
+VkFenceImportFlagBitsKHR = VkFenceImportFlagBits
+
+VkSurfaceCounterFlagBitsEXT = type('VkSurfaceCounterFlagBitsEXT', (ctypes.c_int,), dict())
+VK_SURFACE_COUNTER_VBLANK_BIT_EXT = VkSurfaceCounterFlagBitsEXT(1)
+VK_SURFACE_COUNTER_VBLANK_EXT = VK_SURFACE_COUNTER_VBLANK_BIT_EXT
+
+VkDisplayPowerStateEXT = type('VkDisplayPowerStateEXT', (ctypes.c_int,), dict())
+VK_DISPLAY_POWER_STATE_OFF_EXT = VkDisplayPowerStateEXT(0)
+VK_DISPLAY_POWER_STATE_SUSPEND_EXT = VkDisplayPowerStateEXT(1)
+VK_DISPLAY_POWER_STATE_ON_EXT = VkDisplayPowerStateEXT(2)
+
+VkDeviceEventTypeEXT = type('VkDeviceEventTypeEXT', (ctypes.c_int,), dict())
+VK_DEVICE_EVENT_TYPE_DISPLAY_HOTPLUG_EXT = VkDeviceEventTypeEXT(0)
+
+VkDisplayEventTypeEXT = type('VkDisplayEventTypeEXT', (ctypes.c_int,), dict())
+VK_DISPLAY_EVENT_TYPE_FIRST_PIXEL_OUT_EXT = VkDisplayEventTypeEXT(0)
+
+VkPeerMemoryFeatureFlagBits = type('VkPeerMemoryFeatureFlagBits', (ctypes.c_int,), dict())
+VK_PEER_MEMORY_FEATURE_COPY_SRC_BIT = VkPeerMemoryFeatureFlagBits(1)
+VK_PEER_MEMORY_FEATURE_COPY_DST_BIT = VkPeerMemoryFeatureFlagBits(2)
+VK_PEER_MEMORY_FEATURE_GENERIC_SRC_BIT = VkPeerMemoryFeatureFlagBits(4)
+VK_PEER_MEMORY_FEATURE_GENERIC_DST_BIT = VkPeerMemoryFeatureFlagBits(8)
+VK_PEER_MEMORY_FEATURE_COPY_SRC_BIT_KHR = VK_PEER_MEMORY_FEATURE_COPY_SRC_BIT
+VK_PEER_MEMORY_FEATURE_COPY_DST_BIT_KHR = VK_PEER_MEMORY_FEATURE_COPY_DST_BIT
+VK_PEER_MEMORY_FEATURE_GENERIC_SRC_BIT_KHR = VK_PEER_MEMORY_FEATURE_GENERIC_SRC_BIT
+VK_PEER_MEMORY_FEATURE_GENERIC_DST_BIT_KHR = VK_PEER_MEMORY_FEATURE_GENERIC_DST_BIT
+
+VkPeerMemoryFeatureFlagBitsKHR = VkPeerMemoryFeatureFlagBits
+
+VkMemoryAllocateFlagBits = type('VkMemoryAllocateFlagBits', (ctypes.c_int,), dict())
+VK_MEMORY_ALLOCATE_DEVICE_MASK_BIT = VkMemoryAllocateFlagBits(1)
+VK_MEMORY_ALLOCATE_DEVICE_ADDRESS_BIT = VkMemoryAllocateFlagBits(2)
+VK_MEMORY_ALLOCATE_DEVICE_ADDRESS_CAPTURE_REPLAY_BIT = VkMemoryAllocateFlagBits(4)
+VK_MEMORY_ALLOCATE_DEVICE_MASK_BIT_KHR = VK_MEMORY_ALLOCATE_DEVICE_MASK_BIT
+VK_MEMORY_ALLOCATE_DEVICE_ADDRESS_BIT_KHR = VK_MEMORY_ALLOCATE_DEVICE_ADDRESS_BIT
+VK_MEMORY_ALLOCATE_DEVICE_ADDRESS_CAPTURE_REPLAY_BIT_KHR = VK_MEMORY_ALLOCATE_DEVICE_ADDRESS_CAPTURE_REPLAY_BIT
+
+VkMemoryAllocateFlagBitsKHR = VkMemoryAllocateFlagBits
+
+VkDeviceGroupPresentModeFlagBitsKHR = type('VkDeviceGroupPresentModeFlagBitsKHR', (ctypes.c_int,), dict())
+VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_BIT_KHR = VkDeviceGroupPresentModeFlagBitsKHR(1)
+VK_DEVICE_GROUP_PRESENT_MODE_REMOTE_BIT_KHR = VkDeviceGroupPresentModeFlagBitsKHR(2)
+VK_DEVICE_GROUP_PRESENT_MODE_SUM_BIT_KHR = VkDeviceGroupPresentModeFlagBitsKHR(4)
+VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_MULTI_DEVICE_BIT_KHR = VkDeviceGroupPresentModeFlagBitsKHR(8)
+
+VkSwapchainCreateFlagBitsKHR = type('VkSwapchainCreateFlagBitsKHR', (ctypes.c_int,), dict())
+VK_SWAPCHAIN_CREATE_SPLIT_INSTANCE_BIND_REGIONS_BIT_KHR = VkSwapchainCreateFlagBitsKHR(1)
+VK_SWAPCHAIN_CREATE_PROTECTED_BIT_KHR = VkSwapchainCreateFlagBitsKHR(2)
+VK_SWAPCHAIN_CREATE_SPLIT_INSTANCE_BIND_REGIONS_BIT_KHR = VkSwapchainCreateFlagBitsKHR(1)
+VK_SWAPCHAIN_CREATE_MUTABLE_FORMAT_BIT_KHR = VkSwapchainCreateFlagBitsKHR(4)
+
+VkSubgroupFeatureFlagBits = type('VkSubgroupFeatureFlagBits', (ctypes.c_int,), dict())
 VK_SUBGROUP_FEATURE_BASIC_BIT = VkSubgroupFeatureFlagBits(1)
 VK_SUBGROUP_FEATURE_VOTE_BIT = VkSubgroupFeatureFlagBits(2)
 VK_SUBGROUP_FEATURE_ARITHMETIC_BIT = VkSubgroupFeatureFlagBits(4)
@@ -1441,248 +2591,106 @@ VK_SUBGROUP_FEATURE_SHUFFLE_BIT = VkSubgroupFeatureFlagBits(16)
 VK_SUBGROUP_FEATURE_SHUFFLE_RELATIVE_BIT = VkSubgroupFeatureFlagBits(32)
 VK_SUBGROUP_FEATURE_CLUSTERED_BIT = VkSubgroupFeatureFlagBits(64)
 VK_SUBGROUP_FEATURE_QUAD_BIT = VkSubgroupFeatureFlagBits(128)
+VK_SUBGROUP_FEATURE_PARTITIONED_BIT_NV = VkSubgroupFeatureFlagBits(256)
 
-
-# ENUM VkIndirectCommandsLayoutUsageFlagBitsNV
-VK_INDIRECT_COMMANDS_LAYOUT_USAGE_EXPLICIT_PREPROCESS_BIT_NV = VkIndirectCommandsLayoutUsageFlagBitsNV(1)
-VK_INDIRECT_COMMANDS_LAYOUT_USAGE_INDEXED_SEQUENCES_BIT_NV = VkIndirectCommandsLayoutUsageFlagBitsNV(2)
-VK_INDIRECT_COMMANDS_LAYOUT_USAGE_UNORDERED_SEQUENCES_BIT_NV = VkIndirectCommandsLayoutUsageFlagBitsNV(4)
-
-
-# ENUM VkIndirectStateFlagBitsNV
-VK_INDIRECT_STATE_FLAG_FRONTFACE_BIT_NV = VkIndirectStateFlagBitsNV(1)
-
-
-# ENUM VkIndirectCommandsTokenTypeNV
-VK_INDIRECT_COMMANDS_TOKEN_TYPE_SHADER_GROUP_NV = VkIndirectCommandsTokenTypeNV(0)
-VK_INDIRECT_COMMANDS_TOKEN_TYPE_STATE_FLAGS_NV = VkIndirectCommandsTokenTypeNV(1)
-VK_INDIRECT_COMMANDS_TOKEN_TYPE_INDEX_BUFFER_NV = VkIndirectCommandsTokenTypeNV(2)
-VK_INDIRECT_COMMANDS_TOKEN_TYPE_VERTEX_BUFFER_NV = VkIndirectCommandsTokenTypeNV(3)
-VK_INDIRECT_COMMANDS_TOKEN_TYPE_PUSH_CONSTANT_NV = VkIndirectCommandsTokenTypeNV(4)
-VK_INDIRECT_COMMANDS_TOKEN_TYPE_DRAW_INDEXED_NV = VkIndirectCommandsTokenTypeNV(5)
-VK_INDIRECT_COMMANDS_TOKEN_TYPE_DRAW_NV = VkIndirectCommandsTokenTypeNV(6)
-VK_INDIRECT_COMMANDS_TOKEN_TYPE_DRAW_TASKS_NV = VkIndirectCommandsTokenTypeNV(7)
-
-
-# ENUM VkPrivateDataSlotCreateFlagBitsEXT
-
-
-# ENUM VkDescriptorSetLayoutCreateFlagBits
-
-
-# ENUM VkExternalMemoryHandleTypeFlagBits
-VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD_BIT = VkExternalMemoryHandleTypeFlagBits(1)
-VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT = VkExternalMemoryHandleTypeFlagBits(2)
-VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT = VkExternalMemoryHandleTypeFlagBits(4)
-VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_BIT = VkExternalMemoryHandleTypeFlagBits(8)
-VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT_BIT = VkExternalMemoryHandleTypeFlagBits(16)
-VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP_BIT = VkExternalMemoryHandleTypeFlagBits(32)
-VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE_BIT = VkExternalMemoryHandleTypeFlagBits(64)
-
-
-# ENUM VkExternalMemoryFeatureFlagBits
-VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT = VkExternalMemoryFeatureFlagBits(1)
-VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT = VkExternalMemoryFeatureFlagBits(2)
-VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT = VkExternalMemoryFeatureFlagBits(4)
-
-
-# ENUM VkExternalSemaphoreHandleTypeFlagBits
-VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD_BIT = VkExternalSemaphoreHandleTypeFlagBits(1)
-VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_BIT = VkExternalSemaphoreHandleTypeFlagBits(2)
-VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT = VkExternalSemaphoreHandleTypeFlagBits(4)
-VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE_BIT = VkExternalSemaphoreHandleTypeFlagBits(8)
-VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D11_FENCE_BIT = VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE_BIT
-VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD_BIT = VkExternalSemaphoreHandleTypeFlagBits(16)
-
-
-# ENUM VkExternalSemaphoreFeatureFlagBits
-VK_EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE_BIT = VkExternalSemaphoreFeatureFlagBits(1)
-VK_EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE_BIT = VkExternalSemaphoreFeatureFlagBits(2)
-
-
-# ENUM VkSemaphoreImportFlagBits
-VK_SEMAPHORE_IMPORT_TEMPORARY_BIT = VkSemaphoreImportFlagBits(1)
-
-
-# ENUM VkExternalFenceHandleTypeFlagBits
-VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD_BIT = VkExternalFenceHandleTypeFlagBits(1)
-VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_BIT = VkExternalFenceHandleTypeFlagBits(2)
-VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT = VkExternalFenceHandleTypeFlagBits(4)
-VK_EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD_BIT = VkExternalFenceHandleTypeFlagBits(8)
-
-
-# ENUM VkExternalFenceFeatureFlagBits
-VK_EXTERNAL_FENCE_FEATURE_EXPORTABLE_BIT = VkExternalFenceFeatureFlagBits(1)
-VK_EXTERNAL_FENCE_FEATURE_IMPORTABLE_BIT = VkExternalFenceFeatureFlagBits(2)
-
-
-# ENUM VkFenceImportFlagBits
-VK_FENCE_IMPORT_TEMPORARY_BIT = VkFenceImportFlagBits(1)
-
-
-# ENUM VkSurfaceCounterFlagBitsEXT
-VK_SURFACE_COUNTER_VBLANK_BIT_EXT = VkSurfaceCounterFlagBitsEXT(1)
-VK_SURFACE_COUNTER_VBLANK_EXT = VK_SURFACE_COUNTER_VBLANK_BIT_EXT
-
-
-# ENUM VkDisplayPowerStateEXT
-VK_DISPLAY_POWER_STATE_OFF_EXT = VkDisplayPowerStateEXT(0)
-VK_DISPLAY_POWER_STATE_SUSPEND_EXT = VkDisplayPowerStateEXT(1)
-VK_DISPLAY_POWER_STATE_ON_EXT = VkDisplayPowerStateEXT(2)
-
-
-# ENUM VkDeviceEventTypeEXT
-VK_DEVICE_EVENT_TYPE_DISPLAY_HOTPLUG_EXT = VkDeviceEventTypeEXT(0)
-
-
-# ENUM VkDisplayEventTypeEXT
-VK_DISPLAY_EVENT_TYPE_FIRST_PIXEL_OUT_EXT = VkDisplayEventTypeEXT(0)
-
-
-# ENUM VkPeerMemoryFeatureFlagBits
-VK_PEER_MEMORY_FEATURE_COPY_SRC_BIT = VkPeerMemoryFeatureFlagBits(1)
-VK_PEER_MEMORY_FEATURE_COPY_DST_BIT = VkPeerMemoryFeatureFlagBits(2)
-VK_PEER_MEMORY_FEATURE_GENERIC_SRC_BIT = VkPeerMemoryFeatureFlagBits(4)
-VK_PEER_MEMORY_FEATURE_GENERIC_DST_BIT = VkPeerMemoryFeatureFlagBits(8)
-
-
-# ENUM VkMemoryAllocateFlagBits
-VK_MEMORY_ALLOCATE_DEVICE_MASK_BIT = VkMemoryAllocateFlagBits(1)
-
-
-# ENUM VkDeviceGroupPresentModeFlagBitsKHR
-VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_BIT_KHR = VkDeviceGroupPresentModeFlagBitsKHR(1)
-VK_DEVICE_GROUP_PRESENT_MODE_REMOTE_BIT_KHR = VkDeviceGroupPresentModeFlagBitsKHR(2)
-VK_DEVICE_GROUP_PRESENT_MODE_SUM_BIT_KHR = VkDeviceGroupPresentModeFlagBitsKHR(4)
-VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_MULTI_DEVICE_BIT_KHR = VkDeviceGroupPresentModeFlagBitsKHR(8)
-
-
-# ENUM VkSwapchainCreateFlagBitsKHR
-
-
-# ENUM VkViewportCoordinateSwizzleNV
-VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_X_NV = VkViewportCoordinateSwizzleNV(0)
-VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_X_NV = VkViewportCoordinateSwizzleNV(1)
-VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_Y_NV = VkViewportCoordinateSwizzleNV(2)
-VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_Y_NV = VkViewportCoordinateSwizzleNV(3)
-VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_Z_NV = VkViewportCoordinateSwizzleNV(4)
-VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_Z_NV = VkViewportCoordinateSwizzleNV(5)
-VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_W_NV = VkViewportCoordinateSwizzleNV(6)
-VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_W_NV = VkViewportCoordinateSwizzleNV(7)
-
-
-# ENUM VkDiscardRectangleModeEXT
-VK_DISCARD_RECTANGLE_MODE_INCLUSIVE_EXT = VkDiscardRectangleModeEXT(0)
-VK_DISCARD_RECTANGLE_MODE_EXCLUSIVE_EXT = VkDiscardRectangleModeEXT(1)
-
-
-# ENUM VkSubpassDescriptionFlagBits
-
-
-# ENUM VkPointClippingBehavior
-VK_POINT_CLIPPING_BEHAVIOR_ALL_CLIP_PLANES = VkPointClippingBehavior(0)
-VK_POINT_CLIPPING_BEHAVIOR_USER_CLIP_PLANES_ONLY = VkPointClippingBehavior(1)
-
-
-# ENUM VkSamplerReductionMode
-VK_SAMPLER_REDUCTION_MODE_WEIGHTED_AVERAGE = VkSamplerReductionMode(0)
-VK_SAMPLER_REDUCTION_MODE_MIN = VkSamplerReductionMode(1)
-VK_SAMPLER_REDUCTION_MODE_MAX = VkSamplerReductionMode(2)
-
-
-# ENUM VkTessellationDomainOrigin
+VkTessellationDomainOrigin = type('VkTessellationDomainOrigin', (ctypes.c_int,), dict())
 VK_TESSELLATION_DOMAIN_ORIGIN_UPPER_LEFT = VkTessellationDomainOrigin(0)
 VK_TESSELLATION_DOMAIN_ORIGIN_LOWER_LEFT = VkTessellationDomainOrigin(1)
+VK_TESSELLATION_DOMAIN_ORIGIN_UPPER_LEFT_KHR = VK_TESSELLATION_DOMAIN_ORIGIN_UPPER_LEFT
+VK_TESSELLATION_DOMAIN_ORIGIN_LOWER_LEFT_KHR = VK_TESSELLATION_DOMAIN_ORIGIN_LOWER_LEFT
 
+VkTessellationDomainOriginKHR = VkTessellationDomainOrigin
 
-# ENUM VkSamplerYcbcrModelConversion
+VkSamplerYcbcrModelConversion = type('VkSamplerYcbcrModelConversion', (ctypes.c_int,), dict())
 VK_SAMPLER_YCBCR_MODEL_CONVERSION_RGB_IDENTITY = VkSamplerYcbcrModelConversion(0)
 VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_IDENTITY = VkSamplerYcbcrModelConversion(1)
 VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_709 = VkSamplerYcbcrModelConversion(2)
 VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_601 = VkSamplerYcbcrModelConversion(3)
 VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_2020 = VkSamplerYcbcrModelConversion(4)
+VK_SAMPLER_YCBCR_MODEL_CONVERSION_RGB_IDENTITY_KHR = VK_SAMPLER_YCBCR_MODEL_CONVERSION_RGB_IDENTITY
+VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_IDENTITY_KHR = VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_IDENTITY
+VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_709_KHR = VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_709
+VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_601_KHR = VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_601
+VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_2020_KHR = VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_2020
 
+VkSamplerYcbcrModelConversionKHR = VkSamplerYcbcrModelConversion
 
-# ENUM VkSamplerYcbcrRange
+VkSamplerYcbcrRange = type('VkSamplerYcbcrRange', (ctypes.c_int,), dict())
 VK_SAMPLER_YCBCR_RANGE_ITU_FULL = VkSamplerYcbcrRange(0)
 VK_SAMPLER_YCBCR_RANGE_ITU_NARROW = VkSamplerYcbcrRange(1)
+VK_SAMPLER_YCBCR_RANGE_ITU_FULL_KHR = VK_SAMPLER_YCBCR_RANGE_ITU_FULL
+VK_SAMPLER_YCBCR_RANGE_ITU_NARROW_KHR = VK_SAMPLER_YCBCR_RANGE_ITU_NARROW
 
+VkSamplerYcbcrRangeKHR = VkSamplerYcbcrRange
 
-# ENUM VkChromaLocation
+VkChromaLocation = type('VkChromaLocation', (ctypes.c_int,), dict())
 VK_CHROMA_LOCATION_COSITED_EVEN = VkChromaLocation(0)
 VK_CHROMA_LOCATION_MIDPOINT = VkChromaLocation(1)
+VK_CHROMA_LOCATION_COSITED_EVEN_KHR = VK_CHROMA_LOCATION_COSITED_EVEN
+VK_CHROMA_LOCATION_MIDPOINT_KHR = VK_CHROMA_LOCATION_MIDPOINT
 
+VkChromaLocationKHR = VkChromaLocation
 
-# ENUM VkBlendOverlapEXT
+VkSamplerReductionMode = type('VkSamplerReductionMode', (ctypes.c_int,), dict())
+VK_SAMPLER_REDUCTION_MODE_WEIGHTED_AVERAGE = VkSamplerReductionMode(0)
+VK_SAMPLER_REDUCTION_MODE_MIN = VkSamplerReductionMode(1)
+VK_SAMPLER_REDUCTION_MODE_MAX = VkSamplerReductionMode(2)
+VK_SAMPLER_REDUCTION_MODE_WEIGHTED_AVERAGE_EXT = VK_SAMPLER_REDUCTION_MODE_WEIGHTED_AVERAGE
+VK_SAMPLER_REDUCTION_MODE_MIN_EXT = VK_SAMPLER_REDUCTION_MODE_MIN
+VK_SAMPLER_REDUCTION_MODE_MAX_EXT = VK_SAMPLER_REDUCTION_MODE_MAX
+
+VkSamplerReductionModeEXT = VkSamplerReductionMode
+
+VkBlendOverlapEXT = type('VkBlendOverlapEXT', (ctypes.c_int,), dict())
 VK_BLEND_OVERLAP_UNCORRELATED_EXT = VkBlendOverlapEXT(0)
 VK_BLEND_OVERLAP_DISJOINT_EXT = VkBlendOverlapEXT(1)
 VK_BLEND_OVERLAP_CONJOINT_EXT = VkBlendOverlapEXT(2)
 
-
-# ENUM VkCoverageModulationModeNV
-VK_COVERAGE_MODULATION_MODE_NONE_NV = VkCoverageModulationModeNV(0)
-VK_COVERAGE_MODULATION_MODE_RGB_NV = VkCoverageModulationModeNV(1)
-VK_COVERAGE_MODULATION_MODE_ALPHA_NV = VkCoverageModulationModeNV(2)
-VK_COVERAGE_MODULATION_MODE_RGBA_NV = VkCoverageModulationModeNV(3)
-
-
-# ENUM VkCoverageReductionModeNV
-VK_COVERAGE_REDUCTION_MODE_MERGE_NV = VkCoverageReductionModeNV(0)
-VK_COVERAGE_REDUCTION_MODE_TRUNCATE_NV = VkCoverageReductionModeNV(1)
-
-
-# ENUM VkValidationCacheHeaderVersionEXT
-VK_VALIDATION_CACHE_HEADER_VERSION_ONE_EXT = VkValidationCacheHeaderVersionEXT(1)
-
-
-# ENUM VkShaderInfoTypeAMD
-VK_SHADER_INFO_TYPE_STATISTICS_AMD = VkShaderInfoTypeAMD(0)
-VK_SHADER_INFO_TYPE_BINARY_AMD = VkShaderInfoTypeAMD(1)
-VK_SHADER_INFO_TYPE_DISASSEMBLY_AMD = VkShaderInfoTypeAMD(2)
-
-
-# ENUM VkQueueGlobalPriorityEXT
-VK_QUEUE_GLOBAL_PRIORITY_LOW_EXT = VkQueueGlobalPriorityEXT(128)
-VK_QUEUE_GLOBAL_PRIORITY_MEDIUM_EXT = VkQueueGlobalPriorityEXT(256)
-VK_QUEUE_GLOBAL_PRIORITY_HIGH_EXT = VkQueueGlobalPriorityEXT(512)
-VK_QUEUE_GLOBAL_PRIORITY_REALTIME_EXT = VkQueueGlobalPriorityEXT(1024)
-
-
-# ENUM VkDebugUtilsMessageSeverityFlagBitsEXT
+VkDebugUtilsMessageSeverityFlagBitsEXT = type('VkDebugUtilsMessageSeverityFlagBitsEXT', (ctypes.c_int,), dict())
 VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT = VkDebugUtilsMessageSeverityFlagBitsEXT(1)
 VK_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT = VkDebugUtilsMessageSeverityFlagBitsEXT(16)
 VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT = VkDebugUtilsMessageSeverityFlagBitsEXT(256)
 VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT = VkDebugUtilsMessageSeverityFlagBitsEXT(4096)
 
-
-# ENUM VkDebugUtilsMessageTypeFlagBitsEXT
+VkDebugUtilsMessageTypeFlagBitsEXT = type('VkDebugUtilsMessageTypeFlagBitsEXT', (ctypes.c_int,), dict())
 VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT = VkDebugUtilsMessageTypeFlagBitsEXT(1)
 VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT = VkDebugUtilsMessageTypeFlagBitsEXT(2)
 VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT = VkDebugUtilsMessageTypeFlagBitsEXT(4)
 
+VkFullScreenExclusiveEXT = type('VkFullScreenExclusiveEXT', (ctypes.c_int,), dict())
+VK_FULL_SCREEN_EXCLUSIVE_DEFAULT_EXT = VkFullScreenExclusiveEXT(0)
+VK_FULL_SCREEN_EXCLUSIVE_ALLOWED_EXT = VkFullScreenExclusiveEXT(1)
+VK_FULL_SCREEN_EXCLUSIVE_DISALLOWED_EXT = VkFullScreenExclusiveEXT(2)
+VK_FULL_SCREEN_EXCLUSIVE_APPLICATION_CONTROLLED_EXT = VkFullScreenExclusiveEXT(3)
 
-# ENUM VkConservativeRasterizationModeEXT
-VK_CONSERVATIVE_RASTERIZATION_MODE_DISABLED_EXT = VkConservativeRasterizationModeEXT(0)
-VK_CONSERVATIVE_RASTERIZATION_MODE_OVERESTIMATE_EXT = VkConservativeRasterizationModeEXT(1)
-VK_CONSERVATIVE_RASTERIZATION_MODE_UNDERESTIMATE_EXT = VkConservativeRasterizationModeEXT(2)
+VkShaderFloatControlsIndependence = type('VkShaderFloatControlsIndependence', (ctypes.c_int,), dict())
+VK_SHADER_FLOAT_CONTROLS_INDEPENDENCE_32_BIT_ONLY = VkShaderFloatControlsIndependence(0)
+VK_SHADER_FLOAT_CONTROLS_INDEPENDENCE_ALL = VkShaderFloatControlsIndependence(1)
+VK_SHADER_FLOAT_CONTROLS_INDEPENDENCE_NONE = VkShaderFloatControlsIndependence(2)
+VK_SHADER_FLOAT_CONTROLS_INDEPENDENCE_32_BIT_ONLY_KHR = VK_SHADER_FLOAT_CONTROLS_INDEPENDENCE_32_BIT_ONLY
+VK_SHADER_FLOAT_CONTROLS_INDEPENDENCE_ALL_KHR = VK_SHADER_FLOAT_CONTROLS_INDEPENDENCE_ALL
+VK_SHADER_FLOAT_CONTROLS_INDEPENDENCE_NONE_KHR = VK_SHADER_FLOAT_CONTROLS_INDEPENDENCE_NONE
 
+VkShaderFloatControlsIndependenceKHR = VkShaderFloatControlsIndependence
 
-# ENUM VkDescriptorBindingFlagBits
-VK_DESCRIPTOR_BINDING_UPDATE_AFTER_BIND_BIT = VkDescriptorBindingFlagBits(1)
-VK_DESCRIPTOR_BINDING_UPDATE_UNUSED_WHILE_PENDING_BIT = VkDescriptorBindingFlagBits(2)
-VK_DESCRIPTOR_BINDING_PARTIALLY_BOUND_BIT = VkDescriptorBindingFlagBits(4)
-VK_DESCRIPTOR_BINDING_VARIABLE_DESCRIPTOR_COUNT_BIT = VkDescriptorBindingFlagBits(8)
+VkSwapchainImageUsageFlagBitsANDROID = type('VkSwapchainImageUsageFlagBitsANDROID', (ctypes.c_int,), dict())
+VK_SWAPCHAIN_IMAGE_USAGE_SHARED_BIT_ANDROID = VkSwapchainImageUsageFlagBitsANDROID(1)
 
+VkFragmentShadingRateCombinerOpKHR = type('VkFragmentShadingRateCombinerOpKHR', (ctypes.c_int,), dict())
+VK_FRAGMENT_SHADING_RATE_COMBINER_OP_KEEP_KHR = VkFragmentShadingRateCombinerOpKHR(0)
+VK_FRAGMENT_SHADING_RATE_COMBINER_OP_REPLACE_KHR = VkFragmentShadingRateCombinerOpKHR(1)
+VK_FRAGMENT_SHADING_RATE_COMBINER_OP_MIN_KHR = VkFragmentShadingRateCombinerOpKHR(2)
+VK_FRAGMENT_SHADING_RATE_COMBINER_OP_MAX_KHR = VkFragmentShadingRateCombinerOpKHR(3)
+VK_FRAGMENT_SHADING_RATE_COMBINER_OP_MUL_KHR = VkFragmentShadingRateCombinerOpKHR(4)
 
-# ENUM VkVendorId
+VkVendorId = type('VkVendorId', (ctypes.c_int,), dict())
 VK_VENDOR_ID_VIV = VkVendorId(0x10001)
 VK_VENDOR_ID_VSI = VkVendorId(0x10002)
 VK_VENDOR_ID_KAZAN = VkVendorId(0x10003)
 VK_VENDOR_ID_CODEPLAY = VkVendorId(0x10004)
 VK_VENDOR_ID_MESA = VkVendorId(0x10005)
 
-
-# ENUM VkDriverId
+VkDriverId = type('VkDriverId', (ctypes.c_int,), dict())
 VK_DRIVER_ID_AMD_PROPRIETARY = VkDriverId(1)
 VK_DRIVER_ID_AMD_OPEN_SOURCE = VkDriverId(2)
 VK_DRIVER_ID_MESA_RADV = VkDriverId(3)
@@ -1697,21 +2705,22 @@ VK_DRIVER_ID_GGP_PROPRIETARY = VkDriverId(11)
 VK_DRIVER_ID_BROADCOM_PROPRIETARY = VkDriverId(12)
 VK_DRIVER_ID_MESA_LLVMPIPE = VkDriverId(13)
 VK_DRIVER_ID_MOLTENVK = VkDriverId(14)
+VK_DRIVER_ID_AMD_PROPRIETARY_KHR = VK_DRIVER_ID_AMD_PROPRIETARY
+VK_DRIVER_ID_AMD_OPEN_SOURCE_KHR = VK_DRIVER_ID_AMD_OPEN_SOURCE
+VK_DRIVER_ID_MESA_RADV_KHR = VK_DRIVER_ID_MESA_RADV
+VK_DRIVER_ID_NVIDIA_PROPRIETARY_KHR = VK_DRIVER_ID_NVIDIA_PROPRIETARY
+VK_DRIVER_ID_INTEL_PROPRIETARY_WINDOWS_KHR = VK_DRIVER_ID_INTEL_PROPRIETARY_WINDOWS
+VK_DRIVER_ID_INTEL_OPEN_SOURCE_MESA_KHR = VK_DRIVER_ID_INTEL_OPEN_SOURCE_MESA
+VK_DRIVER_ID_IMAGINATION_PROPRIETARY_KHR = VK_DRIVER_ID_IMAGINATION_PROPRIETARY
+VK_DRIVER_ID_QUALCOMM_PROPRIETARY_KHR = VK_DRIVER_ID_QUALCOMM_PROPRIETARY
+VK_DRIVER_ID_ARM_PROPRIETARY_KHR = VK_DRIVER_ID_ARM_PROPRIETARY
+VK_DRIVER_ID_GOOGLE_SWIFTSHADER_KHR = VK_DRIVER_ID_GOOGLE_SWIFTSHADER
+VK_DRIVER_ID_GGP_PROPRIETARY_KHR = VK_DRIVER_ID_GGP_PROPRIETARY
+VK_DRIVER_ID_BROADCOM_PROPRIETARY_KHR = VK_DRIVER_ID_BROADCOM_PROPRIETARY
 
+VkDriverIdKHR = VkDriverId
 
-# ENUM VkConditionalRenderingFlagBitsEXT
-VK_CONDITIONAL_RENDERING_INVERTED_BIT_EXT = VkConditionalRenderingFlagBitsEXT(1)
-
-
-# ENUM VkResolveModeFlagBits
-VK_RESOLVE_MODE_NONE = VkResolveModeFlagBits(0)
-VK_RESOLVE_MODE_SAMPLE_ZERO_BIT = VkResolveModeFlagBits(1)
-VK_RESOLVE_MODE_AVERAGE_BIT = VkResolveModeFlagBits(2)
-VK_RESOLVE_MODE_MIN_BIT = VkResolveModeFlagBits(4)
-VK_RESOLVE_MODE_MAX_BIT = VkResolveModeFlagBits(8)
-
-
-# ENUM VkShadingRatePaletteEntryNV
+VkShadingRatePaletteEntryNV = type('VkShadingRatePaletteEntryNV', (ctypes.c_int,), dict())
 VK_SHADING_RATE_PALETTE_ENTRY_NO_INVOCATIONS_NV = VkShadingRatePaletteEntryNV(0)
 VK_SHADING_RATE_PALETTE_ENTRY_16_INVOCATIONS_PER_PIXEL_NV = VkShadingRatePaletteEntryNV(1)
 VK_SHADING_RATE_PALETTE_ENTRY_8_INVOCATIONS_PER_PIXEL_NV = VkShadingRatePaletteEntryNV(2)
@@ -1725,269 +2734,15 @@ VK_SHADING_RATE_PALETTE_ENTRY_1_INVOCATION_PER_4X2_PIXELS_NV = VkShadingRatePale
 VK_SHADING_RATE_PALETTE_ENTRY_1_INVOCATION_PER_2X4_PIXELS_NV = VkShadingRatePaletteEntryNV(10)
 VK_SHADING_RATE_PALETTE_ENTRY_1_INVOCATION_PER_4X4_PIXELS_NV = VkShadingRatePaletteEntryNV(11)
 
-
-# ENUM VkCoarseSampleOrderTypeNV
+VkCoarseSampleOrderTypeNV = type('VkCoarseSampleOrderTypeNV', (ctypes.c_int,), dict())
 VK_COARSE_SAMPLE_ORDER_TYPE_DEFAULT_NV = VkCoarseSampleOrderTypeNV(0)
 VK_COARSE_SAMPLE_ORDER_TYPE_CUSTOM_NV = VkCoarseSampleOrderTypeNV(1)
 VK_COARSE_SAMPLE_ORDER_TYPE_PIXEL_MAJOR_NV = VkCoarseSampleOrderTypeNV(2)
 VK_COARSE_SAMPLE_ORDER_TYPE_SAMPLE_MAJOR_NV = VkCoarseSampleOrderTypeNV(3)
 
-
-# ENUM VkGeometryInstanceFlagBitsKHR
-VK_GEOMETRY_INSTANCE_TRIANGLE_FACING_CULL_DISABLE_BIT_KHR = VkGeometryInstanceFlagBitsKHR(1)
-VK_GEOMETRY_INSTANCE_TRIANGLE_FRONT_COUNTERCLOCKWISE_BIT_KHR = VkGeometryInstanceFlagBitsKHR(2)
-VK_GEOMETRY_INSTANCE_FORCE_OPAQUE_BIT_KHR = VkGeometryInstanceFlagBitsKHR(4)
-VK_GEOMETRY_INSTANCE_FORCE_NO_OPAQUE_BIT_KHR = VkGeometryInstanceFlagBitsKHR(8)
-
-
-# ENUM VkGeometryFlagBitsKHR
-VK_GEOMETRY_OPAQUE_BIT_KHR = VkGeometryFlagBitsKHR(1)
-VK_GEOMETRY_NO_DUPLICATE_ANY_HIT_INVOCATION_BIT_KHR = VkGeometryFlagBitsKHR(2)
-
-
-# ENUM VkBuildAccelerationStructureFlagBitsKHR
-VK_BUILD_ACCELERATION_STRUCTURE_ALLOW_UPDATE_BIT_KHR = VkBuildAccelerationStructureFlagBitsKHR(1)
-VK_BUILD_ACCELERATION_STRUCTURE_ALLOW_COMPACTION_BIT_KHR = VkBuildAccelerationStructureFlagBitsKHR(2)
-VK_BUILD_ACCELERATION_STRUCTURE_PREFER_FAST_TRACE_BIT_KHR = VkBuildAccelerationStructureFlagBitsKHR(4)
-VK_BUILD_ACCELERATION_STRUCTURE_PREFER_FAST_BUILD_BIT_KHR = VkBuildAccelerationStructureFlagBitsKHR(8)
-VK_BUILD_ACCELERATION_STRUCTURE_LOW_MEMORY_BIT_KHR = VkBuildAccelerationStructureFlagBitsKHR(16)
-
-
-# ENUM VkAccelerationStructureCreateFlagBitsKHR
-VK_ACCELERATION_STRUCTURE_CREATE_DEVICE_ADDRESS_CAPTURE_REPLAY_BIT_KHR = VkAccelerationStructureCreateFlagBitsKHR(1)
-
-
-# ENUM VkCopyAccelerationStructureModeKHR
-VK_COPY_ACCELERATION_STRUCTURE_MODE_CLONE_KHR = VkCopyAccelerationStructureModeKHR(0)
-VK_COPY_ACCELERATION_STRUCTURE_MODE_COMPACT_KHR = VkCopyAccelerationStructureModeKHR(1)
-VK_COPY_ACCELERATION_STRUCTURE_MODE_SERIALIZE_KHR = VkCopyAccelerationStructureModeKHR(2)
-VK_COPY_ACCELERATION_STRUCTURE_MODE_DESERIALIZE_KHR = VkCopyAccelerationStructureModeKHR(3)
-
-
-# ENUM VkBuildAccelerationStructureModeKHR
-VK_BUILD_ACCELERATION_STRUCTURE_MODE_BUILD_KHR = VkBuildAccelerationStructureModeKHR(0)
-VK_BUILD_ACCELERATION_STRUCTURE_MODE_UPDATE_KHR = VkBuildAccelerationStructureModeKHR(1)
-
-
-# ENUM VkAccelerationStructureTypeKHR
-VK_ACCELERATION_STRUCTURE_TYPE_TOP_LEVEL_KHR = VkAccelerationStructureTypeKHR(0)
-VK_ACCELERATION_STRUCTURE_TYPE_BOTTOM_LEVEL_KHR = VkAccelerationStructureTypeKHR(1)
-VK_ACCELERATION_STRUCTURE_TYPE_GENERIC_KHR = VkAccelerationStructureTypeKHR(2)
-
-
-# ENUM VkGeometryTypeKHR
-VK_GEOMETRY_TYPE_TRIANGLES_KHR = VkGeometryTypeKHR(0)
-VK_GEOMETRY_TYPE_AABBS_KHR = VkGeometryTypeKHR(1)
-VK_GEOMETRY_TYPE_INSTANCES_KHR = VkGeometryTypeKHR(2)
-
-
-# ENUM VkAccelerationStructureMemoryRequirementsTypeNV
-VK_ACCELERATION_STRUCTURE_MEMORY_REQUIREMENTS_TYPE_OBJECT_NV = VkAccelerationStructureMemoryRequirementsTypeNV(0)
-VK_ACCELERATION_STRUCTURE_MEMORY_REQUIREMENTS_TYPE_BUILD_SCRATCH_NV = VkAccelerationStructureMemoryRequirementsTypeNV(1)
-VK_ACCELERATION_STRUCTURE_MEMORY_REQUIREMENTS_TYPE_UPDATE_SCRATCH_NV = VkAccelerationStructureMemoryRequirementsTypeNV(2)
-
-
-# ENUM VkAccelerationStructureBuildTypeKHR
-VK_ACCELERATION_STRUCTURE_BUILD_TYPE_HOST_KHR = VkAccelerationStructureBuildTypeKHR(0)
-VK_ACCELERATION_STRUCTURE_BUILD_TYPE_DEVICE_KHR = VkAccelerationStructureBuildTypeKHR(1)
-VK_ACCELERATION_STRUCTURE_BUILD_TYPE_HOST_OR_DEVICE_KHR = VkAccelerationStructureBuildTypeKHR(2)
-
-
-# ENUM VkRayTracingShaderGroupTypeKHR
-VK_RAY_TRACING_SHADER_GROUP_TYPE_GENERAL_KHR = VkRayTracingShaderGroupTypeKHR(0)
-VK_RAY_TRACING_SHADER_GROUP_TYPE_TRIANGLES_HIT_GROUP_KHR = VkRayTracingShaderGroupTypeKHR(1)
-VK_RAY_TRACING_SHADER_GROUP_TYPE_PROCEDURAL_HIT_GROUP_KHR = VkRayTracingShaderGroupTypeKHR(2)
-
-
-# ENUM VkAccelerationStructureCompatibilityKHR
-VK_ACCELERATION_STRUCTURE_COMPATIBILITY_COMPATIBLE_KHR = VkAccelerationStructureCompatibilityKHR(0)
-VK_ACCELERATION_STRUCTURE_COMPATIBILITY_INCOMPATIBLE_KHR = VkAccelerationStructureCompatibilityKHR(1)
-
-
-# ENUM VkShaderGroupShaderKHR
-VK_SHADER_GROUP_SHADER_GENERAL_KHR = VkShaderGroupShaderKHR(0)
-VK_SHADER_GROUP_SHADER_CLOSEST_HIT_KHR = VkShaderGroupShaderKHR(1)
-VK_SHADER_GROUP_SHADER_ANY_HIT_KHR = VkShaderGroupShaderKHR(2)
-VK_SHADER_GROUP_SHADER_INTERSECTION_KHR = VkShaderGroupShaderKHR(3)
-
-
-# ENUM VkMemoryOverallocationBehaviorAMD
-VK_MEMORY_OVERALLOCATION_BEHAVIOR_DEFAULT_AMD = VkMemoryOverallocationBehaviorAMD(0)
-VK_MEMORY_OVERALLOCATION_BEHAVIOR_ALLOWED_AMD = VkMemoryOverallocationBehaviorAMD(1)
-VK_MEMORY_OVERALLOCATION_BEHAVIOR_DISALLOWED_AMD = VkMemoryOverallocationBehaviorAMD(2)
-
-
-# ENUM VkFramebufferCreateFlagBits
-
-
-# ENUM VkScopeNV
-VK_SCOPE_DEVICE_NV = VkScopeNV(1)
-VK_SCOPE_WORKGROUP_NV = VkScopeNV(2)
-VK_SCOPE_SUBGROUP_NV = VkScopeNV(3)
-VK_SCOPE_QUEUE_FAMILY_NV = VkScopeNV(5)
-
-
-# ENUM VkComponentTypeNV
-VK_COMPONENT_TYPE_FLOAT16_NV = VkComponentTypeNV(0)
-VK_COMPONENT_TYPE_FLOAT32_NV = VkComponentTypeNV(1)
-VK_COMPONENT_TYPE_FLOAT64_NV = VkComponentTypeNV(2)
-VK_COMPONENT_TYPE_SINT8_NV = VkComponentTypeNV(3)
-VK_COMPONENT_TYPE_SINT16_NV = VkComponentTypeNV(4)
-VK_COMPONENT_TYPE_SINT32_NV = VkComponentTypeNV(5)
-VK_COMPONENT_TYPE_SINT64_NV = VkComponentTypeNV(6)
-VK_COMPONENT_TYPE_UINT8_NV = VkComponentTypeNV(7)
-VK_COMPONENT_TYPE_UINT16_NV = VkComponentTypeNV(8)
-VK_COMPONENT_TYPE_UINT32_NV = VkComponentTypeNV(9)
-VK_COMPONENT_TYPE_UINT64_NV = VkComponentTypeNV(10)
-
-
-# ENUM VkDeviceDiagnosticsConfigFlagBitsNV
-VK_DEVICE_DIAGNOSTICS_CONFIG_ENABLE_SHADER_DEBUG_INFO_BIT_NV = VkDeviceDiagnosticsConfigFlagBitsNV(1)
-VK_DEVICE_DIAGNOSTICS_CONFIG_ENABLE_RESOURCE_TRACKING_BIT_NV = VkDeviceDiagnosticsConfigFlagBitsNV(2)
-VK_DEVICE_DIAGNOSTICS_CONFIG_ENABLE_AUTOMATIC_CHECKPOINTS_BIT_NV = VkDeviceDiagnosticsConfigFlagBitsNV(4)
-
-
-# ENUM VkPipelineCreationFeedbackFlagBitsEXT
-VK_PIPELINE_CREATION_FEEDBACK_VALID_BIT_EXT = VkPipelineCreationFeedbackFlagBitsEXT(1)
-VK_PIPELINE_CREATION_FEEDBACK_APPLICATION_PIPELINE_CACHE_HIT_BIT_EXT = VkPipelineCreationFeedbackFlagBitsEXT(2)
-VK_PIPELINE_CREATION_FEEDBACK_BASE_PIPELINE_ACCELERATION_BIT_EXT = VkPipelineCreationFeedbackFlagBitsEXT(4)
-
-
-# ENUM VkFullScreenExclusiveEXT
-VK_FULL_SCREEN_EXCLUSIVE_DEFAULT_EXT = VkFullScreenExclusiveEXT(0)
-VK_FULL_SCREEN_EXCLUSIVE_ALLOWED_EXT = VkFullScreenExclusiveEXT(1)
-VK_FULL_SCREEN_EXCLUSIVE_DISALLOWED_EXT = VkFullScreenExclusiveEXT(2)
-VK_FULL_SCREEN_EXCLUSIVE_APPLICATION_CONTROLLED_EXT = VkFullScreenExclusiveEXT(3)
-
-
-# ENUM VkPerformanceCounterScopeKHR
-VK_PERFORMANCE_COUNTER_SCOPE_COMMAND_BUFFER_KHR = VkPerformanceCounterScopeKHR(0)
-VK_PERFORMANCE_COUNTER_SCOPE_RENDER_PASS_KHR = VkPerformanceCounterScopeKHR(1)
-VK_PERFORMANCE_COUNTER_SCOPE_COMMAND_KHR = VkPerformanceCounterScopeKHR(2)
-VK_QUERY_SCOPE_COMMAND_BUFFER_KHR = VK_PERFORMANCE_COUNTER_SCOPE_COMMAND_BUFFER_KHR
-VK_QUERY_SCOPE_RENDER_PASS_KHR = VK_PERFORMANCE_COUNTER_SCOPE_RENDER_PASS_KHR
-VK_QUERY_SCOPE_COMMAND_KHR = VK_PERFORMANCE_COUNTER_SCOPE_COMMAND_KHR
-
-
-# ENUM VkPerformanceCounterUnitKHR
-VK_PERFORMANCE_COUNTER_UNIT_GENERIC_KHR = VkPerformanceCounterUnitKHR(0)
-VK_PERFORMANCE_COUNTER_UNIT_PERCENTAGE_KHR = VkPerformanceCounterUnitKHR(1)
-VK_PERFORMANCE_COUNTER_UNIT_NANOSECONDS_KHR = VkPerformanceCounterUnitKHR(2)
-VK_PERFORMANCE_COUNTER_UNIT_BYTES_KHR = VkPerformanceCounterUnitKHR(3)
-VK_PERFORMANCE_COUNTER_UNIT_BYTES_PER_SECOND_KHR = VkPerformanceCounterUnitKHR(4)
-VK_PERFORMANCE_COUNTER_UNIT_KELVIN_KHR = VkPerformanceCounterUnitKHR(5)
-VK_PERFORMANCE_COUNTER_UNIT_WATTS_KHR = VkPerformanceCounterUnitKHR(6)
-VK_PERFORMANCE_COUNTER_UNIT_VOLTS_KHR = VkPerformanceCounterUnitKHR(7)
-VK_PERFORMANCE_COUNTER_UNIT_AMPS_KHR = VkPerformanceCounterUnitKHR(8)
-VK_PERFORMANCE_COUNTER_UNIT_HERTZ_KHR = VkPerformanceCounterUnitKHR(9)
-VK_PERFORMANCE_COUNTER_UNIT_CYCLES_KHR = VkPerformanceCounterUnitKHR(10)
-
-
-# ENUM VkPerformanceCounterStorageKHR
-VK_PERFORMANCE_COUNTER_STORAGE_INT32_KHR = VkPerformanceCounterStorageKHR(0)
-VK_PERFORMANCE_COUNTER_STORAGE_INT64_KHR = VkPerformanceCounterStorageKHR(1)
-VK_PERFORMANCE_COUNTER_STORAGE_UINT32_KHR = VkPerformanceCounterStorageKHR(2)
-VK_PERFORMANCE_COUNTER_STORAGE_UINT64_KHR = VkPerformanceCounterStorageKHR(3)
-VK_PERFORMANCE_COUNTER_STORAGE_FLOAT32_KHR = VkPerformanceCounterStorageKHR(4)
-VK_PERFORMANCE_COUNTER_STORAGE_FLOAT64_KHR = VkPerformanceCounterStorageKHR(5)
-
-
-# ENUM VkPerformanceCounterDescriptionFlagBitsKHR
-VK_PERFORMANCE_COUNTER_DESCRIPTION_PERFORMANCE_IMPACTING_BIT_KHR = VkPerformanceCounterDescriptionFlagBitsKHR(1)
-VK_PERFORMANCE_COUNTER_DESCRIPTION_PERFORMANCE_IMPACTING_KHR = VK_PERFORMANCE_COUNTER_DESCRIPTION_PERFORMANCE_IMPACTING_BIT_KHR
-VK_PERFORMANCE_COUNTER_DESCRIPTION_CONCURRENTLY_IMPACTED_BIT_KHR = VkPerformanceCounterDescriptionFlagBitsKHR(2)
-VK_PERFORMANCE_COUNTER_DESCRIPTION_CONCURRENTLY_IMPACTED_KHR = VK_PERFORMANCE_COUNTER_DESCRIPTION_CONCURRENTLY_IMPACTED_BIT_KHR
-
-
-# ENUM VkAcquireProfilingLockFlagBitsKHR
-
-
-# ENUM VkShaderCorePropertiesFlagBitsAMD
-
-
-# ENUM VkPerformanceConfigurationTypeINTEL
-VK_PERFORMANCE_CONFIGURATION_TYPE_COMMAND_QUEUE_METRICS_DISCOVERY_ACTIVATED_INTEL = VkPerformanceConfigurationTypeINTEL(0)
-
-
-# ENUM VkQueryPoolSamplingModeINTEL
-VK_QUERY_POOL_SAMPLING_MODE_MANUAL_INTEL = VkQueryPoolSamplingModeINTEL(0)
-
-
-# ENUM VkPerformanceOverrideTypeINTEL
-VK_PERFORMANCE_OVERRIDE_TYPE_NULL_HARDWARE_INTEL = VkPerformanceOverrideTypeINTEL(0)
-VK_PERFORMANCE_OVERRIDE_TYPE_FLUSH_GPU_CACHES_INTEL = VkPerformanceOverrideTypeINTEL(1)
-
-
-# ENUM VkPerformanceParameterTypeINTEL
-VK_PERFORMANCE_PARAMETER_TYPE_HW_COUNTERS_SUPPORTED_INTEL = VkPerformanceParameterTypeINTEL(0)
-VK_PERFORMANCE_PARAMETER_TYPE_STREAM_MARKER_VALID_BITS_INTEL = VkPerformanceParameterTypeINTEL(1)
-
-
-# ENUM VkPerformanceValueTypeINTEL
-VK_PERFORMANCE_VALUE_TYPE_UINT32_INTEL = VkPerformanceValueTypeINTEL(0)
-VK_PERFORMANCE_VALUE_TYPE_UINT64_INTEL = VkPerformanceValueTypeINTEL(1)
-VK_PERFORMANCE_VALUE_TYPE_FLOAT_INTEL = VkPerformanceValueTypeINTEL(2)
-VK_PERFORMANCE_VALUE_TYPE_BOOL_INTEL = VkPerformanceValueTypeINTEL(3)
-VK_PERFORMANCE_VALUE_TYPE_STRING_INTEL = VkPerformanceValueTypeINTEL(4)
-
-
-# ENUM VkShaderFloatControlsIndependence
-VK_SHADER_FLOAT_CONTROLS_INDEPENDENCE_32_BIT_ONLY = VkShaderFloatControlsIndependence(0)
-VK_SHADER_FLOAT_CONTROLS_INDEPENDENCE_ALL = VkShaderFloatControlsIndependence(1)
-VK_SHADER_FLOAT_CONTROLS_INDEPENDENCE_NONE = VkShaderFloatControlsIndependence(2)
-
-
-# ENUM VkPipelineExecutableStatisticFormatKHR
+VkPipelineExecutableStatisticFormatKHR = type('VkPipelineExecutableStatisticFormatKHR', (ctypes.c_int,), dict())
 VK_PIPELINE_EXECUTABLE_STATISTIC_FORMAT_BOOL32_KHR = VkPipelineExecutableStatisticFormatKHR(0)
 VK_PIPELINE_EXECUTABLE_STATISTIC_FORMAT_INT64_KHR = VkPipelineExecutableStatisticFormatKHR(1)
 VK_PIPELINE_EXECUTABLE_STATISTIC_FORMAT_UINT64_KHR = VkPipelineExecutableStatisticFormatKHR(2)
 VK_PIPELINE_EXECUTABLE_STATISTIC_FORMAT_FLOAT64_KHR = VkPipelineExecutableStatisticFormatKHR(3)
 
-
-# ENUM VkLineRasterizationModeEXT
-VK_LINE_RASTERIZATION_MODE_DEFAULT_EXT = VkLineRasterizationModeEXT(0)
-VK_LINE_RASTERIZATION_MODE_RECTANGULAR_EXT = VkLineRasterizationModeEXT(1)
-VK_LINE_RASTERIZATION_MODE_BRESENHAM_EXT = VkLineRasterizationModeEXT(2)
-VK_LINE_RASTERIZATION_MODE_RECTANGULAR_SMOOTH_EXT = VkLineRasterizationModeEXT(3)
-
-
-# ENUM VkShaderModuleCreateFlagBits
-
-
-# ENUM VkPipelineCompilerControlFlagBitsAMD
-
-
-# ENUM VkToolPurposeFlagBitsEXT
-VK_TOOL_PURPOSE_VALIDATION_BIT_EXT = VkToolPurposeFlagBitsEXT(1)
-VK_TOOL_PURPOSE_PROFILING_BIT_EXT = VkToolPurposeFlagBitsEXT(2)
-VK_TOOL_PURPOSE_TRACING_BIT_EXT = VkToolPurposeFlagBitsEXT(4)
-VK_TOOL_PURPOSE_ADDITIONAL_FEATURES_BIT_EXT = VkToolPurposeFlagBitsEXT(8)
-VK_TOOL_PURPOSE_MODIFYING_FEATURES_BIT_EXT = VkToolPurposeFlagBitsEXT(16)
-
-
-# ENUM VkFragmentShadingRateCombinerOpKHR
-VK_FRAGMENT_SHADING_RATE_COMBINER_OP_KEEP_KHR = VkFragmentShadingRateCombinerOpKHR(0)
-VK_FRAGMENT_SHADING_RATE_COMBINER_OP_REPLACE_KHR = VkFragmentShadingRateCombinerOpKHR(1)
-VK_FRAGMENT_SHADING_RATE_COMBINER_OP_MIN_KHR = VkFragmentShadingRateCombinerOpKHR(2)
-VK_FRAGMENT_SHADING_RATE_COMBINER_OP_MAX_KHR = VkFragmentShadingRateCombinerOpKHR(3)
-VK_FRAGMENT_SHADING_RATE_COMBINER_OP_MUL_KHR = VkFragmentShadingRateCombinerOpKHR(4)
-
-
-# ENUM VkFragmentShadingRateNV
-VK_FRAGMENT_SHADING_RATE_1_INVOCATION_PER_PIXEL_NV = VkFragmentShadingRateNV(0)
-VK_FRAGMENT_SHADING_RATE_1_INVOCATION_PER_1X2_PIXELS_NV = VkFragmentShadingRateNV(1)
-VK_FRAGMENT_SHADING_RATE_1_INVOCATION_PER_2X1_PIXELS_NV = VkFragmentShadingRateNV(4)
-VK_FRAGMENT_SHADING_RATE_1_INVOCATION_PER_2X2_PIXELS_NV = VkFragmentShadingRateNV(5)
-VK_FRAGMENT_SHADING_RATE_1_INVOCATION_PER_2X4_PIXELS_NV = VkFragmentShadingRateNV(6)
-VK_FRAGMENT_SHADING_RATE_1_INVOCATION_PER_4X2_PIXELS_NV = VkFragmentShadingRateNV(9)
-VK_FRAGMENT_SHADING_RATE_1_INVOCATION_PER_4X4_PIXELS_NV = VkFragmentShadingRateNV(10)
-VK_FRAGMENT_SHADING_RATE_2_INVOCATIONS_PER_PIXEL_NV = VkFragmentShadingRateNV(11)
-VK_FRAGMENT_SHADING_RATE_4_INVOCATIONS_PER_PIXEL_NV = VkFragmentShadingRateNV(12)
-VK_FRAGMENT_SHADING_RATE_8_INVOCATIONS_PER_PIXEL_NV = VkFragmentShadingRateNV(13)
-VK_FRAGMENT_SHADING_RATE_16_INVOCATIONS_PER_PIXEL_NV = VkFragmentShadingRateNV(14)
-VK_FRAGMENT_SHADING_RATE_NO_INVOCATIONS_NV = VkFragmentShadingRateNV(15)
-
-
-# ENUM VkFragmentShadingRateTypeNV
-VK_FRAGMENT_SHADING_RATE_TYPE_FRAGMENT_SIZE_NV = VkFragmentShadingRateTypeNV(0)
-VK_FRAGMENT_SHADING_RATE_TYPE_ENUMS_NV = VkFragmentShadingRateTypeNV(1)
