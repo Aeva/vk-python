@@ -1,5 +1,6 @@
 
 import os
+import re
 import ctypes
 import bs4
 
@@ -20,7 +21,6 @@ with open(XML_PATH, 'r') as infile:
 
 def rewrite_type(typename):
     basic = {
-        "void" : "ctypes.c_void",
         "char" : "ctypes.c_char",
         "float" : "ctypes.c_float",
         "double" : "ctypes.c_double",
@@ -51,6 +51,40 @@ common_constants = {
     "(~0U-2)" : "0xFFFFFFFF - 2",
     "(~0ULL)" : "0xFFFFFFFFFFFFFFFF",
 }
+
+
+def parse_type(c_noise):
+    match = re.match(r'^(\w[A-Za-z0-9_* ]+?)\s+(\w[A-Za-z0-9_]*)(\[[A-Za-z0-9_\[\]]*\])?(:\d+)?$', c_noise)
+    assert(match is not None)
+    m_type, m_name, m_subscript, m_bitfield = match.groups()
+    if m_subscript:
+        assert(m_bitfield is None)
+        m_subscript = re.findall(r'\[([^\[\]]*)\]', m_subscript)
+        assert(len(m_subscript) > 0)
+    if m_bitfield:
+        assert(m_subscript is None)
+        m_bitfield = m_bitfield[1:]
+
+    scrub = re.sub(r'(const|struct|union)', '', m_type).strip()
+    match = re.match(r'^(\w[A-Za-z0-9_]*)([* ]+)?$', scrub)
+    assert(match is not None)
+    m_type, pointers = match.groups()
+    if pointers:
+        pointers = pointers.count("*")
+    else:
+        pointers = 0
+    if m_type == "void":
+        if pointers > 0:
+            m_type = "ctypes.c_void_p"
+            pointers -= 1
+        else:
+            m_type = "None"
+    m_type = rewrite_type(m_type)
+    if m_subscript:
+        m_type = f"({m_type} * ({' * '.join(m_subscript)}))"
+    for i in range(pointers):
+        m_type = f"ctypes.POINTER({m_type})"
+    return m_type, m_name, m_bitfield
 
 
 class vk_type:
@@ -179,16 +213,65 @@ class vk_enum(vk_type):
 class vk_funcpointer(vk_type):
     def __init__(self, tag):
         super().__init__(tag)
+        lines = [i.strip() for i in tag.text.split("\n")]
+        match = re.match(r'^typedef\s*(\w[A-Za-z0-9_*]*)\s*\(', lines.pop(0))
+        assert(match is not None)
+        r_type, r_name, r_bitfield = parse_type(match.groups()[0] + " name")
+        assert(r_bitfield is None)
+        self.args = [r_type]
+        for line in lines:
+            line = line.strip()
+            if not line:
+                continue
+            line = re.sub(r'(,|\);)$', '', line)
+            a_type, a_name, a_bitfield = parse_type(line)
+            assert(a_bitfield is None)
+            assert(a_type != "None")
+            self.args.append(a_type)
+
+    def __str__(self):
+        assert(self.alias is None)
+        args = ", ".join(self.args)
+        return f"{self.name} = VK_FUNCTYPE({args})\n"
 
 
 class vk_struct(vk_type):
     def __init__(self, tag):
         super().__init__(tag)
+        self.kind = "Structure"
+        for child in tag.find_all("comment"):
+            child.replace_with("")
+        for child in tag.find_all("type"):
+            # VkBufferViewCreateInfo has problems without this :|
+            child.insert_after(" ")
+        lines = tag.text.strip().split("\n")
+        self.fields = []
+        for line in lines:
+            line = line.strip()
+            if not line:
+                continue
+            m_type, m_name, m_bitfield = parse_type(line)
+            assert(m_type != "None")
+            self.fields.append((m_type, m_name, m_bitfield))
+
+    def declare(self):
+        if self.alias:
+            return f"{self.name} = type('{self.name}', ({self.alias},), dict())\n"
+        else:
+            return f"{self.name} = type('{self.name}', (ctypes.{self.kind},), dict())\n"
+
+    def define(self):
+        if self.alias:
+            return ""
+        else:
+            fields = ", ".join([f"('{n}', {t}, {b})" if b else f"('{n}', {t})" for (t, n, b) in self.fields])
+            return f"{self.name}._fields_ = [{fields}]\n"
 
 
-class vk_union(vk_type):
+class vk_union(vk_struct):
     def __init__(self, tag):
         super().__init__(tag)
+        self.kind = "Union"
 
 
 class vk_boilerplate:
@@ -251,8 +334,9 @@ else:
         src += "".join(map(str, self.bitmasks)) + "\n"
         src += "".join(map(str, self.handles)) + "\n"
         src += "\n".join(map(str, self.enums)) + "\n"
-        #src += "".join(map(str, self.funcpointers)) + "\n"
-        #src += "".join(map(str, self.structs)) + "\n"
+        src += "".join(map(lambda x: x.declare(), self.structs)) + "\n"
+        src += "".join(map(str, self.funcpointers)) + "\n"
+        src += "".join(map(lambda x: x.define(), self.structs)) + "\n"
         return src
 
 boilerplate = vk_boilerplate(REGISTRY)
