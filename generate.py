@@ -87,6 +87,30 @@ def parse_type(c_noise):
     return m_type, m_name, m_bitfield
 
 
+# The following structs have fields which require platform specific types.
+# As this script does not have a good way of handling these yet, their
+# generated definitions are simply commented out for now.
+SKIP_STRUCTS = [
+    "VkWaylandSurfaceCreateInfoKHR",
+    "VkWin32SurfaceCreateInfoKHR",
+    "VkXlibSurfaceCreateInfoKHR",
+    "VkXcbSurfaceCreateInfoKHR",
+    "VkDirectFBSurfaceCreateInfoEXT",
+    "VkImagePipeSurfaceCreateInfoFUCHSIA",
+    "VkStreamDescriptorSurfaceCreateInfoGGP",
+    "VkImportMemoryWin32HandleInfoNV",
+    "VkExportMemoryWin32HandleInfoNV",
+    "VkImportMemoryWin32HandleInfoKHR",
+    "VkExportMemoryWin32HandleInfoKHR",
+    "VkImportSemaphoreWin32HandleInfoKHR",
+    "VkExportSemaphoreWin32HandleInfoKHR",
+    "VkImportFenceWin32HandleInfoKHR",
+    "VkExportFenceWin32HandleInfoKHR",
+    "VkPresentFrameTokenGGP",
+    "VkSurfaceFullScreenExclusiveWin32InfoEXT",
+]
+
+
 class vk_type:
     def __init__(self, tag):
         self.requires = tag.get("requires")
@@ -246,6 +270,8 @@ class vk_struct(vk_type):
             # VkBufferViewCreateInfo has problems without this :|
             child.insert_after(" ")
         lines = tag.text.strip().split("\n")
+        if self.alias:
+            self.dependencies.append(self.alias)
         self.fields = []
         for line in lines:
             line = line.strip()
@@ -260,16 +286,17 @@ class vk_struct(vk_type):
 
     def declare(self):
         if self.alias:
-            return f"{self.name} = type('{self.name}', ({self.alias},), dict())\n"
+            return ""
         else:
             return f"{self.name} = type('{self.name}', (ctypes.{self.kind},), dict())\n"
 
     def define(self):
         if self.alias:
-            return ""
+            return f"{self.name} = type('{self.name}', ({self.alias},), dict())\n"
         else:
             fields = ", ".join([f"('{n}', {t}, {b})" if b else f"('{n}', {t})" for (t, n, b) in self.fields])
-            return f"{self.name}._fields_ = [{fields}]\n"
+            prefix = "#" if self.name in SKIP_STRUCTS else ""
+            return f"{prefix}{self.name}._fields_ = [{fields}]\n"
 
 
 class vk_union(vk_struct):
