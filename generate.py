@@ -238,6 +238,7 @@ class vk_funcpointer(vk_type):
 class vk_struct(vk_type):
     def __init__(self, tag):
         super().__init__(tag)
+        self.dependencies = []
         self.kind = "Structure"
         for child in tag.find_all("comment"):
             child.replace_with("")
@@ -253,6 +254,9 @@ class vk_struct(vk_type):
             m_type, m_name, m_bitfield = parse_type(line)
             assert(m_type != "None")
             self.fields.append((m_type, m_name, m_bitfield))
+            for found in re.findall(r'vk[a-z_]*', m_type, re.IGNORECASE):
+                if found != self.name and not found in self.dependencies:
+                    self.dependencies.append(found)
 
     def declare(self):
         if self.alias:
@@ -282,6 +286,7 @@ class vk_boilerplate:
         self.enums = []
         self.funcpointers = []
         self.structs = []
+        structs_dict = {}
 
         # API Constants
         self.enums.append(vk_enum(None, soup))
@@ -301,9 +306,23 @@ class vk_boilerplate:
                 elif category == "funcpointer":
                     self.funcpointers.append(vk_funcpointer(type_tag))
                 elif category == "struct":
-                    self.structs.append(vk_struct(type_tag))
+                    struct = vk_struct(type_tag)
+                    structs_dict[struct.name] = struct
                 elif category == "union":
-                    self.structs.append(vk_union(type_tag))
+                    struct = vk_union(type_tag)
+                    structs_dict[struct.name] = struct
+
+        # resolve struct dependency ordering
+        committed = set()
+        def commit(struct):
+            if not struct.name in committed:
+                committed.add(struct.name)
+                for name in struct.dependencies:
+                    if name in structs_dict:
+                        commit(structs_dict[name])
+                self.structs.append(struct)
+        for struct in structs_dict.values():
+            commit(struct)
 
     def __str__(self):
         src = """
