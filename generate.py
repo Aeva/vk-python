@@ -86,6 +86,9 @@ def parse_type(c_noise):
             pointers -= 1
         else:
             m_type = "None"
+    if m_type == "char" and pointers > 0:
+        m_type = "ctypes.c_char_p"
+        pointers -= 1
     m_type = rewrite_type(m_type)
     if m_subscript:
         m_type = f"({m_type} * ({' * '.join(m_subscript)}))"
@@ -102,6 +105,19 @@ def indent(src):
         else:
             new_lines.append("")
     return "\n".join(new_lines)
+
+
+def vk_define(tag):
+    found = re.findall(r'#define VK_HEADER_VERSION ([0-9]+)', tag.text)
+    if found:
+        return f"VK_HEADER_VERSION = {found[0]}"
+
+    found = re.findall(r'#define (\w+) (VK_MAKE_VERSION\( ?\w ?, ?\w ?, ?\w ?\))', tag.text)
+    if found:
+        name, value = found[0]
+        return f"{name} = {value}"
+
+    return None
 
 
 class vk_type:
@@ -307,6 +323,7 @@ class vk_union(vk_struct):
 class vk_command:
     def __init__(self, tag):
         self.condition = None
+        self.loader_type = None
         self.alias = tag.get("alias")
         if self.alias:
             self.name = tag.get("name")
@@ -324,9 +341,17 @@ class vk_command:
     def __str__(self):
         src = "pass"
         if self.alias:
-            src = f"{self.name} = {self.alias}\n"
+            src = f"PFN_{self.name} = PFN_{self.alias}\n"
+            src += f"{self.name} = {self.alias}\n"
+        elif self.loader_type:
+            loader = f"vk_{self.loader_type}_fn"
+            sig = [self.r_type] + self.p_types
+            src = f"PFN_{self.name} = VK_FUNCTYPE({', '.join(sig)})\n"
+            src += f"{self.name} = {loader}('{self.name}', PFN_{self.name})\n"
         else:
-            src = f"{self.name} = VK_DLL.{self.name}\n"
+            sig = [self.r_type] + self.p_types
+            src = f"PFN_{self.name} = VK_FUNCTYPE({', '.join(sig)})\n"
+            src += f"{self.name} = VK_DLL.{self.name}\n"
             src += f"{self.name}.restype = {self.r_type}\n"
             src += f"{self.name}.argtypes = [{', '.join(self.p_types)}]\n"
         if self.condition:
@@ -336,6 +361,7 @@ class vk_command:
 
 class vk_boilerplate:
     def __init__(self, soup):
+        self.defines = []
         self.basetypes = []
         self.bitmasks = []
         self.handles = []
@@ -352,7 +378,11 @@ class vk_boilerplate:
         for types_tag in soup.find_all("types"):
             for type_tag in types_tag.find_all("type"):
                 category = type_tag.get("category")
-                if category == "basetype":
+                if category == "define":
+                    define = vk_define(type_tag)
+                    if define:
+                        self.defines.append(define)
+                elif category == "basetype":
                     self.basetypes.append(vk_basetype(type_tag))
                 elif category == "bitmask":
                     self.bitmasks.append(vk_bitmask(type_tag))
@@ -374,18 +404,22 @@ class vk_boilerplate:
                 command = vk_command(cmd_tag)
                 self.commands[command.name] = command
 
-        for platform in soup.find_all("platform"):
-            platform_name = platform.get("name")
-            platform_guard = platform.get("protect")
-            for extension in soup.find_all("extension", platform=platform_name):
-                for ext_type in extension.find_all("type"):
-                    type_name = ext_type.get("name")
+        platforms = {p.get("name"):p.get("protect") for p in soup.find_all("platform")}
+        for extensions_tag in soup.find_all("extensions"):
+            for extension in extensions_tag.find_all("extension"):
+                platform_name = extension.get("platform")
+                platform_guard = platforms.get(platform_name)
+                extension_type = extension.get("type")
+                for type_tag in extension.find_all("type"):
+                    type_name = type_tag.get("name")
                     if type_name in structs_dict:
                         structs_dict[type_name].condition = platform_guard
-                for ext_cmd in extension.find_all("command"):
-                    cmd_name = ext_cmd.get("name")
+                for command_tag in extension.find_all("command"):
+                    cmd_name = command_tag.get("name")
                     if cmd_name in self.commands:
                         self.commands[cmd_name].condition = platform_guard
+                        if extension_type:
+                            self.commands[cmd_name].loader_type = extension_type
 
         # resolve struct dependency ordering
         committed = set()
@@ -422,6 +456,9 @@ VK_USE_PLATFORM_FUCHSIA = False
 VK_USE_PLATFORM_GGP = False
 VK_ENABLE_BETA_EXTENSIONS = False
 
+def VK_MAKE_VERSION(major, minor, patch):
+    return ctypes.c_uint32(major << 22 | minor << 12 | patch)
+
 VK_DLL = None
 VK_FUNCTYPE = None
 if platform.system() == "Windows":
@@ -442,12 +479,33 @@ elif platform.system() == "Linux":
 else:
     raise RuntimeError(f"Unsupported platform: {platform.system()}")
 
+def vk_instance_fn(name, proto):
+    def wrapper(vk_instance, *args):
+        addr = vkGetInstanceProcAddr(vk_instance, name)
+        if addr:
+            fn = proto(ctypes.cast(addr, ctypes.c_void_p))
+            return (vk_instance, *args)
+        else:
+            raise RuntimeError
+    return wrapper
+
+def vk_device_fn(name, proto):
+    def wrapper(vk_device, *args):
+        addr = vkGetDeviceProcAddr(vk_device, name)
+        if addr:
+            fn = proto(ctypes.cast(addr, ctypes.c_void_p))
+            return (vk_device, *args)
+        else:
+            raise RuntimeError
+    return wrapper
+
 #=============================================================================#
 # The remainder of this file was generated automatically from the Vulkan API  #
 # Registry XML file.                                                          #
 #=============================================================================#
 
 """
+        src += "\n".join(self.defines) + "\n\n"
         src += "".join(map(str, self.basetypes)) + "\n"
         src += "".join(map(str, self.bitmasks)) + "\n"
         src += "".join(map(str, self.handles)) + "\n"
