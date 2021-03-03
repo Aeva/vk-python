@@ -45,22 +45,14 @@ else:
 
 def vk_instance_fn(name, proto):
     def wrapper(vk_instance, *args):
-        addr = vkGetInstanceProcAddr(vk_instance, name)
-        if addr:
-            fn = proto(ctypes.cast(addr, ctypes.c_void_p))
-            return (vk_instance, *args)
-        else:
-            raise RuntimeError
+        addr = vkGetInstanceProcAddr(vk_instance, name.encode())
+        return ctypes.cast(addr, proto)(vk_instance, *args)
     return wrapper
 
 def vk_device_fn(name, proto):
     def wrapper(vk_device, *args):
-        addr = vkGetDeviceProcAddr(vk_device, name)
-        if addr:
-            fn = proto(ctypes.cast(addr, ctypes.c_void_p))
-            return (vk_device, *args)
-        else:
-            raise RuntimeError
+        addr = vkGetDeviceProcAddr(vk_device, name.encode())
+        return ctypes.cast(addr, proto)(vk_device, *args)
     return wrapper
 
 #=============================================================================#
@@ -73,6 +65,7 @@ VK_API_VERSION_1_0 = VK_MAKE_VERSION(1, 0, 0)
 VK_API_VERSION_1_1 = VK_MAKE_VERSION(1, 1, 0)
 VK_API_VERSION_1_2 = VK_MAKE_VERSION(1, 2, 0)
 VK_HEADER_VERSION = 162
+
 ANativeWindow = type('ANativeWindow', (ctypes.Structure,), dict())
 AHardwareBuffer = type('AHardwareBuffer', (ctypes.Structure,), dict())
 CAMetalLayer = type('CAMetalLayer', (ctypes.Structure,), dict())
@@ -229,48 +222,48 @@ VkPipelineRasterizationDepthClipStateCreateFlagsEXT = type('VkPipelineRasterizat
 VkSwapchainImageUsageFlagsANDROID = type('VkSwapchainImageUsageFlagsANDROID', (VkFlags,), dict())
 VkToolPurposeFlagsEXT = type('VkToolPurposeFlagsEXT', (VkFlags,), dict())
 
-VkInstance = type('VkInstance', (ctypes.Structure,), dict())
-VkPhysicalDevice = type('VkPhysicalDevice', (ctypes.Structure,), dict())
-VkDevice = type('VkDevice', (ctypes.Structure,), dict())
-VkQueue = type('VkQueue', (ctypes.Structure,), dict())
-VkCommandBuffer = type('VkCommandBuffer', (ctypes.Structure,), dict())
-VkDeviceMemory = type('VkDeviceMemory', (ctypes.Structure,), dict())
-VkCommandPool = type('VkCommandPool', (ctypes.Structure,), dict())
-VkBuffer = type('VkBuffer', (ctypes.Structure,), dict())
-VkBufferView = type('VkBufferView', (ctypes.Structure,), dict())
-VkImage = type('VkImage', (ctypes.Structure,), dict())
-VkImageView = type('VkImageView', (ctypes.Structure,), dict())
-VkShaderModule = type('VkShaderModule', (ctypes.Structure,), dict())
-VkPipeline = type('VkPipeline', (ctypes.Structure,), dict())
-VkPipelineLayout = type('VkPipelineLayout', (ctypes.Structure,), dict())
-VkSampler = type('VkSampler', (ctypes.Structure,), dict())
-VkDescriptorSet = type('VkDescriptorSet', (ctypes.Structure,), dict())
-VkDescriptorSetLayout = type('VkDescriptorSetLayout', (ctypes.Structure,), dict())
-VkDescriptorPool = type('VkDescriptorPool', (ctypes.Structure,), dict())
-VkFence = type('VkFence', (ctypes.Structure,), dict())
-VkSemaphore = type('VkSemaphore', (ctypes.Structure,), dict())
-VkEvent = type('VkEvent', (ctypes.Structure,), dict())
-VkQueryPool = type('VkQueryPool', (ctypes.Structure,), dict())
-VkFramebuffer = type('VkFramebuffer', (ctypes.Structure,), dict())
-VkRenderPass = type('VkRenderPass', (ctypes.Structure,), dict())
-VkPipelineCache = type('VkPipelineCache', (ctypes.Structure,), dict())
-VkIndirectCommandsLayoutNV = type('VkIndirectCommandsLayoutNV', (ctypes.Structure,), dict())
-VkDescriptorUpdateTemplate = type('VkDescriptorUpdateTemplate', (ctypes.Structure,), dict())
+VkInstance = ctypes.POINTER(type('VkInstance', (ctypes.Structure,), dict()))
+VkPhysicalDevice = ctypes.POINTER(type('VkPhysicalDevice', (ctypes.Structure,), dict()))
+VkDevice = ctypes.POINTER(type('VkDevice', (ctypes.Structure,), dict()))
+VkQueue = ctypes.POINTER(type('VkQueue', (ctypes.Structure,), dict()))
+VkCommandBuffer = ctypes.POINTER(type('VkCommandBuffer', (ctypes.Structure,), dict()))
+VkDeviceMemory = ctypes.POINTER(type('VkDeviceMemory', (ctypes.Structure,), dict()))
+VkCommandPool = ctypes.POINTER(type('VkCommandPool', (ctypes.Structure,), dict()))
+VkBuffer = ctypes.POINTER(type('VkBuffer', (ctypes.Structure,), dict()))
+VkBufferView = ctypes.POINTER(type('VkBufferView', (ctypes.Structure,), dict()))
+VkImage = ctypes.POINTER(type('VkImage', (ctypes.Structure,), dict()))
+VkImageView = ctypes.POINTER(type('VkImageView', (ctypes.Structure,), dict()))
+VkShaderModule = ctypes.POINTER(type('VkShaderModule', (ctypes.Structure,), dict()))
+VkPipeline = ctypes.POINTER(type('VkPipeline', (ctypes.Structure,), dict()))
+VkPipelineLayout = ctypes.POINTER(type('VkPipelineLayout', (ctypes.Structure,), dict()))
+VkSampler = ctypes.POINTER(type('VkSampler', (ctypes.Structure,), dict()))
+VkDescriptorSet = ctypes.POINTER(type('VkDescriptorSet', (ctypes.Structure,), dict()))
+VkDescriptorSetLayout = ctypes.POINTER(type('VkDescriptorSetLayout', (ctypes.Structure,), dict()))
+VkDescriptorPool = ctypes.POINTER(type('VkDescriptorPool', (ctypes.Structure,), dict()))
+VkFence = ctypes.POINTER(type('VkFence', (ctypes.Structure,), dict()))
+VkSemaphore = ctypes.POINTER(type('VkSemaphore', (ctypes.Structure,), dict()))
+VkEvent = ctypes.POINTER(type('VkEvent', (ctypes.Structure,), dict()))
+VkQueryPool = ctypes.POINTER(type('VkQueryPool', (ctypes.Structure,), dict()))
+VkFramebuffer = ctypes.POINTER(type('VkFramebuffer', (ctypes.Structure,), dict()))
+VkRenderPass = ctypes.POINTER(type('VkRenderPass', (ctypes.Structure,), dict()))
+VkPipelineCache = ctypes.POINTER(type('VkPipelineCache', (ctypes.Structure,), dict()))
+VkIndirectCommandsLayoutNV = ctypes.POINTER(type('VkIndirectCommandsLayoutNV', (ctypes.Structure,), dict()))
+VkDescriptorUpdateTemplate = ctypes.POINTER(type('VkDescriptorUpdateTemplate', (ctypes.Structure,), dict()))
 VkDescriptorUpdateTemplateKHR = VkDescriptorUpdateTemplate
-VkSamplerYcbcrConversion = type('VkSamplerYcbcrConversion', (ctypes.Structure,), dict())
+VkSamplerYcbcrConversion = ctypes.POINTER(type('VkSamplerYcbcrConversion', (ctypes.Structure,), dict()))
 VkSamplerYcbcrConversionKHR = VkSamplerYcbcrConversion
-VkValidationCacheEXT = type('VkValidationCacheEXT', (ctypes.Structure,), dict())
-VkAccelerationStructureKHR = type('VkAccelerationStructureKHR', (ctypes.Structure,), dict())
-VkAccelerationStructureNV = type('VkAccelerationStructureNV', (ctypes.Structure,), dict())
-VkPerformanceConfigurationINTEL = type('VkPerformanceConfigurationINTEL', (ctypes.Structure,), dict())
-VkDeferredOperationKHR = type('VkDeferredOperationKHR', (ctypes.Structure,), dict())
-VkPrivateDataSlotEXT = type('VkPrivateDataSlotEXT', (ctypes.Structure,), dict())
-VkDisplayKHR = type('VkDisplayKHR', (ctypes.Structure,), dict())
-VkDisplayModeKHR = type('VkDisplayModeKHR', (ctypes.Structure,), dict())
-VkSurfaceKHR = type('VkSurfaceKHR', (ctypes.Structure,), dict())
-VkSwapchainKHR = type('VkSwapchainKHR', (ctypes.Structure,), dict())
-VkDebugReportCallbackEXT = type('VkDebugReportCallbackEXT', (ctypes.Structure,), dict())
-VkDebugUtilsMessengerEXT = type('VkDebugUtilsMessengerEXT', (ctypes.Structure,), dict())
+VkValidationCacheEXT = ctypes.POINTER(type('VkValidationCacheEXT', (ctypes.Structure,), dict()))
+VkAccelerationStructureKHR = ctypes.POINTER(type('VkAccelerationStructureKHR', (ctypes.Structure,), dict()))
+VkAccelerationStructureNV = ctypes.POINTER(type('VkAccelerationStructureNV', (ctypes.Structure,), dict()))
+VkPerformanceConfigurationINTEL = ctypes.POINTER(type('VkPerformanceConfigurationINTEL', (ctypes.Structure,), dict()))
+VkDeferredOperationKHR = ctypes.POINTER(type('VkDeferredOperationKHR', (ctypes.Structure,), dict()))
+VkPrivateDataSlotEXT = ctypes.POINTER(type('VkPrivateDataSlotEXT', (ctypes.Structure,), dict()))
+VkDisplayKHR = ctypes.POINTER(type('VkDisplayKHR', (ctypes.Structure,), dict()))
+VkDisplayModeKHR = ctypes.POINTER(type('VkDisplayModeKHR', (ctypes.Structure,), dict()))
+VkSurfaceKHR = ctypes.POINTER(type('VkSurfaceKHR', (ctypes.Structure,), dict()))
+VkSwapchainKHR = ctypes.POINTER(type('VkSwapchainKHR', (ctypes.Structure,), dict()))
+VkDebugReportCallbackEXT = ctypes.POINTER(type('VkDebugReportCallbackEXT', (ctypes.Structure,), dict()))
+VkDebugUtilsMessengerEXT = ctypes.POINTER(type('VkDebugUtilsMessengerEXT', (ctypes.Structure,), dict()))
 
 # API Constants
 VK_MAX_PHYSICAL_DEVICE_NAME_SIZE = 256

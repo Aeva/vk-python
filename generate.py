@@ -126,6 +126,7 @@ class vk_type:
         self.name = tag.get("name")
         self.alias = tag.get("alias")
         self.ctype = None
+        self.exact_ctype = None
         if self.name is None:
             name = find_one(tag, "name")
             if name:
@@ -136,6 +137,8 @@ class vk_type:
         assert(self.name is not None)
         if self.alias:
             return f"{self.name} = {self.alias}\n"
+        elif self.exact_ctype:
+            return f"{self.name} = {self.exact_ctype}\n"
         elif self.ctype:
             return f"{self.name} = type('{self.name}', ({self.ctype},), dict())\n"
         else:
@@ -171,7 +174,7 @@ class vk_handle(vk_type):
             typedef = find_one(tag, "type")
             assert(typedef is not None)
             assert(typedef.text in ["VK_DEFINE_HANDLE", "VK_DEFINE_NON_DISPATCHABLE_HANDLE"])
-            self.ctype = "ctypes.Structure"
+            self.exact_ctype = f"ctypes.POINTER(type('{self.name}', (ctypes.Structure,), dict()))"
 
 
 class vk_enum_value():
@@ -222,6 +225,7 @@ class vk_enum(vk_type):
             self.name = "API Constants"
             self.alias = None
             self.ctype = None
+            self.exact_ctype = None
             type_name = None
         enums_tag = find_one(soup, "enums", attrs={"name":self.name})
         self.enums = []
