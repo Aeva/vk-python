@@ -5,11 +5,35 @@ import platform
 if ctypes.sizeof(ctypes.c_void_p) != 8:
     raise RuntimeError("Only 64 bit is supported.")
 
+VK_USE_PLATFORM_XLIB_KHR = False
+VK_USE_PLATFORM_XLIB_XRANDR_EXT = False
+VK_USE_PLATFORM_XCB_KHR = False
+VK_USE_PLATFORM_WAYLAND_KHR = False
+VK_USE_PLATFORM_DIRECTFB_EXT = False
+VK_USE_PLATFORM_ANDROID_KHR = False
+VK_USE_PLATFORM_WIN32_KHR = False
+VK_USE_PLATFORM_VI_NN = False
+VK_USE_PLATFORM_IOS_MVK = False
+VK_USE_PLATFORM_MACOS_MVK = False
+VK_USE_PLATFORM_METAL_EXT = False
+VK_USE_PLATFORM_FUCHSIA = False
+VK_USE_PLATFORM_GGP = False
+VK_ENABLE_BETA_EXTENSIONS = False
+
 VK_DLL = None
 VK_FUNCTYPE = None
 if platform.system() == "Windows":
     VK_DLL = ctypes.windll.LoadLibrary("vulkan-1")
     VK_FUNCTYPE = ctypes.WINFUNCTYPE
+    VK_USE_PLATFORM_WIN32_KHR = True
+    import ctypes.wintypes
+    class SECURITY_ATTRIBUTES(ctypes.Structure):
+        _fields_ = [
+            ("nLength", ctypes.wintypes.DWORD),
+            ("lpSecurityDescriptor", ctypes.wintypes.LPVOID),
+            ("bInheritHandle", ctypes.wintypes.BOOL),
+        ]
+
 elif platform.system() == "Linux":
     VK_DLL = ctypes.cdll.LoadLibrary("libvulkan.so.1")
     VK_FUNCTYPE = ctypes.CFUNCTYPE
@@ -2864,15 +2888,24 @@ VkDisplayPlaneCapabilitiesKHR = type('VkDisplayPlaneCapabilitiesKHR', (ctypes.St
 VkDisplaySurfaceCreateInfoKHR = type('VkDisplaySurfaceCreateInfoKHR', (ctypes.Structure,), dict())
 VkDisplayPresentInfoKHR = type('VkDisplayPresentInfoKHR', (ctypes.Structure,), dict())
 VkSurfaceCapabilitiesKHR = type('VkSurfaceCapabilitiesKHR', (ctypes.Structure,), dict())
-VkAndroidSurfaceCreateInfoKHR = type('VkAndroidSurfaceCreateInfoKHR', (ctypes.Structure,), dict())
-VkViSurfaceCreateInfoNN = type('VkViSurfaceCreateInfoNN', (ctypes.Structure,), dict())
-VkWaylandSurfaceCreateInfoKHR = type('VkWaylandSurfaceCreateInfoKHR', (ctypes.Structure,), dict())
-VkWin32SurfaceCreateInfoKHR = type('VkWin32SurfaceCreateInfoKHR', (ctypes.Structure,), dict())
-VkXlibSurfaceCreateInfoKHR = type('VkXlibSurfaceCreateInfoKHR', (ctypes.Structure,), dict())
-VkXcbSurfaceCreateInfoKHR = type('VkXcbSurfaceCreateInfoKHR', (ctypes.Structure,), dict())
-VkDirectFBSurfaceCreateInfoEXT = type('VkDirectFBSurfaceCreateInfoEXT', (ctypes.Structure,), dict())
-VkImagePipeSurfaceCreateInfoFUCHSIA = type('VkImagePipeSurfaceCreateInfoFUCHSIA', (ctypes.Structure,), dict())
-VkStreamDescriptorSurfaceCreateInfoGGP = type('VkStreamDescriptorSurfaceCreateInfoGGP', (ctypes.Structure,), dict())
+if VK_USE_PLATFORM_ANDROID_KHR:
+    VkAndroidSurfaceCreateInfoKHR = type('VkAndroidSurfaceCreateInfoKHR', (ctypes.Structure,), dict())
+if VK_USE_PLATFORM_VI_NN:
+    VkViSurfaceCreateInfoNN = type('VkViSurfaceCreateInfoNN', (ctypes.Structure,), dict())
+if VK_USE_PLATFORM_WAYLAND_KHR:
+    VkWaylandSurfaceCreateInfoKHR = type('VkWaylandSurfaceCreateInfoKHR', (ctypes.Structure,), dict())
+if VK_USE_PLATFORM_WIN32_KHR:
+    VkWin32SurfaceCreateInfoKHR = type('VkWin32SurfaceCreateInfoKHR', (ctypes.Structure,), dict())
+if VK_USE_PLATFORM_XLIB_KHR:
+    VkXlibSurfaceCreateInfoKHR = type('VkXlibSurfaceCreateInfoKHR', (ctypes.Structure,), dict())
+if VK_USE_PLATFORM_XCB_KHR:
+    VkXcbSurfaceCreateInfoKHR = type('VkXcbSurfaceCreateInfoKHR', (ctypes.Structure,), dict())
+if VK_USE_PLATFORM_DIRECTFB_EXT:
+    VkDirectFBSurfaceCreateInfoEXT = type('VkDirectFBSurfaceCreateInfoEXT', (ctypes.Structure,), dict())
+if VK_USE_PLATFORM_FUCHSIA:
+    VkImagePipeSurfaceCreateInfoFUCHSIA = type('VkImagePipeSurfaceCreateInfoFUCHSIA', (ctypes.Structure,), dict())
+if VK_USE_PLATFORM_GGP:
+    VkStreamDescriptorSurfaceCreateInfoGGP = type('VkStreamDescriptorSurfaceCreateInfoGGP', (ctypes.Structure,), dict())
 VkSurfaceFormatKHR = type('VkSurfaceFormatKHR', (ctypes.Structure,), dict())
 VkSwapchainCreateInfoKHR = type('VkSwapchainCreateInfoKHR', (ctypes.Structure,), dict())
 VkPresentInfoKHR = type('VkPresentInfoKHR', (ctypes.Structure,), dict())
@@ -2889,9 +2922,12 @@ VkDedicatedAllocationMemoryAllocateInfoNV = type('VkDedicatedAllocationMemoryAll
 VkExternalImageFormatPropertiesNV = type('VkExternalImageFormatPropertiesNV', (ctypes.Structure,), dict())
 VkExternalMemoryImageCreateInfoNV = type('VkExternalMemoryImageCreateInfoNV', (ctypes.Structure,), dict())
 VkExportMemoryAllocateInfoNV = type('VkExportMemoryAllocateInfoNV', (ctypes.Structure,), dict())
-VkImportMemoryWin32HandleInfoNV = type('VkImportMemoryWin32HandleInfoNV', (ctypes.Structure,), dict())
-VkExportMemoryWin32HandleInfoNV = type('VkExportMemoryWin32HandleInfoNV', (ctypes.Structure,), dict())
-VkWin32KeyedMutexAcquireReleaseInfoNV = type('VkWin32KeyedMutexAcquireReleaseInfoNV', (ctypes.Structure,), dict())
+if VK_USE_PLATFORM_WIN32_KHR:
+    VkImportMemoryWin32HandleInfoNV = type('VkImportMemoryWin32HandleInfoNV', (ctypes.Structure,), dict())
+if VK_USE_PLATFORM_WIN32_KHR:
+    VkExportMemoryWin32HandleInfoNV = type('VkExportMemoryWin32HandleInfoNV', (ctypes.Structure,), dict())
+if VK_USE_PLATFORM_WIN32_KHR:
+    VkWin32KeyedMutexAcquireReleaseInfoNV = type('VkWin32KeyedMutexAcquireReleaseInfoNV', (ctypes.Structure,), dict())
 VkPhysicalDeviceDeviceGeneratedCommandsFeaturesNV = type('VkPhysicalDeviceDeviceGeneratedCommandsFeaturesNV', (ctypes.Structure,), dict())
 VkDevicePrivateDataCreateInfoEXT = type('VkDevicePrivateDataCreateInfoEXT', (ctypes.Structure,), dict())
 VkPrivateDataSlotCreateInfoEXT = type('VkPrivateDataSlotCreateInfoEXT', (ctypes.Structure,), dict())
@@ -2933,29 +2969,41 @@ VkPhysicalDeviceIDProperties = type('VkPhysicalDeviceIDProperties', (ctypes.Stru
 VkExternalMemoryImageCreateInfo = type('VkExternalMemoryImageCreateInfo', (ctypes.Structure,), dict())
 VkExternalMemoryBufferCreateInfo = type('VkExternalMemoryBufferCreateInfo', (ctypes.Structure,), dict())
 VkExportMemoryAllocateInfo = type('VkExportMemoryAllocateInfo', (ctypes.Structure,), dict())
-VkImportMemoryWin32HandleInfoKHR = type('VkImportMemoryWin32HandleInfoKHR', (ctypes.Structure,), dict())
-VkExportMemoryWin32HandleInfoKHR = type('VkExportMemoryWin32HandleInfoKHR', (ctypes.Structure,), dict())
-VkMemoryWin32HandlePropertiesKHR = type('VkMemoryWin32HandlePropertiesKHR', (ctypes.Structure,), dict())
-VkMemoryGetWin32HandleInfoKHR = type('VkMemoryGetWin32HandleInfoKHR', (ctypes.Structure,), dict())
+if VK_USE_PLATFORM_WIN32_KHR:
+    VkImportMemoryWin32HandleInfoKHR = type('VkImportMemoryWin32HandleInfoKHR', (ctypes.Structure,), dict())
+if VK_USE_PLATFORM_WIN32_KHR:
+    VkExportMemoryWin32HandleInfoKHR = type('VkExportMemoryWin32HandleInfoKHR', (ctypes.Structure,), dict())
+if VK_USE_PLATFORM_WIN32_KHR:
+    VkMemoryWin32HandlePropertiesKHR = type('VkMemoryWin32HandlePropertiesKHR', (ctypes.Structure,), dict())
+if VK_USE_PLATFORM_WIN32_KHR:
+    VkMemoryGetWin32HandleInfoKHR = type('VkMemoryGetWin32HandleInfoKHR', (ctypes.Structure,), dict())
 VkImportMemoryFdInfoKHR = type('VkImportMemoryFdInfoKHR', (ctypes.Structure,), dict())
 VkMemoryFdPropertiesKHR = type('VkMemoryFdPropertiesKHR', (ctypes.Structure,), dict())
 VkMemoryGetFdInfoKHR = type('VkMemoryGetFdInfoKHR', (ctypes.Structure,), dict())
-VkWin32KeyedMutexAcquireReleaseInfoKHR = type('VkWin32KeyedMutexAcquireReleaseInfoKHR', (ctypes.Structure,), dict())
+if VK_USE_PLATFORM_WIN32_KHR:
+    VkWin32KeyedMutexAcquireReleaseInfoKHR = type('VkWin32KeyedMutexAcquireReleaseInfoKHR', (ctypes.Structure,), dict())
 VkPhysicalDeviceExternalSemaphoreInfo = type('VkPhysicalDeviceExternalSemaphoreInfo', (ctypes.Structure,), dict())
 VkExternalSemaphoreProperties = type('VkExternalSemaphoreProperties', (ctypes.Structure,), dict())
 VkExportSemaphoreCreateInfo = type('VkExportSemaphoreCreateInfo', (ctypes.Structure,), dict())
-VkImportSemaphoreWin32HandleInfoKHR = type('VkImportSemaphoreWin32HandleInfoKHR', (ctypes.Structure,), dict())
-VkExportSemaphoreWin32HandleInfoKHR = type('VkExportSemaphoreWin32HandleInfoKHR', (ctypes.Structure,), dict())
-VkD3D12FenceSubmitInfoKHR = type('VkD3D12FenceSubmitInfoKHR', (ctypes.Structure,), dict())
-VkSemaphoreGetWin32HandleInfoKHR = type('VkSemaphoreGetWin32HandleInfoKHR', (ctypes.Structure,), dict())
+if VK_USE_PLATFORM_WIN32_KHR:
+    VkImportSemaphoreWin32HandleInfoKHR = type('VkImportSemaphoreWin32HandleInfoKHR', (ctypes.Structure,), dict())
+if VK_USE_PLATFORM_WIN32_KHR:
+    VkExportSemaphoreWin32HandleInfoKHR = type('VkExportSemaphoreWin32HandleInfoKHR', (ctypes.Structure,), dict())
+if VK_USE_PLATFORM_WIN32_KHR:
+    VkD3D12FenceSubmitInfoKHR = type('VkD3D12FenceSubmitInfoKHR', (ctypes.Structure,), dict())
+if VK_USE_PLATFORM_WIN32_KHR:
+    VkSemaphoreGetWin32HandleInfoKHR = type('VkSemaphoreGetWin32HandleInfoKHR', (ctypes.Structure,), dict())
 VkImportSemaphoreFdInfoKHR = type('VkImportSemaphoreFdInfoKHR', (ctypes.Structure,), dict())
 VkSemaphoreGetFdInfoKHR = type('VkSemaphoreGetFdInfoKHR', (ctypes.Structure,), dict())
 VkPhysicalDeviceExternalFenceInfo = type('VkPhysicalDeviceExternalFenceInfo', (ctypes.Structure,), dict())
 VkExternalFenceProperties = type('VkExternalFenceProperties', (ctypes.Structure,), dict())
 VkExportFenceCreateInfo = type('VkExportFenceCreateInfo', (ctypes.Structure,), dict())
-VkImportFenceWin32HandleInfoKHR = type('VkImportFenceWin32HandleInfoKHR', (ctypes.Structure,), dict())
-VkExportFenceWin32HandleInfoKHR = type('VkExportFenceWin32HandleInfoKHR', (ctypes.Structure,), dict())
-VkFenceGetWin32HandleInfoKHR = type('VkFenceGetWin32HandleInfoKHR', (ctypes.Structure,), dict())
+if VK_USE_PLATFORM_WIN32_KHR:
+    VkImportFenceWin32HandleInfoKHR = type('VkImportFenceWin32HandleInfoKHR', (ctypes.Structure,), dict())
+if VK_USE_PLATFORM_WIN32_KHR:
+    VkExportFenceWin32HandleInfoKHR = type('VkExportFenceWin32HandleInfoKHR', (ctypes.Structure,), dict())
+if VK_USE_PLATFORM_WIN32_KHR:
+    VkFenceGetWin32HandleInfoKHR = type('VkFenceGetWin32HandleInfoKHR', (ctypes.Structure,), dict())
 VkImportFenceFdInfoKHR = type('VkImportFenceFdInfoKHR', (ctypes.Structure,), dict())
 VkFenceGetFdInfoKHR = type('VkFenceGetFdInfoKHR', (ctypes.Structure,), dict())
 VkPhysicalDeviceMultiviewFeatures = type('VkPhysicalDeviceMultiviewFeatures', (ctypes.Structure,), dict())
@@ -2993,9 +3041,12 @@ VkRefreshCycleDurationGOOGLE = type('VkRefreshCycleDurationGOOGLE', (ctypes.Stru
 VkPastPresentationTimingGOOGLE = type('VkPastPresentationTimingGOOGLE', (ctypes.Structure,), dict())
 VkPresentTimeGOOGLE = type('VkPresentTimeGOOGLE', (ctypes.Structure,), dict())
 VkPresentTimesInfoGOOGLE = type('VkPresentTimesInfoGOOGLE', (ctypes.Structure,), dict())
-VkIOSSurfaceCreateInfoMVK = type('VkIOSSurfaceCreateInfoMVK', (ctypes.Structure,), dict())
-VkMacOSSurfaceCreateInfoMVK = type('VkMacOSSurfaceCreateInfoMVK', (ctypes.Structure,), dict())
-VkMetalSurfaceCreateInfoEXT = type('VkMetalSurfaceCreateInfoEXT', (ctypes.Structure,), dict())
+if VK_USE_PLATFORM_IOS_MVK:
+    VkIOSSurfaceCreateInfoMVK = type('VkIOSSurfaceCreateInfoMVK', (ctypes.Structure,), dict())
+if VK_USE_PLATFORM_MACOS_MVK:
+    VkMacOSSurfaceCreateInfoMVK = type('VkMacOSSurfaceCreateInfoMVK', (ctypes.Structure,), dict())
+if VK_USE_PLATFORM_METAL_EXT:
+    VkMetalSurfaceCreateInfoEXT = type('VkMetalSurfaceCreateInfoEXT', (ctypes.Structure,), dict())
 VkViewportWScalingNV = type('VkViewportWScalingNV', (ctypes.Structure,), dict())
 VkPipelineViewportWScalingStateCreateInfoNV = type('VkPipelineViewportWScalingStateCreateInfoNV', (ctypes.Structure,), dict())
 VkViewportSwizzleNV = type('VkViewportSwizzleNV', (ctypes.Structure,), dict())
@@ -3067,10 +3118,14 @@ VkPhysicalDeviceShaderDrawParametersFeatures = type('VkPhysicalDeviceShaderDrawP
 VkPhysicalDeviceShaderFloat16Int8Features = type('VkPhysicalDeviceShaderFloat16Int8Features', (ctypes.Structure,), dict())
 VkPhysicalDeviceFloatControlsProperties = type('VkPhysicalDeviceFloatControlsProperties', (ctypes.Structure,), dict())
 VkPhysicalDeviceHostQueryResetFeatures = type('VkPhysicalDeviceHostQueryResetFeatures', (ctypes.Structure,), dict())
-VkNativeBufferUsage2ANDROID = type('VkNativeBufferUsage2ANDROID', (ctypes.Structure,), dict())
-VkNativeBufferANDROID = type('VkNativeBufferANDROID', (ctypes.Structure,), dict())
-VkSwapchainImageCreateInfoANDROID = type('VkSwapchainImageCreateInfoANDROID', (ctypes.Structure,), dict())
-VkPhysicalDevicePresentationPropertiesANDROID = type('VkPhysicalDevicePresentationPropertiesANDROID', (ctypes.Structure,), dict())
+if VK_USE_PLATFORM_ANDROID_KHR:
+    VkNativeBufferUsage2ANDROID = type('VkNativeBufferUsage2ANDROID', (ctypes.Structure,), dict())
+if VK_USE_PLATFORM_ANDROID_KHR:
+    VkNativeBufferANDROID = type('VkNativeBufferANDROID', (ctypes.Structure,), dict())
+if VK_USE_PLATFORM_ANDROID_KHR:
+    VkSwapchainImageCreateInfoANDROID = type('VkSwapchainImageCreateInfoANDROID', (ctypes.Structure,), dict())
+if VK_USE_PLATFORM_ANDROID_KHR:
+    VkPhysicalDevicePresentationPropertiesANDROID = type('VkPhysicalDevicePresentationPropertiesANDROID', (ctypes.Structure,), dict())
 VkShaderResourceUsageAMD = type('VkShaderResourceUsageAMD', (ctypes.Structure,), dict())
 VkShaderStatisticsInfoAMD = type('VkShaderStatisticsInfoAMD', (ctypes.Structure,), dict())
 VkDeviceQueueGlobalPriorityCreateInfoEXT = type('VkDeviceQueueGlobalPriorityCreateInfoEXT', (ctypes.Structure,), dict())
@@ -3112,13 +3167,19 @@ VkVertexInputBindingDivisorDescriptionEXT = type('VkVertexInputBindingDivisorDes
 VkPipelineVertexInputDivisorStateCreateInfoEXT = type('VkPipelineVertexInputDivisorStateCreateInfoEXT', (ctypes.Structure,), dict())
 VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT = type('VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT', (ctypes.Structure,), dict())
 VkPhysicalDevicePCIBusInfoPropertiesEXT = type('VkPhysicalDevicePCIBusInfoPropertiesEXT', (ctypes.Structure,), dict())
-VkImportAndroidHardwareBufferInfoANDROID = type('VkImportAndroidHardwareBufferInfoANDROID', (ctypes.Structure,), dict())
-VkAndroidHardwareBufferUsageANDROID = type('VkAndroidHardwareBufferUsageANDROID', (ctypes.Structure,), dict())
-VkAndroidHardwareBufferPropertiesANDROID = type('VkAndroidHardwareBufferPropertiesANDROID', (ctypes.Structure,), dict())
-VkMemoryGetAndroidHardwareBufferInfoANDROID = type('VkMemoryGetAndroidHardwareBufferInfoANDROID', (ctypes.Structure,), dict())
-VkAndroidHardwareBufferFormatPropertiesANDROID = type('VkAndroidHardwareBufferFormatPropertiesANDROID', (ctypes.Structure,), dict())
+if VK_USE_PLATFORM_ANDROID_KHR:
+    VkImportAndroidHardwareBufferInfoANDROID = type('VkImportAndroidHardwareBufferInfoANDROID', (ctypes.Structure,), dict())
+if VK_USE_PLATFORM_ANDROID_KHR:
+    VkAndroidHardwareBufferUsageANDROID = type('VkAndroidHardwareBufferUsageANDROID', (ctypes.Structure,), dict())
+if VK_USE_PLATFORM_ANDROID_KHR:
+    VkAndroidHardwareBufferPropertiesANDROID = type('VkAndroidHardwareBufferPropertiesANDROID', (ctypes.Structure,), dict())
+if VK_USE_PLATFORM_ANDROID_KHR:
+    VkMemoryGetAndroidHardwareBufferInfoANDROID = type('VkMemoryGetAndroidHardwareBufferInfoANDROID', (ctypes.Structure,), dict())
+if VK_USE_PLATFORM_ANDROID_KHR:
+    VkAndroidHardwareBufferFormatPropertiesANDROID = type('VkAndroidHardwareBufferFormatPropertiesANDROID', (ctypes.Structure,), dict())
 VkCommandBufferInheritanceConditionalRenderingInfoEXT = type('VkCommandBufferInheritanceConditionalRenderingInfoEXT', (ctypes.Structure,), dict())
-VkExternalFormatANDROID = type('VkExternalFormatANDROID', (ctypes.Structure,), dict())
+if VK_USE_PLATFORM_ANDROID_KHR:
+    VkExternalFormatANDROID = type('VkExternalFormatANDROID', (ctypes.Structure,), dict())
 VkPhysicalDevice8BitStorageFeatures = type('VkPhysicalDevice8BitStorageFeatures', (ctypes.Structure,), dict())
 VkPhysicalDeviceConditionalRenderingFeaturesEXT = type('VkPhysicalDeviceConditionalRenderingFeaturesEXT', (ctypes.Structure,), dict())
 VkPhysicalDeviceVulkanMemoryModelFeatures = type('VkPhysicalDeviceVulkanMemoryModelFeatures', (ctypes.Structure,), dict())
@@ -3216,12 +3277,16 @@ VkCooperativeMatrixPropertiesNV = type('VkCooperativeMatrixPropertiesNV', (ctype
 VkPhysicalDeviceYcbcrImageArraysFeaturesEXT = type('VkPhysicalDeviceYcbcrImageArraysFeaturesEXT', (ctypes.Structure,), dict())
 VkImageViewHandleInfoNVX = type('VkImageViewHandleInfoNVX', (ctypes.Structure,), dict())
 VkImageViewAddressPropertiesNVX = type('VkImageViewAddressPropertiesNVX', (ctypes.Structure,), dict())
-VkPresentFrameTokenGGP = type('VkPresentFrameTokenGGP', (ctypes.Structure,), dict())
+if VK_USE_PLATFORM_GGP:
+    VkPresentFrameTokenGGP = type('VkPresentFrameTokenGGP', (ctypes.Structure,), dict())
 VkPipelineCreationFeedbackEXT = type('VkPipelineCreationFeedbackEXT', (ctypes.Structure,), dict())
 VkPipelineCreationFeedbackCreateInfoEXT = type('VkPipelineCreationFeedbackCreateInfoEXT', (ctypes.Structure,), dict())
-VkSurfaceFullScreenExclusiveInfoEXT = type('VkSurfaceFullScreenExclusiveInfoEXT', (ctypes.Structure,), dict())
-VkSurfaceFullScreenExclusiveWin32InfoEXT = type('VkSurfaceFullScreenExclusiveWin32InfoEXT', (ctypes.Structure,), dict())
-VkSurfaceCapabilitiesFullScreenExclusiveEXT = type('VkSurfaceCapabilitiesFullScreenExclusiveEXT', (ctypes.Structure,), dict())
+if VK_USE_PLATFORM_WIN32_KHR:
+    VkSurfaceFullScreenExclusiveInfoEXT = type('VkSurfaceFullScreenExclusiveInfoEXT', (ctypes.Structure,), dict())
+if VK_USE_PLATFORM_WIN32_KHR:
+    VkSurfaceFullScreenExclusiveWin32InfoEXT = type('VkSurfaceFullScreenExclusiveWin32InfoEXT', (ctypes.Structure,), dict())
+if VK_USE_PLATFORM_WIN32_KHR:
+    VkSurfaceCapabilitiesFullScreenExclusiveEXT = type('VkSurfaceCapabilitiesFullScreenExclusiveEXT', (ctypes.Structure,), dict())
 VkPhysicalDevicePerformanceQueryFeaturesKHR = type('VkPhysicalDevicePerformanceQueryFeaturesKHR', (ctypes.Structure,), dict())
 VkPhysicalDevicePerformanceQueryPropertiesKHR = type('VkPhysicalDevicePerformanceQueryPropertiesKHR', (ctypes.Structure,), dict())
 VkPerformanceCounterKHR = type('VkPerformanceCounterKHR', (ctypes.Structure,), dict())
@@ -3307,8 +3372,10 @@ VkDeviceDiagnosticsConfigCreateInfoNV = type('VkDeviceDiagnosticsConfigCreateInf
 VkPhysicalDeviceRobustness2FeaturesEXT = type('VkPhysicalDeviceRobustness2FeaturesEXT', (ctypes.Structure,), dict())
 VkPhysicalDeviceRobustness2PropertiesEXT = type('VkPhysicalDeviceRobustness2PropertiesEXT', (ctypes.Structure,), dict())
 VkPhysicalDeviceImageRobustnessFeaturesEXT = type('VkPhysicalDeviceImageRobustnessFeaturesEXT', (ctypes.Structure,), dict())
-VkPhysicalDevicePortabilitySubsetFeaturesKHR = type('VkPhysicalDevicePortabilitySubsetFeaturesKHR', (ctypes.Structure,), dict())
-VkPhysicalDevicePortabilitySubsetPropertiesKHR = type('VkPhysicalDevicePortabilitySubsetPropertiesKHR', (ctypes.Structure,), dict())
+if VK_ENABLE_BETA_EXTENSIONS:
+    VkPhysicalDevicePortabilitySubsetFeaturesKHR = type('VkPhysicalDevicePortabilitySubsetFeaturesKHR', (ctypes.Structure,), dict())
+if VK_ENABLE_BETA_EXTENSIONS:
+    VkPhysicalDevicePortabilitySubsetPropertiesKHR = type('VkPhysicalDevicePortabilitySubsetPropertiesKHR', (ctypes.Structure,), dict())
 VkPhysicalDevice4444FormatsFeaturesEXT = type('VkPhysicalDevice4444FormatsFeaturesEXT', (ctypes.Structure,), dict())
 VkBufferCopy2KHR = type('VkBufferCopy2KHR', (ctypes.Structure,), dict())
 VkImageCopy2KHR = type('VkImageCopy2KHR', (ctypes.Structure,), dict())
@@ -3461,15 +3528,24 @@ VkDisplayPlaneCapabilitiesKHR._fields_ = [('supportedAlpha', VkDisplayPlaneAlpha
 VkDisplaySurfaceCreateInfoKHR._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('flags', VkDisplaySurfaceCreateFlagsKHR), ('displayMode', VkDisplayModeKHR), ('planeIndex', ctypes.c_uint32), ('planeStackIndex', ctypes.c_uint32), ('transform', VkSurfaceTransformFlagBitsKHR), ('globalAlpha', ctypes.c_float), ('alphaMode', VkDisplayPlaneAlphaFlagBitsKHR), ('imageExtent', VkExtent2D)]
 VkDisplayPresentInfoKHR._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('srcRect', VkRect2D), ('dstRect', VkRect2D), ('persistent', VkBool32)]
 VkSurfaceCapabilitiesKHR._fields_ = [('minImageCount', ctypes.c_uint32), ('maxImageCount', ctypes.c_uint32), ('currentExtent', VkExtent2D), ('minImageExtent', VkExtent2D), ('maxImageExtent', VkExtent2D), ('maxImageArrayLayers', ctypes.c_uint32), ('supportedTransforms', VkSurfaceTransformFlagsKHR), ('currentTransform', VkSurfaceTransformFlagBitsKHR), ('supportedCompositeAlpha', VkCompositeAlphaFlagsKHR), ('supportedUsageFlags', VkImageUsageFlags)]
-VkAndroidSurfaceCreateInfoKHR._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('flags', VkAndroidSurfaceCreateFlagsKHR), ('window', ctypes.POINTER(ANativeWindow))]
-VkViSurfaceCreateInfoNN._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('flags', VkViSurfaceCreateFlagsNN), ('window', ctypes.c_void_p)]
-#VkWaylandSurfaceCreateInfoKHR._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('flags', VkWaylandSurfaceCreateFlagsKHR), ('display', ctypes.POINTER(wl_display)), ('surface', ctypes.POINTER(wl_surface))]
-#VkWin32SurfaceCreateInfoKHR._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('flags', VkWin32SurfaceCreateFlagsKHR), ('hinstance', HINSTANCE), ('hwnd', HWND)]
-#VkXlibSurfaceCreateInfoKHR._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('flags', VkXlibSurfaceCreateFlagsKHR), ('dpy', ctypes.POINTER(Display)), ('window', Window)]
-#VkXcbSurfaceCreateInfoKHR._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('flags', VkXcbSurfaceCreateFlagsKHR), ('connection', ctypes.POINTER(xcb_connection_t)), ('window', xcb_window_t)]
-#VkDirectFBSurfaceCreateInfoEXT._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('flags', VkDirectFBSurfaceCreateFlagsEXT), ('dfb', ctypes.POINTER(IDirectFB)), ('surface', ctypes.POINTER(IDirectFBSurface))]
-#VkImagePipeSurfaceCreateInfoFUCHSIA._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('flags', VkImagePipeSurfaceCreateFlagsFUCHSIA), ('imagePipeHandle', zx_handle_t)]
-#VkStreamDescriptorSurfaceCreateInfoGGP._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('flags', VkStreamDescriptorSurfaceCreateFlagsGGP), ('streamDescriptor', GgpStreamDescriptor)]
+if VK_USE_PLATFORM_ANDROID_KHR:
+    VkAndroidSurfaceCreateInfoKHR._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('flags', VkAndroidSurfaceCreateFlagsKHR), ('window', ctypes.POINTER(ANativeWindow))]
+if VK_USE_PLATFORM_VI_NN:
+    VkViSurfaceCreateInfoNN._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('flags', VkViSurfaceCreateFlagsNN), ('window', ctypes.c_void_p)]
+if VK_USE_PLATFORM_WAYLAND_KHR:
+    VkWaylandSurfaceCreateInfoKHR._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('flags', VkWaylandSurfaceCreateFlagsKHR), ('display', ctypes.POINTER(wl_display)), ('surface', ctypes.POINTER(wl_surface))]
+if VK_USE_PLATFORM_WIN32_KHR:
+    VkWin32SurfaceCreateInfoKHR._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('flags', VkWin32SurfaceCreateFlagsKHR), ('hinstance', ctypes.wintypes.HINSTANCE), ('hwnd', ctypes.wintypes.HWND)]
+if VK_USE_PLATFORM_XLIB_KHR:
+    VkXlibSurfaceCreateInfoKHR._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('flags', VkXlibSurfaceCreateFlagsKHR), ('dpy', ctypes.POINTER(Display)), ('window', Window)]
+if VK_USE_PLATFORM_XCB_KHR:
+    VkXcbSurfaceCreateInfoKHR._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('flags', VkXcbSurfaceCreateFlagsKHR), ('connection', ctypes.POINTER(xcb_connection_t)), ('window', xcb_window_t)]
+if VK_USE_PLATFORM_DIRECTFB_EXT:
+    VkDirectFBSurfaceCreateInfoEXT._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('flags', VkDirectFBSurfaceCreateFlagsEXT), ('dfb', ctypes.POINTER(IDirectFB)), ('surface', ctypes.POINTER(IDirectFBSurface))]
+if VK_USE_PLATFORM_FUCHSIA:
+    VkImagePipeSurfaceCreateInfoFUCHSIA._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('flags', VkImagePipeSurfaceCreateFlagsFUCHSIA), ('imagePipeHandle', zx_handle_t)]
+if VK_USE_PLATFORM_GGP:
+    VkStreamDescriptorSurfaceCreateInfoGGP._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('flags', VkStreamDescriptorSurfaceCreateFlagsGGP), ('streamDescriptor', GgpStreamDescriptor)]
 VkSurfaceFormatKHR._fields_ = [('format', VkFormat), ('colorSpace', VkColorSpaceKHR)]
 VkSwapchainCreateInfoKHR._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('flags', VkSwapchainCreateFlagsKHR), ('surface', VkSurfaceKHR), ('minImageCount', ctypes.c_uint32), ('imageFormat', VkFormat), ('imageColorSpace', VkColorSpaceKHR), ('imageExtent', VkExtent2D), ('imageArrayLayers', ctypes.c_uint32), ('imageUsage', VkImageUsageFlags), ('imageSharingMode', VkSharingMode), ('queueFamilyIndexCount', ctypes.c_uint32), ('pQueueFamilyIndices', ctypes.POINTER(ctypes.c_uint32)), ('preTransform', VkSurfaceTransformFlagBitsKHR), ('compositeAlpha', VkCompositeAlphaFlagBitsKHR), ('presentMode', VkPresentModeKHR), ('clipped', VkBool32), ('oldSwapchain', VkSwapchainKHR)]
 VkPresentInfoKHR._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('waitSemaphoreCount', ctypes.c_uint32), ('pWaitSemaphores', ctypes.POINTER(VkSemaphore)), ('swapchainCount', ctypes.c_uint32), ('pSwapchains', ctypes.POINTER(VkSwapchainKHR)), ('pImageIndices', ctypes.POINTER(ctypes.c_uint32)), ('pResults', ctypes.POINTER(VkResult))]
@@ -3486,9 +3562,12 @@ VkDedicatedAllocationMemoryAllocateInfoNV._fields_ = [('sType', VkStructureType)
 VkExternalImageFormatPropertiesNV._fields_ = [('imageFormatProperties', VkImageFormatProperties), ('externalMemoryFeatures', VkExternalMemoryFeatureFlagsNV), ('exportFromImportedHandleTypes', VkExternalMemoryHandleTypeFlagsNV), ('compatibleHandleTypes', VkExternalMemoryHandleTypeFlagsNV)]
 VkExternalMemoryImageCreateInfoNV._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('handleTypes', VkExternalMemoryHandleTypeFlagsNV)]
 VkExportMemoryAllocateInfoNV._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('handleTypes', VkExternalMemoryHandleTypeFlagsNV)]
-#VkImportMemoryWin32HandleInfoNV._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('handleType', VkExternalMemoryHandleTypeFlagsNV), ('handle', HANDLE)]
-#VkExportMemoryWin32HandleInfoNV._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('pAttributes', ctypes.POINTER(SECURITY_ATTRIBUTES)), ('dwAccess', DWORD)]
-VkWin32KeyedMutexAcquireReleaseInfoNV._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('acquireCount', ctypes.c_uint32), ('pAcquireSyncs', ctypes.POINTER(VkDeviceMemory)), ('pAcquireKeys', ctypes.POINTER(ctypes.c_uint64)), ('pAcquireTimeoutMilliseconds', ctypes.POINTER(ctypes.c_uint32)), ('releaseCount', ctypes.c_uint32), ('pReleaseSyncs', ctypes.POINTER(VkDeviceMemory)), ('pReleaseKeys', ctypes.POINTER(ctypes.c_uint64))]
+if VK_USE_PLATFORM_WIN32_KHR:
+    VkImportMemoryWin32HandleInfoNV._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('handleType', VkExternalMemoryHandleTypeFlagsNV), ('handle', ctypes.wintypes.HANDLE)]
+if VK_USE_PLATFORM_WIN32_KHR:
+    VkExportMemoryWin32HandleInfoNV._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('pAttributes', ctypes.POINTER(SECURITY_ATTRIBUTES)), ('dwAccess', ctypes.wintypes.DWORD)]
+if VK_USE_PLATFORM_WIN32_KHR:
+    VkWin32KeyedMutexAcquireReleaseInfoNV._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('acquireCount', ctypes.c_uint32), ('pAcquireSyncs', ctypes.POINTER(VkDeviceMemory)), ('pAcquireKeys', ctypes.POINTER(ctypes.c_uint64)), ('pAcquireTimeoutMilliseconds', ctypes.POINTER(ctypes.c_uint32)), ('releaseCount', ctypes.c_uint32), ('pReleaseSyncs', ctypes.POINTER(VkDeviceMemory)), ('pReleaseKeys', ctypes.POINTER(ctypes.c_uint64))]
 VkPhysicalDeviceDeviceGeneratedCommandsFeaturesNV._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('deviceGeneratedCommands', VkBool32)]
 VkDevicePrivateDataCreateInfoEXT._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('privateDataSlotRequestCount', ctypes.c_uint32)]
 VkPrivateDataSlotCreateInfoEXT._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('flags', VkPrivateDataSlotCreateFlagsEXT)]
@@ -3553,24 +3632,33 @@ VkExternalMemoryBufferCreateInfo._fields_ = [('sType', VkStructureType), ('pNext
 VkExternalMemoryBufferCreateInfoKHR = type('VkExternalMemoryBufferCreateInfoKHR', (VkExternalMemoryBufferCreateInfo,), dict())
 VkExportMemoryAllocateInfo._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('handleTypes', VkExternalMemoryHandleTypeFlags)]
 VkExportMemoryAllocateInfoKHR = type('VkExportMemoryAllocateInfoKHR', (VkExportMemoryAllocateInfo,), dict())
-#VkImportMemoryWin32HandleInfoKHR._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('handleType', VkExternalMemoryHandleTypeFlagBits), ('handle', HANDLE), ('name', LPCWSTR)]
-#VkExportMemoryWin32HandleInfoKHR._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('pAttributes', ctypes.POINTER(SECURITY_ATTRIBUTES)), ('dwAccess', DWORD), ('name', LPCWSTR)]
-VkMemoryWin32HandlePropertiesKHR._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('memoryTypeBits', ctypes.c_uint32)]
-VkMemoryGetWin32HandleInfoKHR._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('memory', VkDeviceMemory), ('handleType', VkExternalMemoryHandleTypeFlagBits)]
+if VK_USE_PLATFORM_WIN32_KHR:
+    VkImportMemoryWin32HandleInfoKHR._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('handleType', VkExternalMemoryHandleTypeFlagBits), ('handle', ctypes.wintypes.HANDLE), ('name', ctypes.wintypes.LPCWSTR)]
+if VK_USE_PLATFORM_WIN32_KHR:
+    VkExportMemoryWin32HandleInfoKHR._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('pAttributes', ctypes.POINTER(SECURITY_ATTRIBUTES)), ('dwAccess', ctypes.wintypes.DWORD), ('name', ctypes.wintypes.LPCWSTR)]
+if VK_USE_PLATFORM_WIN32_KHR:
+    VkMemoryWin32HandlePropertiesKHR._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('memoryTypeBits', ctypes.c_uint32)]
+if VK_USE_PLATFORM_WIN32_KHR:
+    VkMemoryGetWin32HandleInfoKHR._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('memory', VkDeviceMemory), ('handleType', VkExternalMemoryHandleTypeFlagBits)]
 VkImportMemoryFdInfoKHR._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('handleType', VkExternalMemoryHandleTypeFlagBits), ('fd', ctypes.c_int)]
 VkMemoryFdPropertiesKHR._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('memoryTypeBits', ctypes.c_uint32)]
 VkMemoryGetFdInfoKHR._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('memory', VkDeviceMemory), ('handleType', VkExternalMemoryHandleTypeFlagBits)]
-VkWin32KeyedMutexAcquireReleaseInfoKHR._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('acquireCount', ctypes.c_uint32), ('pAcquireSyncs', ctypes.POINTER(VkDeviceMemory)), ('pAcquireKeys', ctypes.POINTER(ctypes.c_uint64)), ('pAcquireTimeouts', ctypes.POINTER(ctypes.c_uint32)), ('releaseCount', ctypes.c_uint32), ('pReleaseSyncs', ctypes.POINTER(VkDeviceMemory)), ('pReleaseKeys', ctypes.POINTER(ctypes.c_uint64))]
+if VK_USE_PLATFORM_WIN32_KHR:
+    VkWin32KeyedMutexAcquireReleaseInfoKHR._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('acquireCount', ctypes.c_uint32), ('pAcquireSyncs', ctypes.POINTER(VkDeviceMemory)), ('pAcquireKeys', ctypes.POINTER(ctypes.c_uint64)), ('pAcquireTimeouts', ctypes.POINTER(ctypes.c_uint32)), ('releaseCount', ctypes.c_uint32), ('pReleaseSyncs', ctypes.POINTER(VkDeviceMemory)), ('pReleaseKeys', ctypes.POINTER(ctypes.c_uint64))]
 VkPhysicalDeviceExternalSemaphoreInfo._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('handleType', VkExternalSemaphoreHandleTypeFlagBits)]
 VkPhysicalDeviceExternalSemaphoreInfoKHR = type('VkPhysicalDeviceExternalSemaphoreInfoKHR', (VkPhysicalDeviceExternalSemaphoreInfo,), dict())
 VkExternalSemaphoreProperties._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('exportFromImportedHandleTypes', VkExternalSemaphoreHandleTypeFlags), ('compatibleHandleTypes', VkExternalSemaphoreHandleTypeFlags), ('externalSemaphoreFeatures', VkExternalSemaphoreFeatureFlags)]
 VkExternalSemaphorePropertiesKHR = type('VkExternalSemaphorePropertiesKHR', (VkExternalSemaphoreProperties,), dict())
 VkExportSemaphoreCreateInfo._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('handleTypes', VkExternalSemaphoreHandleTypeFlags)]
 VkExportSemaphoreCreateInfoKHR = type('VkExportSemaphoreCreateInfoKHR', (VkExportSemaphoreCreateInfo,), dict())
-#VkImportSemaphoreWin32HandleInfoKHR._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('semaphore', VkSemaphore), ('flags', VkSemaphoreImportFlags), ('handleType', VkExternalSemaphoreHandleTypeFlagBits), ('handle', HANDLE), ('name', LPCWSTR)]
-#VkExportSemaphoreWin32HandleInfoKHR._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('pAttributes', ctypes.POINTER(SECURITY_ATTRIBUTES)), ('dwAccess', DWORD), ('name', LPCWSTR)]
-VkD3D12FenceSubmitInfoKHR._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('waitSemaphoreValuesCount', ctypes.c_uint32), ('pWaitSemaphoreValues', ctypes.POINTER(ctypes.c_uint64)), ('signalSemaphoreValuesCount', ctypes.c_uint32), ('pSignalSemaphoreValues', ctypes.POINTER(ctypes.c_uint64))]
-VkSemaphoreGetWin32HandleInfoKHR._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('semaphore', VkSemaphore), ('handleType', VkExternalSemaphoreHandleTypeFlagBits)]
+if VK_USE_PLATFORM_WIN32_KHR:
+    VkImportSemaphoreWin32HandleInfoKHR._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('semaphore', VkSemaphore), ('flags', VkSemaphoreImportFlags), ('handleType', VkExternalSemaphoreHandleTypeFlagBits), ('handle', ctypes.wintypes.HANDLE), ('name', ctypes.wintypes.LPCWSTR)]
+if VK_USE_PLATFORM_WIN32_KHR:
+    VkExportSemaphoreWin32HandleInfoKHR._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('pAttributes', ctypes.POINTER(SECURITY_ATTRIBUTES)), ('dwAccess', ctypes.wintypes.DWORD), ('name', ctypes.wintypes.LPCWSTR)]
+if VK_USE_PLATFORM_WIN32_KHR:
+    VkD3D12FenceSubmitInfoKHR._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('waitSemaphoreValuesCount', ctypes.c_uint32), ('pWaitSemaphoreValues', ctypes.POINTER(ctypes.c_uint64)), ('signalSemaphoreValuesCount', ctypes.c_uint32), ('pSignalSemaphoreValues', ctypes.POINTER(ctypes.c_uint64))]
+if VK_USE_PLATFORM_WIN32_KHR:
+    VkSemaphoreGetWin32HandleInfoKHR._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('semaphore', VkSemaphore), ('handleType', VkExternalSemaphoreHandleTypeFlagBits)]
 VkImportSemaphoreFdInfoKHR._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('semaphore', VkSemaphore), ('flags', VkSemaphoreImportFlags), ('handleType', VkExternalSemaphoreHandleTypeFlagBits), ('fd', ctypes.c_int)]
 VkSemaphoreGetFdInfoKHR._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('semaphore', VkSemaphore), ('handleType', VkExternalSemaphoreHandleTypeFlagBits)]
 VkPhysicalDeviceExternalFenceInfo._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('handleType', VkExternalFenceHandleTypeFlagBits)]
@@ -3579,9 +3667,12 @@ VkExternalFenceProperties._fields_ = [('sType', VkStructureType), ('pNext', ctyp
 VkExternalFencePropertiesKHR = type('VkExternalFencePropertiesKHR', (VkExternalFenceProperties,), dict())
 VkExportFenceCreateInfo._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('handleTypes', VkExternalFenceHandleTypeFlags)]
 VkExportFenceCreateInfoKHR = type('VkExportFenceCreateInfoKHR', (VkExportFenceCreateInfo,), dict())
-#VkImportFenceWin32HandleInfoKHR._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('fence', VkFence), ('flags', VkFenceImportFlags), ('handleType', VkExternalFenceHandleTypeFlagBits), ('handle', HANDLE), ('name', LPCWSTR)]
-#VkExportFenceWin32HandleInfoKHR._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('pAttributes', ctypes.POINTER(SECURITY_ATTRIBUTES)), ('dwAccess', DWORD), ('name', LPCWSTR)]
-VkFenceGetWin32HandleInfoKHR._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('fence', VkFence), ('handleType', VkExternalFenceHandleTypeFlagBits)]
+if VK_USE_PLATFORM_WIN32_KHR:
+    VkImportFenceWin32HandleInfoKHR._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('fence', VkFence), ('flags', VkFenceImportFlags), ('handleType', VkExternalFenceHandleTypeFlagBits), ('handle', ctypes.wintypes.HANDLE), ('name', ctypes.wintypes.LPCWSTR)]
+if VK_USE_PLATFORM_WIN32_KHR:
+    VkExportFenceWin32HandleInfoKHR._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('pAttributes', ctypes.POINTER(SECURITY_ATTRIBUTES)), ('dwAccess', ctypes.wintypes.DWORD), ('name', ctypes.wintypes.LPCWSTR)]
+if VK_USE_PLATFORM_WIN32_KHR:
+    VkFenceGetWin32HandleInfoKHR._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('fence', VkFence), ('handleType', VkExternalFenceHandleTypeFlagBits)]
 VkImportFenceFdInfoKHR._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('fence', VkFence), ('flags', VkFenceImportFlags), ('handleType', VkExternalFenceHandleTypeFlagBits), ('fd', ctypes.c_int)]
 VkFenceGetFdInfoKHR._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('fence', VkFence), ('handleType', VkExternalFenceHandleTypeFlagBits)]
 VkPhysicalDeviceMultiviewFeatures._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('multiview', VkBool32), ('multiviewGeometryShader', VkBool32), ('multiviewTessellationShader', VkBool32)]
@@ -3635,9 +3726,12 @@ VkRefreshCycleDurationGOOGLE._fields_ = [('refreshDuration', ctypes.c_uint64)]
 VkPastPresentationTimingGOOGLE._fields_ = [('presentID', ctypes.c_uint32), ('desiredPresentTime', ctypes.c_uint64), ('actualPresentTime', ctypes.c_uint64), ('earliestPresentTime', ctypes.c_uint64), ('presentMargin', ctypes.c_uint64)]
 VkPresentTimeGOOGLE._fields_ = [('presentID', ctypes.c_uint32), ('desiredPresentTime', ctypes.c_uint64)]
 VkPresentTimesInfoGOOGLE._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('swapchainCount', ctypes.c_uint32), ('pTimes', ctypes.POINTER(VkPresentTimeGOOGLE))]
-VkIOSSurfaceCreateInfoMVK._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('flags', VkIOSSurfaceCreateFlagsMVK), ('pView', ctypes.c_void_p)]
-VkMacOSSurfaceCreateInfoMVK._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('flags', VkMacOSSurfaceCreateFlagsMVK), ('pView', ctypes.c_void_p)]
-VkMetalSurfaceCreateInfoEXT._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('flags', VkMetalSurfaceCreateFlagsEXT), ('pLayer', ctypes.POINTER(CAMetalLayer))]
+if VK_USE_PLATFORM_IOS_MVK:
+    VkIOSSurfaceCreateInfoMVK._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('flags', VkIOSSurfaceCreateFlagsMVK), ('pView', ctypes.c_void_p)]
+if VK_USE_PLATFORM_MACOS_MVK:
+    VkMacOSSurfaceCreateInfoMVK._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('flags', VkMacOSSurfaceCreateFlagsMVK), ('pView', ctypes.c_void_p)]
+if VK_USE_PLATFORM_METAL_EXT:
+    VkMetalSurfaceCreateInfoEXT._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('flags', VkMetalSurfaceCreateFlagsEXT), ('pLayer', ctypes.POINTER(CAMetalLayer))]
 VkViewportWScalingNV._fields_ = [('xcoeff', ctypes.c_float), ('ycoeff', ctypes.c_float)]
 VkPipelineViewportWScalingStateCreateInfoNV._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('viewportWScalingEnable', VkBool32), ('viewportCount', ctypes.c_uint32), ('pViewportWScalings', ctypes.POINTER(VkViewportWScalingNV))]
 VkViewportSwizzleNV._fields_ = [('x', VkViewportCoordinateSwizzleNV), ('y', VkViewportCoordinateSwizzleNV), ('z', VkViewportCoordinateSwizzleNV), ('w', VkViewportCoordinateSwizzleNV)]
@@ -3739,10 +3833,14 @@ VkPhysicalDeviceFloatControlsProperties._fields_ = [('sType', VkStructureType), 
 VkPhysicalDeviceFloatControlsPropertiesKHR = type('VkPhysicalDeviceFloatControlsPropertiesKHR', (VkPhysicalDeviceFloatControlsProperties,), dict())
 VkPhysicalDeviceHostQueryResetFeatures._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('hostQueryReset', VkBool32)]
 VkPhysicalDeviceHostQueryResetFeaturesEXT = type('VkPhysicalDeviceHostQueryResetFeaturesEXT', (VkPhysicalDeviceHostQueryResetFeatures,), dict())
-VkNativeBufferUsage2ANDROID._fields_ = [('consumer', ctypes.c_uint64), ('producer', ctypes.c_uint64)]
-VkNativeBufferANDROID._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('handle', ctypes.c_void_p), ('stride', ctypes.c_int), ('format', ctypes.c_int), ('usage', ctypes.c_int), ('usage2', VkNativeBufferUsage2ANDROID)]
-VkSwapchainImageCreateInfoANDROID._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('usage', VkSwapchainImageUsageFlagsANDROID)]
-VkPhysicalDevicePresentationPropertiesANDROID._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('sharedImage', VkBool32)]
+if VK_USE_PLATFORM_ANDROID_KHR:
+    VkNativeBufferUsage2ANDROID._fields_ = [('consumer', ctypes.c_uint64), ('producer', ctypes.c_uint64)]
+if VK_USE_PLATFORM_ANDROID_KHR:
+    VkNativeBufferANDROID._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('handle', ctypes.c_void_p), ('stride', ctypes.c_int), ('format', ctypes.c_int), ('usage', ctypes.c_int), ('usage2', VkNativeBufferUsage2ANDROID)]
+if VK_USE_PLATFORM_ANDROID_KHR:
+    VkSwapchainImageCreateInfoANDROID._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('usage', VkSwapchainImageUsageFlagsANDROID)]
+if VK_USE_PLATFORM_ANDROID_KHR:
+    VkPhysicalDevicePresentationPropertiesANDROID._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('sharedImage', VkBool32)]
 VkShaderResourceUsageAMD._fields_ = [('numUsedVgprs', ctypes.c_uint32), ('numUsedSgprs', ctypes.c_uint32), ('ldsSizePerLocalWorkGroup', ctypes.c_uint32), ('ldsUsageSizeInBytes', ctypes.c_size_t), ('scratchMemUsageInBytes', ctypes.c_size_t)]
 VkShaderStatisticsInfoAMD._fields_ = [('shaderStageMask', VkShaderStageFlags), ('resourceUsage', VkShaderResourceUsageAMD), ('numPhysicalVgprs', ctypes.c_uint32), ('numPhysicalSgprs', ctypes.c_uint32), ('numAvailableVgprs', ctypes.c_uint32), ('numAvailableSgprs', ctypes.c_uint32), ('computeWorkGroupSize', (ctypes.c_uint32 * (3)))]
 VkDeviceQueueGlobalPriorityCreateInfoEXT._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('globalPriority', VkQueueGlobalPriorityEXT)]
@@ -3802,13 +3900,19 @@ VkVertexInputBindingDivisorDescriptionEXT._fields_ = [('binding', ctypes.c_uint3
 VkPipelineVertexInputDivisorStateCreateInfoEXT._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('vertexBindingDivisorCount', ctypes.c_uint32), ('pVertexBindingDivisors', ctypes.POINTER(VkVertexInputBindingDivisorDescriptionEXT))]
 VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('maxVertexAttribDivisor', ctypes.c_uint32)]
 VkPhysicalDevicePCIBusInfoPropertiesEXT._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('pciDomain', ctypes.c_uint32), ('pciBus', ctypes.c_uint32), ('pciDevice', ctypes.c_uint32), ('pciFunction', ctypes.c_uint32)]
-VkImportAndroidHardwareBufferInfoANDROID._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('buffer', ctypes.POINTER(AHardwareBuffer))]
-VkAndroidHardwareBufferUsageANDROID._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('androidHardwareBufferUsage', ctypes.c_uint64)]
-VkAndroidHardwareBufferPropertiesANDROID._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('allocationSize', VkDeviceSize), ('memoryTypeBits', ctypes.c_uint32)]
-VkMemoryGetAndroidHardwareBufferInfoANDROID._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('memory', VkDeviceMemory)]
-VkAndroidHardwareBufferFormatPropertiesANDROID._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('format', VkFormat), ('externalFormat', ctypes.c_uint64), ('formatFeatures', VkFormatFeatureFlags), ('samplerYcbcrConversionComponents', VkComponentMapping), ('suggestedYcbcrModel', VkSamplerYcbcrModelConversion), ('suggestedYcbcrRange', VkSamplerYcbcrRange), ('suggestedXChromaOffset', VkChromaLocation), ('suggestedYChromaOffset', VkChromaLocation)]
+if VK_USE_PLATFORM_ANDROID_KHR:
+    VkImportAndroidHardwareBufferInfoANDROID._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('buffer', ctypes.POINTER(AHardwareBuffer))]
+if VK_USE_PLATFORM_ANDROID_KHR:
+    VkAndroidHardwareBufferUsageANDROID._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('androidHardwareBufferUsage', ctypes.c_uint64)]
+if VK_USE_PLATFORM_ANDROID_KHR:
+    VkAndroidHardwareBufferPropertiesANDROID._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('allocationSize', VkDeviceSize), ('memoryTypeBits', ctypes.c_uint32)]
+if VK_USE_PLATFORM_ANDROID_KHR:
+    VkMemoryGetAndroidHardwareBufferInfoANDROID._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('memory', VkDeviceMemory)]
+if VK_USE_PLATFORM_ANDROID_KHR:
+    VkAndroidHardwareBufferFormatPropertiesANDROID._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('format', VkFormat), ('externalFormat', ctypes.c_uint64), ('formatFeatures', VkFormatFeatureFlags), ('samplerYcbcrConversionComponents', VkComponentMapping), ('suggestedYcbcrModel', VkSamplerYcbcrModelConversion), ('suggestedYcbcrRange', VkSamplerYcbcrRange), ('suggestedXChromaOffset', VkChromaLocation), ('suggestedYChromaOffset', VkChromaLocation)]
 VkCommandBufferInheritanceConditionalRenderingInfoEXT._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('conditionalRenderingEnable', VkBool32)]
-VkExternalFormatANDROID._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('externalFormat', ctypes.c_uint64)]
+if VK_USE_PLATFORM_ANDROID_KHR:
+    VkExternalFormatANDROID._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('externalFormat', ctypes.c_uint64)]
 VkPhysicalDevice8BitStorageFeatures._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('storageBuffer8BitAccess', VkBool32), ('uniformAndStorageBuffer8BitAccess', VkBool32), ('storagePushConstant8', VkBool32)]
 VkPhysicalDevice8BitStorageFeaturesKHR = type('VkPhysicalDevice8BitStorageFeaturesKHR', (VkPhysicalDevice8BitStorageFeatures,), dict())
 VkPhysicalDeviceConditionalRenderingFeaturesEXT._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('conditionalRendering', VkBool32), ('inheritedConditionalRendering', VkBool32)]
@@ -3923,12 +4027,16 @@ VkCooperativeMatrixPropertiesNV._fields_ = [('sType', VkStructureType), ('pNext'
 VkPhysicalDeviceYcbcrImageArraysFeaturesEXT._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('ycbcrImageArrays', VkBool32)]
 VkImageViewHandleInfoNVX._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('imageView', VkImageView), ('descriptorType', VkDescriptorType), ('sampler', VkSampler)]
 VkImageViewAddressPropertiesNVX._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('deviceAddress', VkDeviceAddress), ('size', VkDeviceSize)]
-#VkPresentFrameTokenGGP._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('frameToken', GgpFrameToken)]
+if VK_USE_PLATFORM_GGP:
+    VkPresentFrameTokenGGP._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('frameToken', GgpFrameToken)]
 VkPipelineCreationFeedbackEXT._fields_ = [('flags', VkPipelineCreationFeedbackFlagsEXT), ('duration', ctypes.c_uint64)]
 VkPipelineCreationFeedbackCreateInfoEXT._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('pPipelineCreationFeedback', ctypes.POINTER(VkPipelineCreationFeedbackEXT)), ('pipelineStageCreationFeedbackCount', ctypes.c_uint32), ('pPipelineStageCreationFeedbacks', ctypes.POINTER(VkPipelineCreationFeedbackEXT))]
-VkSurfaceFullScreenExclusiveInfoEXT._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('fullScreenExclusive', VkFullScreenExclusiveEXT)]
-#VkSurfaceFullScreenExclusiveWin32InfoEXT._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('hmonitor', HMONITOR)]
-VkSurfaceCapabilitiesFullScreenExclusiveEXT._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('fullScreenExclusiveSupported', VkBool32)]
+if VK_USE_PLATFORM_WIN32_KHR:
+    VkSurfaceFullScreenExclusiveInfoEXT._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('fullScreenExclusive', VkFullScreenExclusiveEXT)]
+if VK_USE_PLATFORM_WIN32_KHR:
+    VkSurfaceFullScreenExclusiveWin32InfoEXT._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('hmonitor', ctypes.wintypes.HMONITOR)]
+if VK_USE_PLATFORM_WIN32_KHR:
+    VkSurfaceCapabilitiesFullScreenExclusiveEXT._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('fullScreenExclusiveSupported', VkBool32)]
 VkPhysicalDevicePerformanceQueryFeaturesKHR._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('performanceCounterQueryPools', VkBool32), ('performanceCounterMultipleQueryPools', VkBool32)]
 VkPhysicalDevicePerformanceQueryPropertiesKHR._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('allowCommandBufferQueryCopies', VkBool32)]
 VkPerformanceCounterKHR._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('unit', VkPerformanceCounterUnitKHR), ('scope', VkPerformanceCounterScopeKHR), ('storage', VkPerformanceCounterStorageKHR), ('uuid', (ctypes.c_uint8 * (VK_UUID_SIZE)))]
@@ -4023,8 +4131,10 @@ VkDeviceDiagnosticsConfigCreateInfoNV._fields_ = [('sType', VkStructureType), ('
 VkPhysicalDeviceRobustness2FeaturesEXT._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('robustBufferAccess2', VkBool32), ('robustImageAccess2', VkBool32), ('nullDescriptor', VkBool32)]
 VkPhysicalDeviceRobustness2PropertiesEXT._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('robustStorageBufferAccessSizeAlignment', VkDeviceSize), ('robustUniformBufferAccessSizeAlignment', VkDeviceSize)]
 VkPhysicalDeviceImageRobustnessFeaturesEXT._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('robustImageAccess', VkBool32)]
-VkPhysicalDevicePortabilitySubsetFeaturesKHR._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('constantAlphaColorBlendFactors', VkBool32), ('events', VkBool32), ('imageViewFormatReinterpretation', VkBool32), ('imageViewFormatSwizzle', VkBool32), ('imageView2DOn3DImage', VkBool32), ('multisampleArrayImage', VkBool32), ('mutableComparisonSamplers', VkBool32), ('pointPolygons', VkBool32), ('samplerMipLodBias', VkBool32), ('separateStencilMaskRef', VkBool32), ('shaderSampleRateInterpolationFunctions', VkBool32), ('tessellationIsolines', VkBool32), ('tessellationPointMode', VkBool32), ('triangleFans', VkBool32), ('vertexAttributeAccessBeyondStride', VkBool32)]
-VkPhysicalDevicePortabilitySubsetPropertiesKHR._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('minVertexInputBindingStrideAlignment', ctypes.c_uint32)]
+if VK_ENABLE_BETA_EXTENSIONS:
+    VkPhysicalDevicePortabilitySubsetFeaturesKHR._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('constantAlphaColorBlendFactors', VkBool32), ('events', VkBool32), ('imageViewFormatReinterpretation', VkBool32), ('imageViewFormatSwizzle', VkBool32), ('imageView2DOn3DImage', VkBool32), ('multisampleArrayImage', VkBool32), ('mutableComparisonSamplers', VkBool32), ('pointPolygons', VkBool32), ('samplerMipLodBias', VkBool32), ('separateStencilMaskRef', VkBool32), ('shaderSampleRateInterpolationFunctions', VkBool32), ('tessellationIsolines', VkBool32), ('tessellationPointMode', VkBool32), ('triangleFans', VkBool32), ('vertexAttributeAccessBeyondStride', VkBool32)]
+if VK_ENABLE_BETA_EXTENSIONS:
+    VkPhysicalDevicePortabilitySubsetPropertiesKHR._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('minVertexInputBindingStrideAlignment', ctypes.c_uint32)]
 VkPhysicalDevice4444FormatsFeaturesEXT._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('formatA4R4G4B4', VkBool32), ('formatA4B4G4R4', VkBool32)]
 VkBufferCopy2KHR._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('srcOffset', VkDeviceSize), ('dstOffset', VkDeviceSize), ('size', VkDeviceSize)]
 VkImageCopy2KHR._fields_ = [('sType', VkStructureType), ('pNext', ctypes.c_void_p), ('srcSubresource', VkImageSubresourceLayers), ('srcOffset', VkOffset3D), ('dstSubresource', VkImageSubresourceLayers), ('dstOffset', VkOffset3D), ('extent', VkExtent3D)]

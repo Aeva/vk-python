@@ -2,6 +2,7 @@
 import os
 import re
 import ctypes
+import ctypes.wintypes as wintypes
 import bs4
 
 
@@ -20,7 +21,7 @@ with open(XML_PATH, 'r') as infile:
 
 
 def rewrite_type(typename):
-    basic = {
+    rewrites = {
         "char" : "ctypes.c_char",
         "float" : "ctypes.c_float",
         "double" : "ctypes.c_double",
@@ -32,8 +33,14 @@ def rewrite_type(typename):
         "int64_t" : "ctypes.c_int64",
         "size_t" : "ctypes.c_size_t",
         "int" : "ctypes.c_int",
+        "DWORD" : "ctypes.wintypes.DWORD",
+        "HANDLE" : "ctypes.wintypes.HANDLE",
+        "HINSTANCE" : "ctypes.wintypes.HINSTANCE",
+        "HMONITOR" : "ctypes.wintypes.HMONITOR",
+        "HWND" : "ctypes.wintypes.HWND",
+        "LPCWSTR" : "ctypes.wintypes.LPCWSTR",
     }
-    return basic.get(typename) or typename
+    return rewrites.get(typename) or typename
 
 
 def find_one(tag, *args, **kargs):
@@ -85,30 +92,6 @@ def parse_type(c_noise):
     for i in range(pointers):
         m_type = f"ctypes.POINTER({m_type})"
     return m_type, m_name, m_bitfield
-
-
-# The following structs have fields which require platform specific types.
-# As this script does not have a good way of handling these yet, their
-# generated definitions are simply commented out for now.
-SKIP_STRUCTS = [
-    "VkWaylandSurfaceCreateInfoKHR",
-    "VkWin32SurfaceCreateInfoKHR",
-    "VkXlibSurfaceCreateInfoKHR",
-    "VkXcbSurfaceCreateInfoKHR",
-    "VkDirectFBSurfaceCreateInfoEXT",
-    "VkImagePipeSurfaceCreateInfoFUCHSIA",
-    "VkStreamDescriptorSurfaceCreateInfoGGP",
-    "VkImportMemoryWin32HandleInfoNV",
-    "VkExportMemoryWin32HandleInfoNV",
-    "VkImportMemoryWin32HandleInfoKHR",
-    "VkExportMemoryWin32HandleInfoKHR",
-    "VkImportSemaphoreWin32HandleInfoKHR",
-    "VkExportSemaphoreWin32HandleInfoKHR",
-    "VkImportFenceWin32HandleInfoKHR",
-    "VkExportFenceWin32HandleInfoKHR",
-    "VkPresentFrameTokenGGP",
-    "VkSurfaceFullScreenExclusiveWin32InfoEXT",
-]
 
 
 class vk_type:
@@ -263,6 +246,7 @@ class vk_struct(vk_type):
     def __init__(self, tag):
         super().__init__(tag)
         self.dependencies = []
+        self.condition = None
         self.kind = "Structure"
         for child in tag.find_all("comment"):
             child.replace_with("")
@@ -284,19 +268,24 @@ class vk_struct(vk_type):
                 if found != self.name and not found in self.dependencies:
                     self.dependencies.append(found)
 
+    def wrap_output(self, src):
+        if self.condition is not None:
+            return f"if {self.condition}:\n    {src}"
+        else:
+            return src
+
     def declare(self):
         if self.alias:
             return ""
         else:
-            return f"{self.name} = type('{self.name}', (ctypes.{self.kind},), dict())\n"
+            return self.wrap_output(f"{self.name} = type('{self.name}', (ctypes.{self.kind},), dict())\n")
 
     def define(self):
         if self.alias:
-            return f"{self.name} = type('{self.name}', ({self.alias},), dict())\n"
+            return self.wrap_output(f"{self.name} = type('{self.name}', ({self.alias},), dict())\n")
         else:
             fields = ", ".join([f"('{n}', {t}, {b})" if b else f"('{n}', {t})" for (t, n, b) in self.fields])
-            prefix = "#" if self.name in SKIP_STRUCTS else ""
-            return f"{prefix}{self.name}._fields_ = [{fields}]\n"
+            return self.wrap_output(f"{self.name}._fields_ = [{fields}]\n")
 
 
 class vk_union(vk_struct):
@@ -339,6 +328,15 @@ class vk_boilerplate:
                     struct = vk_union(type_tag)
                     structs_dict[struct.name] = struct
 
+        for platform in soup.find_all("platform"):
+            platform_name = platform.get("name")
+            platform_guard = platform.get("protect")
+            for extension in soup.find_all("extension", platform=platform_name):
+                for ext_type in extension.find_all("type"):
+                    type_name = ext_type.get("name")
+                    if type_name in structs_dict:
+                        structs_dict[type_name].condition = platform_guard
+
         # resolve struct dependency ordering
         committed = set()
         def commit(struct):
@@ -359,11 +357,35 @@ import platform
 if ctypes.sizeof(ctypes.c_void_p) != 8:
     raise RuntimeError("Only 64 bit is supported.")
 
+VK_USE_PLATFORM_XLIB_KHR = False
+VK_USE_PLATFORM_XLIB_XRANDR_EXT = False
+VK_USE_PLATFORM_XCB_KHR = False
+VK_USE_PLATFORM_WAYLAND_KHR = False
+VK_USE_PLATFORM_DIRECTFB_EXT = False
+VK_USE_PLATFORM_ANDROID_KHR = False
+VK_USE_PLATFORM_WIN32_KHR = False
+VK_USE_PLATFORM_VI_NN = False
+VK_USE_PLATFORM_IOS_MVK = False
+VK_USE_PLATFORM_MACOS_MVK = False
+VK_USE_PLATFORM_METAL_EXT = False
+VK_USE_PLATFORM_FUCHSIA = False
+VK_USE_PLATFORM_GGP = False
+VK_ENABLE_BETA_EXTENSIONS = False
+
 VK_DLL = None
 VK_FUNCTYPE = None
 if platform.system() == "Windows":
     VK_DLL = ctypes.windll.LoadLibrary("vulkan-1")
     VK_FUNCTYPE = ctypes.WINFUNCTYPE
+    VK_USE_PLATFORM_WIN32_KHR = True
+    import ctypes.wintypes
+    class SECURITY_ATTRIBUTES(ctypes.Structure):
+        _fields_ = [
+            ("nLength", ctypes.wintypes.DWORD),
+            ("lpSecurityDescriptor", ctypes.wintypes.LPVOID),
+            ("bInheritHandle", ctypes.wintypes.BOOL),
+        ]
+
 elif platform.system() == "Linux":
     VK_DLL = ctypes.cdll.LoadLibrary("libvulkan.so.1")
     VK_FUNCTYPE = ctypes.CFUNCTYPE
