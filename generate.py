@@ -17,7 +17,7 @@ assert(os.path.isdir(SDK_PATH))
 XML_PATH = os.path.join(SDK_PATH, "share", "vulkan", "registry", "vk.xml")
 assert(os.path.isfile(XML_PATH))
 with open(XML_PATH, 'r') as infile:
-    REGISTRY = bs4.BeautifulSoup(infile.read(), 'html.parser')
+    REGISTRY = bs4.BeautifulSoup(infile.read(), 'lxml-xml')
 
 
 def rewrite_type(typename):
@@ -92,6 +92,16 @@ def parse_type(c_noise):
     for i in range(pointers):
         m_type = f"ctypes.POINTER({m_type})"
     return m_type, m_name, m_bitfield
+
+
+def indent(src):
+    new_lines = []
+    for line in src.split("\n"):
+        if line.strip() != "":
+            new_lines.append(f"    {line}")
+        else:
+            new_lines.append("")
+    return "\n".join(new_lines)
 
 
 class vk_type:
@@ -294,6 +304,36 @@ class vk_union(vk_struct):
         self.kind = "Union"
 
 
+class vk_command:
+    def __init__(self, tag):
+        self.condition = None
+        self.alias = tag.get("alias")
+        if self.alias:
+            self.name = tag.get("name")
+        else:
+            proto = tag.find_all("proto")[0]
+            self.r_type, self.name, invalid = parse_type(proto.text)
+            assert(invalid is None)
+            self.p_types = []
+            for param in tag.find_all("param"):
+                if param.parent == tag:
+                    p_type, p_name, invalid = parse_type(param.text)
+                    assert(invalid is None)
+                    self.p_types.append(p_type)
+
+    def __str__(self):
+        src = "pass"
+        if self.alias:
+            src = f"{self.name} = {self.alias}\n"
+        else:
+            src = f"{self.name} = VK_DLL.{self.name}\n"
+            src += f"{self.name}.restype = {self.r_type}\n"
+            src += f"{self.name}.argtypes = [{', '.join(self.p_types)}]\n"
+        if self.condition:
+            src = f"if {self.condition}:\n" + indent(src)
+        return src
+
+
 class vk_boilerplate:
     def __init__(self, soup):
         self.basetypes = []
@@ -303,6 +343,7 @@ class vk_boilerplate:
         self.funcpointers = []
         self.structs = []
         structs_dict = {}
+        self.commands = {}
 
         # API Constants
         self.enums.append(vk_enum(None, soup))
@@ -328,6 +369,11 @@ class vk_boilerplate:
                     struct = vk_union(type_tag)
                     structs_dict[struct.name] = struct
 
+        for commands in soup.find_all("commands"):
+            for cmd_tag in commands.find_all("command"):
+                command = vk_command(cmd_tag)
+                self.commands[command.name] = command
+
         for platform in soup.find_all("platform"):
             platform_name = platform.get("name")
             platform_guard = platform.get("protect")
@@ -336,6 +382,10 @@ class vk_boilerplate:
                     type_name = ext_type.get("name")
                     if type_name in structs_dict:
                         structs_dict[type_name].condition = platform_guard
+                for ext_cmd in extension.find_all("command"):
+                    cmd_name = ext_cmd.get("name")
+                    if cmd_name in self.commands:
+                        self.commands[cmd_name].condition = platform_guard
 
         # resolve struct dependency ordering
         committed = set()
@@ -405,6 +455,7 @@ else:
         src += "".join(map(lambda x: x.declare(), self.structs)) + "\n"
         src += "".join(map(str, self.funcpointers)) + "\n"
         src += "".join(map(lambda x: x.define(), self.structs)) + "\n"
+        src += "".join(map(str, self.commands.values())) + "\n"
         return src
 
 boilerplate = vk_boilerplate(REGISTRY)
