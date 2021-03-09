@@ -358,7 +358,7 @@ class vk_command:
             loader = f"vk_{self.loader_type}_fn"
             sig = [self.r_type] + self.p_types
             src = f"PFN_{self.name} = VK_FUNCTYPE({', '.join(sig)})\n"
-            src += f"{self.name} = {loader}('{self.name}', PFN_{self.name})\n"
+            src += f"{self.name} = {loader}(b'{self.name}', PFN_{self.name})\n"
         else:
             sig = [self.r_type] + self.p_types
             src = f"PFN_{self.name} = VK_FUNCTYPE({', '.join(sig)})\n"
@@ -495,8 +495,8 @@ def vk_instance_fn(name, proto):
     def wrapper(vk_instance, *args):
         addr = vkGetInstanceProcAddr(vk_instance, name)
         if addr:
-            fn = proto(ctypes.cast(addr, ctypes.c_void_p))
-            return (vk_instance, *args)
+            fn = ctypes.cast(addr, proto)
+            return fn(vk_instance, *args)
         else:
             raise RuntimeError
     return wrapper
@@ -505,8 +505,8 @@ def vk_device_fn(name, proto):
     def wrapper(vk_device, *args):
         addr = vkGetDeviceProcAddr(vk_device, name)
         if addr:
-            fn = proto(ctypes.cast(addr, ctypes.c_void_p))
-            return (vk_device, *args)
+            fn = ctypes.cast(addr, proto)
+            return fn(vk_device, *args)
         else:
             raise RuntimeError
     return wrapper
