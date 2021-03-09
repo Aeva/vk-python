@@ -242,6 +242,13 @@ class vk_enum(vk_type):
 
     def __str__(self):
         src = super().__str__()
+        if self.alias is None and self.ctype is not None:
+            src = f"{self.name} = type('{self.name}', ({self.ctype},), copy.deepcopy(enum_type_mixin))\n"
+            src += f"{self.name}.names = " + "{\n"
+            for enum in self.enums:
+                if enum.alias is None:
+                    src += f"    {enum.value} : '{enum.name}',\n"
+            src += "}\n"
         for enum in self.enums:
             src += str(enum)
         return src
@@ -439,6 +446,7 @@ class vk_boilerplate:
 
     def __str__(self):
         src = """
+import copy
 import ctypes
 import platform
 
@@ -502,6 +510,16 @@ def vk_device_fn(name, proto):
         else:
             raise RuntimeError
     return wrapper
+
+enum_type_mixin = {
+    'names' : {},
+    '__str__' : lambda self: self.names.get(self.value, str(self.value)),
+    '__eq__' : lambda self, other: self.value == other.value,
+    '__lt__' : lambda self, other: self.value < other.value,
+    '__le__' : lambda self, other: self.value <= other.value,
+    '__gt__' : lambda self, other: self.value > other.value,
+    '__ge__' : lambda self, other: self.value >= other.value,
+}
 
 #=============================================================================#
 # The remainder of this file was generated automatically from the Vulkan API  #
