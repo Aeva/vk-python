@@ -493,7 +493,7 @@ else:
 
 def vk_instance_fn(name, proto):
     def wrapper(vk_instance, *args):
-        addr = vkGetInstanceProcAddr(vk_instance, name)
+        addr = vkGetInstanceProcAddr(ctypes.cast(vk_instance, VkInstance), name)
         if addr:
             fn = ctypes.cast(addr, proto)
             return fn(vk_instance, *args)
@@ -503,7 +503,7 @@ def vk_instance_fn(name, proto):
 
 def vk_device_fn(name, proto):
     def wrapper(vk_device, *args):
-        addr = vkGetDeviceProcAddr(vk_device, name)
+        addr = vkGetDeviceProcAddr(ctypes.cast(vk_device, VkDevice), name)
         if addr:
             fn = ctypes.cast(addr, proto)
             return fn(vk_device, *args)
