@@ -1,5 +1,4 @@
 
-import copy
 import ctypes
 import platform
 
@@ -64,15 +63,72 @@ def vk_device_fn(name, proto):
             raise RuntimeError
     return wrapper
 
-enum_type_mixin = {
-    'names' : {},
-    '__str__' : lambda self: self.names.get(self.value, str(self.value)),
-    '__eq__' : lambda self, other: self.value == other.value,
-    '__lt__' : lambda self, other: self.value < other.value,
-    '__le__' : lambda self, other: self.value <= other.value,
-    '__gt__' : lambda self, other: self.value > other.value,
-    '__ge__' : lambda self, other: self.value >= other.value,
-}
+class c_enum(ctypes.c_int):
+    names = {}
+    def __str__(self):
+        return self.names.get(self.value, str(self.value))
+    def __int__(self):
+        return int(self.value)
+    def __float__(self):
+        return float(self.value)
+    def __eq__(self, other):
+        return self.value == int(other)
+    def __lt__(self, other):
+        return self.value < int(other)
+    def __le__(self, other):
+        return self.value <= int(other)
+    def __gt__(self, other):
+        return self.value > int(other)
+    def __ge__(self, other):
+        return self.value >= int(other)
+    def __add__(self, other):
+        return self.value + int(other)
+    def __sub__(self, other):
+        return self.value - int(other)
+    def __mul__(self, other):
+        return self.value * int(other)
+    def __truediv__(self, other):
+        return self.value / int(other)
+    def __floordiv__(self, other):
+        return self.value // int(other)
+    def __mod__(self, other):
+        return self.value % int(other)
+    def __pow__(self, other):
+        return self.value ** int(other)
+    def __lshift__(self, other):
+        return self.value << int(other)
+    def __rshift__(self, other):
+        return self.value >> int(other)
+    def __and__(self, other):
+        return self.value & int(other)
+    def __xor__(self, other):
+        return self.value ^ int(other)
+    def __or__(self, other):
+        return self.value | int(other)
+    def __radd__(self, other):
+        return int(other) + self.value
+    def __rsub__(self, other):
+        return int(other) - self.value
+    def __rmul__(self, other):
+        return int(other) * self.value
+    def __rtruediv__(self, other):
+        return int(other) / self.value
+    def __rfloordiv__(self, other):
+        return int(other) // self.value
+    def __rmod__(self, other):
+        return int(other) % self.value
+    def __rpow__(self, other):
+        return int(other) ** self.value
+    def __rlshift__(self, other):
+        return int(other) << self.value
+    def __rrshift__(self, other):
+        return int(other) >> self.value
+    def __rand__(self, other):
+        return int(other) & self.value
+    def __rxor__(self, other):
+        return int(other) ^ self.value
+    def __ror__(self, other):
+        return int(other) | self.value
 
 #=============================================================================#
 # The remainder of this file was generated automatically from the Vulkan API  #
@@ -314,7 +370,7 @@ VK_MAX_DRIVER_INFO_SIZE_KHR = VK_MAX_DRIVER_INFO_SIZE
 VK_SHADER_UNUSED_KHR = 0xFFFFFFFF
 VK_SHADER_UNUSED_NV = VK_SHADER_UNUSED_KHR
 
-VkAttachmentLoadOp = type('VkAttachmentLoadOp', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkAttachmentLoadOp = type('VkAttachmentLoadOp', (c_enum,), dict(names=dict()))
 VkAttachmentLoadOp.names = {
     0 : 'VK_ATTACHMENT_LOAD_OP_LOAD',
     1 : 'VK_ATTACHMENT_LOAD_OP_CLEAR',
@@ -324,7 +380,7 @@ VK_ATTACHMENT_LOAD_OP_LOAD = VkAttachmentLoadOp(0)
 VK_ATTACHMENT_LOAD_OP_CLEAR = VkAttachmentLoadOp(1)
 VK_ATTACHMENT_LOAD_OP_DONT_CARE = VkAttachmentLoadOp(2)
 
-VkAttachmentStoreOp = type('VkAttachmentStoreOp', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkAttachmentStoreOp = type('VkAttachmentStoreOp', (c_enum,), dict(names=dict()))
 VkAttachmentStoreOp.names = {
     0 : 'VK_ATTACHMENT_STORE_OP_STORE',
     1 : 'VK_ATTACHMENT_STORE_OP_DONT_CARE',
@@ -334,7 +390,7 @@ VK_ATTACHMENT_STORE_OP_STORE = VkAttachmentStoreOp(0)
 VK_ATTACHMENT_STORE_OP_DONT_CARE = VkAttachmentStoreOp(1)
 VK_ATTACHMENT_STORE_OP_NONE_QCOM = VkAttachmentStoreOp(1000301000)
 
-VkBlendFactor = type('VkBlendFactor', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkBlendFactor = type('VkBlendFactor', (c_enum,), dict(names=dict()))
 VkBlendFactor.names = {
     0 : 'VK_BLEND_FACTOR_ZERO',
     1 : 'VK_BLEND_FACTOR_ONE',
@@ -376,7 +432,7 @@ VK_BLEND_FACTOR_ONE_MINUS_SRC1_COLOR = VkBlendFactor(16)
 VK_BLEND_FACTOR_SRC1_ALPHA = VkBlendFactor(17)
 VK_BLEND_FACTOR_ONE_MINUS_SRC1_ALPHA = VkBlendFactor(18)
 
-VkBlendOp = type('VkBlendOp', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkBlendOp = type('VkBlendOp', (c_enum,), dict(names=dict()))
 VkBlendOp.names = {
     0 : 'VK_BLEND_OP_ADD',
     1 : 'VK_BLEND_OP_SUBTRACT',
@@ -482,7 +538,7 @@ VK_BLEND_OP_RED_EXT = VkBlendOp(1000148043)
 VK_BLEND_OP_GREEN_EXT = VkBlendOp(1000148044)
 VK_BLEND_OP_BLUE_EXT = VkBlendOp(1000148045)
 
-VkBorderColor = type('VkBorderColor', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkBorderColor = type('VkBorderColor', (c_enum,), dict(names=dict()))
 VkBorderColor.names = {
     0 : 'VK_BORDER_COLOR_FLOAT_TRANSPARENT_BLACK',
     1 : 'VK_BORDER_COLOR_INT_TRANSPARENT_BLACK',
@@ -502,24 +558,24 @@ VK_BORDER_COLOR_INT_OPAQUE_WHITE = VkBorderColor(5)
 VK_BORDER_COLOR_FLOAT_CUSTOM_EXT = VkBorderColor(1000287003)
 VK_BORDER_COLOR_INT_CUSTOM_EXT = VkBorderColor(1000287004)
 
-VkFramebufferCreateFlagBits = type('VkFramebufferCreateFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkFramebufferCreateFlagBits = type('VkFramebufferCreateFlagBits', (c_enum,), dict(names=dict()))
 VkFramebufferCreateFlagBits.names = {
     1 : 'VK_FRAMEBUFFER_CREATE_IMAGELESS_BIT',
 }
 VK_FRAMEBUFFER_CREATE_IMAGELESS_BIT = VkFramebufferCreateFlagBits(1)
 VK_FRAMEBUFFER_CREATE_IMAGELESS_BIT_KHR = VK_FRAMEBUFFER_CREATE_IMAGELESS_BIT
 
-VkQueryPoolCreateFlagBits = type('VkQueryPoolCreateFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkQueryPoolCreateFlagBits = type('VkQueryPoolCreateFlagBits', (c_enum,), dict(names=dict()))
 VkQueryPoolCreateFlagBits.names = {
 }
 
-VkRenderPassCreateFlagBits = type('VkRenderPassCreateFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkRenderPassCreateFlagBits = type('VkRenderPassCreateFlagBits', (c_enum,), dict(names=dict()))
 VkRenderPassCreateFlagBits.names = {
     2 : 'VK_RENDER_PASS_CREATE_TRANSFORM_BIT_QCOM',
 }
 VK_RENDER_PASS_CREATE_TRANSFORM_BIT_QCOM = VkRenderPassCreateFlagBits(2)
 
-VkSamplerCreateFlagBits = type('VkSamplerCreateFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkSamplerCreateFlagBits = type('VkSamplerCreateFlagBits', (c_enum,), dict(names=dict()))
 VkSamplerCreateFlagBits.names = {
     1 : 'VK_SAMPLER_CREATE_SUBSAMPLED_BIT_EXT',
     2 : 'VK_SAMPLER_CREATE_SUBSAMPLED_COARSE_RECONSTRUCTION_BIT_EXT',
@@ -527,19 +583,19 @@ VkSamplerCreateFlagBits.names = {
 VK_SAMPLER_CREATE_SUBSAMPLED_BIT_EXT = VkSamplerCreateFlagBits(1)
 VK_SAMPLER_CREATE_SUBSAMPLED_COARSE_RECONSTRUCTION_BIT_EXT = VkSamplerCreateFlagBits(2)
 
-VkPipelineCacheHeaderVersion = type('VkPipelineCacheHeaderVersion', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkPipelineCacheHeaderVersion = type('VkPipelineCacheHeaderVersion', (c_enum,), dict(names=dict()))
 VkPipelineCacheHeaderVersion.names = {
     1 : 'VK_PIPELINE_CACHE_HEADER_VERSION_ONE',
 }
 VK_PIPELINE_CACHE_HEADER_VERSION_ONE = VkPipelineCacheHeaderVersion(1)
 
-VkPipelineCacheCreateFlagBits = type('VkPipelineCacheCreateFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkPipelineCacheCreateFlagBits = type('VkPipelineCacheCreateFlagBits', (c_enum,), dict(names=dict()))
 VkPipelineCacheCreateFlagBits.names = {
     1 : 'VK_PIPELINE_CACHE_CREATE_EXTERNALLY_SYNCHRONIZED_BIT_EXT',
 }
 VK_PIPELINE_CACHE_CREATE_EXTERNALLY_SYNCHRONIZED_BIT_EXT = VkPipelineCacheCreateFlagBits(1)
 
-VkPipelineShaderStageCreateFlagBits = type('VkPipelineShaderStageCreateFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkPipelineShaderStageCreateFlagBits = type('VkPipelineShaderStageCreateFlagBits', (c_enum,), dict(names=dict()))
 VkPipelineShaderStageCreateFlagBits.names = {
     1 : 'VK_PIPELINE_SHADER_STAGE_CREATE_ALLOW_VARYING_SUBGROUP_SIZE_BIT_EXT',
     2 : 'VK_PIPELINE_SHADER_STAGE_CREATE_REQUIRE_FULL_SUBGROUPS_BIT_EXT',
@@ -547,7 +603,7 @@ VkPipelineShaderStageCreateFlagBits.names = {
 VK_PIPELINE_SHADER_STAGE_CREATE_ALLOW_VARYING_SUBGROUP_SIZE_BIT_EXT = VkPipelineShaderStageCreateFlagBits(1)
 VK_PIPELINE_SHADER_STAGE_CREATE_REQUIRE_FULL_SUBGROUPS_BIT_EXT = VkPipelineShaderStageCreateFlagBits(2)
 
-VkDescriptorSetLayoutCreateFlagBits = type('VkDescriptorSetLayoutCreateFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkDescriptorSetLayoutCreateFlagBits = type('VkDescriptorSetLayoutCreateFlagBits', (c_enum,), dict(names=dict()))
 VkDescriptorSetLayoutCreateFlagBits.names = {
     2 : 'VK_DESCRIPTOR_SET_LAYOUT_CREATE_UPDATE_AFTER_BIND_POOL_BIT',
     1 : 'VK_DESCRIPTOR_SET_LAYOUT_CREATE_PUSH_DESCRIPTOR_BIT_KHR',
@@ -556,17 +612,17 @@ VK_DESCRIPTOR_SET_LAYOUT_CREATE_UPDATE_AFTER_BIND_POOL_BIT = VkDescriptorSetLayo
 VK_DESCRIPTOR_SET_LAYOUT_CREATE_PUSH_DESCRIPTOR_BIT_KHR = VkDescriptorSetLayoutCreateFlagBits(1)
 VK_DESCRIPTOR_SET_LAYOUT_CREATE_UPDATE_AFTER_BIND_POOL_BIT_EXT = VK_DESCRIPTOR_SET_LAYOUT_CREATE_UPDATE_AFTER_BIND_POOL_BIT
 
-VkInstanceCreateFlagBits = type('VkInstanceCreateFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkInstanceCreateFlagBits = type('VkInstanceCreateFlagBits', (c_enum,), dict(names=dict()))
 VkInstanceCreateFlagBits.names = {
 }
 
-VkDeviceQueueCreateFlagBits = type('VkDeviceQueueCreateFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkDeviceQueueCreateFlagBits = type('VkDeviceQueueCreateFlagBits', (c_enum,), dict(names=dict()))
 VkDeviceQueueCreateFlagBits.names = {
     1 : 'VK_DEVICE_QUEUE_CREATE_PROTECTED_BIT',
 }
 VK_DEVICE_QUEUE_CREATE_PROTECTED_BIT = VkDeviceQueueCreateFlagBits(1)
 
-VkBufferCreateFlagBits = type('VkBufferCreateFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkBufferCreateFlagBits = type('VkBufferCreateFlagBits', (c_enum,), dict(names=dict()))
 VkBufferCreateFlagBits.names = {
     1 : 'VK_BUFFER_CREATE_SPARSE_BINDING_BIT',
     2 : 'VK_BUFFER_CREATE_SPARSE_RESIDENCY_BIT',
@@ -582,7 +638,7 @@ VK_BUFFER_CREATE_DEVICE_ADDRESS_CAPTURE_REPLAY_BIT = VkBufferCreateFlagBits(16)
 VK_BUFFER_CREATE_DEVICE_ADDRESS_CAPTURE_REPLAY_BIT_EXT = VK_BUFFER_CREATE_DEVICE_ADDRESS_CAPTURE_REPLAY_BIT
 VK_BUFFER_CREATE_DEVICE_ADDRESS_CAPTURE_REPLAY_BIT_KHR = VK_BUFFER_CREATE_DEVICE_ADDRESS_CAPTURE_REPLAY_BIT
 
-VkBufferUsageFlagBits = type('VkBufferUsageFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkBufferUsageFlagBits = type('VkBufferUsageFlagBits', (c_enum,), dict(names=dict()))
 VkBufferUsageFlagBits.names = {
     1 : 'VK_BUFFER_USAGE_TRANSFER_SRC_BIT',
     2 : 'VK_BUFFER_USAGE_TRANSFER_DST_BIT',
@@ -621,7 +677,7 @@ VK_BUFFER_USAGE_RAY_TRACING_BIT_NV = VK_BUFFER_USAGE_SHADER_BINDING_TABLE_BIT_KH
 VK_BUFFER_USAGE_SHADER_DEVICE_ADDRESS_BIT_EXT = VK_BUFFER_USAGE_SHADER_DEVICE_ADDRESS_BIT
 VK_BUFFER_USAGE_SHADER_DEVICE_ADDRESS_BIT_KHR = VK_BUFFER_USAGE_SHADER_DEVICE_ADDRESS_BIT
 
-VkColorComponentFlagBits = type('VkColorComponentFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkColorComponentFlagBits = type('VkColorComponentFlagBits', (c_enum,), dict(names=dict()))
 VkColorComponentFlagBits.names = {
     1 : 'VK_COLOR_COMPONENT_R_BIT',
     2 : 'VK_COLOR_COMPONENT_G_BIT',
@@ -633,7 +689,7 @@ VK_COLOR_COMPONENT_G_BIT = VkColorComponentFlagBits(2)
 VK_COLOR_COMPONENT_B_BIT = VkColorComponentFlagBits(4)
 VK_COLOR_COMPONENT_A_BIT = VkColorComponentFlagBits(8)
 
-VkComponentSwizzle = type('VkComponentSwizzle', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkComponentSwizzle = type('VkComponentSwizzle', (c_enum,), dict(names=dict()))
 VkComponentSwizzle.names = {
     0 : 'VK_COMPONENT_SWIZZLE_IDENTITY',
     1 : 'VK_COMPONENT_SWIZZLE_ZERO',
@@ -651,7 +707,7 @@ VK_COMPONENT_SWIZZLE_G = VkComponentSwizzle(4)
 VK_COMPONENT_SWIZZLE_B = VkComponentSwizzle(5)
 VK_COMPONENT_SWIZZLE_A = VkComponentSwizzle(6)
 
-VkCommandPoolCreateFlagBits = type('VkCommandPoolCreateFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkCommandPoolCreateFlagBits = type('VkCommandPoolCreateFlagBits', (c_enum,), dict(names=dict()))
 VkCommandPoolCreateFlagBits.names = {
     1 : 'VK_COMMAND_POOL_CREATE_TRANSIENT_BIT',
     2 : 'VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT',
@@ -661,19 +717,19 @@ VK_COMMAND_POOL_CREATE_TRANSIENT_BIT = VkCommandPoolCreateFlagBits(1)
 VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT = VkCommandPoolCreateFlagBits(2)
 VK_COMMAND_POOL_CREATE_PROTECTED_BIT = VkCommandPoolCreateFlagBits(4)
 
-VkCommandPoolResetFlagBits = type('VkCommandPoolResetFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkCommandPoolResetFlagBits = type('VkCommandPoolResetFlagBits', (c_enum,), dict(names=dict()))
 VkCommandPoolResetFlagBits.names = {
     1 : 'VK_COMMAND_POOL_RESET_RELEASE_RESOURCES_BIT',
 }
 VK_COMMAND_POOL_RESET_RELEASE_RESOURCES_BIT = VkCommandPoolResetFlagBits(1)
 
-VkCommandBufferResetFlagBits = type('VkCommandBufferResetFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkCommandBufferResetFlagBits = type('VkCommandBufferResetFlagBits', (c_enum,), dict(names=dict()))
 VkCommandBufferResetFlagBits.names = {
     1 : 'VK_COMMAND_BUFFER_RESET_RELEASE_RESOURCES_BIT',
 }
 VK_COMMAND_BUFFER_RESET_RELEASE_RESOURCES_BIT = VkCommandBufferResetFlagBits(1)
 
-VkCommandBufferLevel = type('VkCommandBufferLevel', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkCommandBufferLevel = type('VkCommandBufferLevel', (c_enum,), dict(names=dict()))
 VkCommandBufferLevel.names = {
     0 : 'VK_COMMAND_BUFFER_LEVEL_PRIMARY',
     1 : 'VK_COMMAND_BUFFER_LEVEL_SECONDARY',
@@ -681,7 +737,7 @@ VkCommandBufferLevel.names = {
 VK_COMMAND_BUFFER_LEVEL_PRIMARY = VkCommandBufferLevel(0)
 VK_COMMAND_BUFFER_LEVEL_SECONDARY = VkCommandBufferLevel(1)
 
-VkCommandBufferUsageFlagBits = type('VkCommandBufferUsageFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkCommandBufferUsageFlagBits = type('VkCommandBufferUsageFlagBits', (c_enum,), dict(names=dict()))
 VkCommandBufferUsageFlagBits.names = {
     1 : 'VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT',
     2 : 'VK_COMMAND_BUFFER_USAGE_RENDER_PASS_CONTINUE_BIT',
@@ -691,7 +747,7 @@ VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT = VkCommandBufferUsageFlagBits(1)
 VK_COMMAND_BUFFER_USAGE_RENDER_PASS_CONTINUE_BIT = VkCommandBufferUsageFlagBits(2)
 VK_COMMAND_BUFFER_USAGE_SIMULTANEOUS_USE_BIT = VkCommandBufferUsageFlagBits(4)
 
-VkCompareOp = type('VkCompareOp', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkCompareOp = type('VkCompareOp', (c_enum,), dict(names=dict()))
 VkCompareOp.names = {
     0 : 'VK_COMPARE_OP_NEVER',
     1 : 'VK_COMPARE_OP_LESS',
@@ -711,7 +767,7 @@ VK_COMPARE_OP_NOT_EQUAL = VkCompareOp(5)
 VK_COMPARE_OP_GREATER_OR_EQUAL = VkCompareOp(6)
 VK_COMPARE_OP_ALWAYS = VkCompareOp(7)
 
-VkCullModeFlagBits = type('VkCullModeFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkCullModeFlagBits = type('VkCullModeFlagBits', (c_enum,), dict(names=dict()))
 VkCullModeFlagBits.names = {
     0 : 'VK_CULL_MODE_NONE',
     1 : 'VK_CULL_MODE_FRONT_BIT',
@@ -723,7 +779,7 @@ VK_CULL_MODE_FRONT_BIT = VkCullModeFlagBits(1)
 VK_CULL_MODE_BACK_BIT = VkCullModeFlagBits(2)
 VK_CULL_MODE_FRONT_AND_BACK = VkCullModeFlagBits(0x00000003)
 
-VkDescriptorType = type('VkDescriptorType', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkDescriptorType = type('VkDescriptorType', (c_enum,), dict(names=dict()))
 VkDescriptorType.names = {
     0 : 'VK_DESCRIPTOR_TYPE_SAMPLER',
     1 : 'VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER',
@@ -755,11 +811,11 @@ VK_DESCRIPTOR_TYPE_INLINE_UNIFORM_BLOCK_EXT = VkDescriptorType(1000138000)
 VK_DESCRIPTOR_TYPE_ACCELERATION_STRUCTURE_KHR = VkDescriptorType(1000150000)
 VK_DESCRIPTOR_TYPE_ACCELERATION_STRUCTURE_NV = VkDescriptorType(1000165000)
 
-VkDeviceCreateFlagBits = type('VkDeviceCreateFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkDeviceCreateFlagBits = type('VkDeviceCreateFlagBits', (c_enum,), dict(names=dict()))
 VkDeviceCreateFlagBits.names = {
 }
 
-VkDynamicState = type('VkDynamicState', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkDynamicState = type('VkDynamicState', (c_enum,), dict(names=dict()))
 VkDynamicState.names = {
     0 : 'VK_DYNAMIC_STATE_VIEWPORT',
     1 : 'VK_DYNAMIC_STATE_SCISSOR',
@@ -823,13 +879,13 @@ VK_DYNAMIC_STATE_DEPTH_BOUNDS_TEST_ENABLE_EXT = VkDynamicState(1000267009)
 VK_DYNAMIC_STATE_STENCIL_TEST_ENABLE_EXT = VkDynamicState(1000267010)
 VK_DYNAMIC_STATE_STENCIL_OP_EXT = VkDynamicState(1000267011)
 
-VkFenceCreateFlagBits = type('VkFenceCreateFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkFenceCreateFlagBits = type('VkFenceCreateFlagBits', (c_enum,), dict(names=dict()))
 VkFenceCreateFlagBits.names = {
     1 : 'VK_FENCE_CREATE_SIGNALED_BIT',
 }
 VK_FENCE_CREATE_SIGNALED_BIT = VkFenceCreateFlagBits(1)
 
-VkPolygonMode = type('VkPolygonMode', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkPolygonMode = type('VkPolygonMode', (c_enum,), dict(names=dict()))
 VkPolygonMode.names = {
     0 : 'VK_POLYGON_MODE_FILL',
     1 : 'VK_POLYGON_MODE_LINE',
@@ -841,7 +897,7 @@ VK_POLYGON_MODE_LINE = VkPolygonMode(1)
 VK_POLYGON_MODE_POINT = VkPolygonMode(2)
 VK_POLYGON_MODE_FILL_RECTANGLE_NV = VkPolygonMode(1000153000)
 
-VkFormat = type('VkFormat', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkFormat = type('VkFormat', (c_enum,), dict(names=dict()))
 VkFormat.names = {
     0 : 'VK_FORMAT_UNDEFINED',
     1 : 'VK_FORMAT_R4G4_UNORM_PACK8',
@@ -1365,7 +1421,7 @@ VK_FORMAT_G16_B16_R16_3PLANE_444_UNORM_KHR = VK_FORMAT_G16_B16_R16_3PLANE_444_UN
 VK_FORMAT_A4R4G4B4_UNORM_PACK16_EXT = VkFormat(1000340000)
 VK_FORMAT_A4B4G4R4_UNORM_PACK16_EXT = VkFormat(1000340001)
 
-VkFormatFeatureFlagBits = type('VkFormatFeatureFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkFormatFeatureFlagBits = type('VkFormatFeatureFlagBits', (c_enum,), dict(names=dict()))
 VkFormatFeatureFlagBits.names = {
     1 : 'VK_FORMAT_FEATURE_SAMPLED_IMAGE_BIT',
     2 : 'VK_FORMAT_FEATURE_STORAGE_IMAGE_BIT',
@@ -1434,7 +1490,7 @@ VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_CUBIC_BIT_EXT = VK_FORMAT_FEATURE_SAMPLED
 VK_FORMAT_FEATURE_FRAGMENT_DENSITY_MAP_BIT_EXT = VkFormatFeatureFlagBits(16777216)
 VK_FORMAT_FEATURE_FRAGMENT_SHADING_RATE_ATTACHMENT_BIT_KHR = VkFormatFeatureFlagBits(1073741824)
 
-VkFrontFace = type('VkFrontFace', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkFrontFace = type('VkFrontFace', (c_enum,), dict(names=dict()))
 VkFrontFace.names = {
     0 : 'VK_FRONT_FACE_COUNTER_CLOCKWISE',
     1 : 'VK_FRONT_FACE_CLOCKWISE',
@@ -1442,7 +1498,7 @@ VkFrontFace.names = {
 VK_FRONT_FACE_COUNTER_CLOCKWISE = VkFrontFace(0)
 VK_FRONT_FACE_CLOCKWISE = VkFrontFace(1)
 
-VkImageAspectFlagBits = type('VkImageAspectFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkImageAspectFlagBits = type('VkImageAspectFlagBits', (c_enum,), dict(names=dict()))
 VkImageAspectFlagBits.names = {
     1 : 'VK_IMAGE_ASPECT_COLOR_BIT',
     2 : 'VK_IMAGE_ASPECT_DEPTH_BIT',
@@ -1471,7 +1527,7 @@ VK_IMAGE_ASPECT_MEMORY_PLANE_1_BIT_EXT = VkImageAspectFlagBits(256)
 VK_IMAGE_ASPECT_MEMORY_PLANE_2_BIT_EXT = VkImageAspectFlagBits(512)
 VK_IMAGE_ASPECT_MEMORY_PLANE_3_BIT_EXT = VkImageAspectFlagBits(1024)
 
-VkImageCreateFlagBits = type('VkImageCreateFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkImageCreateFlagBits = type('VkImageCreateFlagBits', (c_enum,), dict(names=dict()))
 VkImageCreateFlagBits.names = {
     1 : 'VK_IMAGE_CREATE_SPARSE_BINDING_BIT',
     2 : 'VK_IMAGE_CREATE_SPARSE_RESIDENCY_BIT',
@@ -1511,7 +1567,7 @@ VK_IMAGE_CREATE_DISJOINT_BIT_KHR = VK_IMAGE_CREATE_DISJOINT_BIT
 VK_IMAGE_CREATE_ALIAS_BIT_KHR = VK_IMAGE_CREATE_ALIAS_BIT
 VK_IMAGE_CREATE_SUBSAMPLED_BIT_EXT = VkImageCreateFlagBits(16384)
 
-VkImageLayout = type('VkImageLayout', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkImageLayout = type('VkImageLayout', (c_enum,), dict(names=dict()))
 VkImageLayout.names = {
     0 : 'VK_IMAGE_LAYOUT_UNDEFINED',
     1 : 'VK_IMAGE_LAYOUT_GENERAL',
@@ -1560,7 +1616,7 @@ VK_IMAGE_LAYOUT_DEPTH_READ_ONLY_OPTIMAL_KHR = VK_IMAGE_LAYOUT_DEPTH_READ_ONLY_OP
 VK_IMAGE_LAYOUT_STENCIL_ATTACHMENT_OPTIMAL_KHR = VK_IMAGE_LAYOUT_STENCIL_ATTACHMENT_OPTIMAL
 VK_IMAGE_LAYOUT_STENCIL_READ_ONLY_OPTIMAL_KHR = VK_IMAGE_LAYOUT_STENCIL_READ_ONLY_OPTIMAL
 
-VkImageTiling = type('VkImageTiling', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkImageTiling = type('VkImageTiling', (c_enum,), dict(names=dict()))
 VkImageTiling.names = {
     0 : 'VK_IMAGE_TILING_OPTIMAL',
     1 : 'VK_IMAGE_TILING_LINEAR',
@@ -1570,7 +1626,7 @@ VK_IMAGE_TILING_OPTIMAL = VkImageTiling(0)
 VK_IMAGE_TILING_LINEAR = VkImageTiling(1)
 VK_IMAGE_TILING_DRM_FORMAT_MODIFIER_EXT = VkImageTiling(1000158000)
 
-VkImageType = type('VkImageType', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkImageType = type('VkImageType', (c_enum,), dict(names=dict()))
 VkImageType.names = {
     0 : 'VK_IMAGE_TYPE_1D',
     1 : 'VK_IMAGE_TYPE_2D',
@@ -1580,7 +1636,7 @@ VK_IMAGE_TYPE_1D = VkImageType(0)
 VK_IMAGE_TYPE_2D = VkImageType(1)
 VK_IMAGE_TYPE_3D = VkImageType(2)
 
-VkImageUsageFlagBits = type('VkImageUsageFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkImageUsageFlagBits = type('VkImageUsageFlagBits', (c_enum,), dict(names=dict()))
 VkImageUsageFlagBits.names = {
     1 : 'VK_IMAGE_USAGE_TRANSFER_SRC_BIT',
     2 : 'VK_IMAGE_USAGE_TRANSFER_DST_BIT',
@@ -1605,7 +1661,7 @@ VK_IMAGE_USAGE_SHADING_RATE_IMAGE_BIT_NV = VkImageUsageFlagBits(256)
 VK_IMAGE_USAGE_FRAGMENT_DENSITY_MAP_BIT_EXT = VkImageUsageFlagBits(512)
 VK_IMAGE_USAGE_FRAGMENT_SHADING_RATE_ATTACHMENT_BIT_KHR = VK_IMAGE_USAGE_SHADING_RATE_IMAGE_BIT_NV
 
-VkImageViewCreateFlagBits = type('VkImageViewCreateFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkImageViewCreateFlagBits = type('VkImageViewCreateFlagBits', (c_enum,), dict(names=dict()))
 VkImageViewCreateFlagBits.names = {
     1 : 'VK_IMAGE_VIEW_CREATE_FRAGMENT_DENSITY_MAP_DYNAMIC_BIT_EXT',
     2 : 'VK_IMAGE_VIEW_CREATE_FRAGMENT_DENSITY_MAP_DEFERRED_BIT_EXT',
@@ -1613,7 +1669,7 @@ VkImageViewCreateFlagBits.names = {
 VK_IMAGE_VIEW_CREATE_FRAGMENT_DENSITY_MAP_DYNAMIC_BIT_EXT = VkImageViewCreateFlagBits(1)
 VK_IMAGE_VIEW_CREATE_FRAGMENT_DENSITY_MAP_DEFERRED_BIT_EXT = VkImageViewCreateFlagBits(2)
 
-VkImageViewType = type('VkImageViewType', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkImageViewType = type('VkImageViewType', (c_enum,), dict(names=dict()))
 VkImageViewType.names = {
     0 : 'VK_IMAGE_VIEW_TYPE_1D',
     1 : 'VK_IMAGE_VIEW_TYPE_2D',
@@ -1631,7 +1687,7 @@ VK_IMAGE_VIEW_TYPE_1D_ARRAY = VkImageViewType(4)
 VK_IMAGE_VIEW_TYPE_2D_ARRAY = VkImageViewType(5)
 VK_IMAGE_VIEW_TYPE_CUBE_ARRAY = VkImageViewType(6)
 
-VkSharingMode = type('VkSharingMode', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkSharingMode = type('VkSharingMode', (c_enum,), dict(names=dict()))
 VkSharingMode.names = {
     0 : 'VK_SHARING_MODE_EXCLUSIVE',
     1 : 'VK_SHARING_MODE_CONCURRENT',
@@ -1639,7 +1695,7 @@ VkSharingMode.names = {
 VK_SHARING_MODE_EXCLUSIVE = VkSharingMode(0)
 VK_SHARING_MODE_CONCURRENT = VkSharingMode(1)
 
-VkIndexType = type('VkIndexType', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkIndexType = type('VkIndexType', (c_enum,), dict(names=dict()))
 VkIndexType.names = {
     0 : 'VK_INDEX_TYPE_UINT16',
     1 : 'VK_INDEX_TYPE_UINT32',
@@ -1652,7 +1708,7 @@ VK_INDEX_TYPE_NONE_KHR = VkIndexType(1000165000)
 VK_INDEX_TYPE_NONE_NV = VK_INDEX_TYPE_NONE_KHR
 VK_INDEX_TYPE_UINT8_EXT = VkIndexType(1000265000)
 
-VkLogicOp = type('VkLogicOp', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkLogicOp = type('VkLogicOp', (c_enum,), dict(names=dict()))
 VkLogicOp.names = {
     0 : 'VK_LOGIC_OP_CLEAR',
     1 : 'VK_LOGIC_OP_AND',
@@ -1688,7 +1744,7 @@ VK_LOGIC_OP_OR_INVERTED = VkLogicOp(13)
 VK_LOGIC_OP_NAND = VkLogicOp(14)
 VK_LOGIC_OP_SET = VkLogicOp(15)
 
-VkMemoryHeapFlagBits = type('VkMemoryHeapFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkMemoryHeapFlagBits = type('VkMemoryHeapFlagBits', (c_enum,), dict(names=dict()))
 VkMemoryHeapFlagBits.names = {
     1 : 'VK_MEMORY_HEAP_DEVICE_LOCAL_BIT',
     2 : 'VK_MEMORY_HEAP_MULTI_INSTANCE_BIT',
@@ -1697,7 +1753,7 @@ VK_MEMORY_HEAP_DEVICE_LOCAL_BIT = VkMemoryHeapFlagBits(1)
 VK_MEMORY_HEAP_MULTI_INSTANCE_BIT = VkMemoryHeapFlagBits(2)
 VK_MEMORY_HEAP_MULTI_INSTANCE_BIT_KHR = VK_MEMORY_HEAP_MULTI_INSTANCE_BIT
 
-VkAccessFlagBits = type('VkAccessFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkAccessFlagBits = type('VkAccessFlagBits', (c_enum,), dict(names=dict()))
 VkAccessFlagBits.names = {
     1 : 'VK_ACCESS_INDIRECT_COMMAND_READ_BIT',
     2 : 'VK_ACCESS_INDEX_READ_BIT',
@@ -1760,7 +1816,7 @@ VK_ACCESS_FRAGMENT_SHADING_RATE_ATTACHMENT_READ_BIT_KHR = VK_ACCESS_SHADING_RATE
 VK_ACCESS_COMMAND_PREPROCESS_READ_BIT_NV = VkAccessFlagBits(131072)
 VK_ACCESS_COMMAND_PREPROCESS_WRITE_BIT_NV = VkAccessFlagBits(262144)
 
-VkMemoryPropertyFlagBits = type('VkMemoryPropertyFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkMemoryPropertyFlagBits = type('VkMemoryPropertyFlagBits', (c_enum,), dict(names=dict()))
 VkMemoryPropertyFlagBits.names = {
     1 : 'VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT',
     2 : 'VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT',
@@ -1780,7 +1836,7 @@ VK_MEMORY_PROPERTY_PROTECTED_BIT = VkMemoryPropertyFlagBits(32)
 VK_MEMORY_PROPERTY_DEVICE_COHERENT_BIT_AMD = VkMemoryPropertyFlagBits(64)
 VK_MEMORY_PROPERTY_DEVICE_UNCACHED_BIT_AMD = VkMemoryPropertyFlagBits(128)
 
-VkPhysicalDeviceType = type('VkPhysicalDeviceType', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkPhysicalDeviceType = type('VkPhysicalDeviceType', (c_enum,), dict(names=dict()))
 VkPhysicalDeviceType.names = {
     0 : 'VK_PHYSICAL_DEVICE_TYPE_OTHER',
     1 : 'VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU',
@@ -1794,7 +1850,7 @@ VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU = VkPhysicalDeviceType(2)
 VK_PHYSICAL_DEVICE_TYPE_VIRTUAL_GPU = VkPhysicalDeviceType(3)
 VK_PHYSICAL_DEVICE_TYPE_CPU = VkPhysicalDeviceType(4)
 
-VkPipelineBindPoint = type('VkPipelineBindPoint', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkPipelineBindPoint = type('VkPipelineBindPoint', (c_enum,), dict(names=dict()))
 VkPipelineBindPoint.names = {
     0 : 'VK_PIPELINE_BIND_POINT_GRAPHICS',
     1 : 'VK_PIPELINE_BIND_POINT_COMPUTE',
@@ -1805,7 +1861,7 @@ VK_PIPELINE_BIND_POINT_COMPUTE = VkPipelineBindPoint(1)
 VK_PIPELINE_BIND_POINT_RAY_TRACING_KHR = VkPipelineBindPoint(1000165000)
 VK_PIPELINE_BIND_POINT_RAY_TRACING_NV = VK_PIPELINE_BIND_POINT_RAY_TRACING_KHR
 
-VkPipelineCreateFlagBits = type('VkPipelineCreateFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkPipelineCreateFlagBits = type('VkPipelineCreateFlagBits', (c_enum,), dict(names=dict()))
 VkPipelineCreateFlagBits.names = {
     1 : 'VK_PIPELINE_CREATE_DISABLE_OPTIMIZATION_BIT',
     2 : 'VK_PIPELINE_CREATE_ALLOW_DERIVATIVES_BIT',
@@ -1850,7 +1906,7 @@ VK_PIPELINE_CREATE_LIBRARY_BIT_KHR = VkPipelineCreateFlagBits(2048)
 VK_PIPELINE_CREATE_FAIL_ON_PIPELINE_COMPILE_REQUIRED_BIT_EXT = VkPipelineCreateFlagBits(256)
 VK_PIPELINE_CREATE_EARLY_RETURN_ON_FAILURE_BIT_EXT = VkPipelineCreateFlagBits(512)
 
-VkPrimitiveTopology = type('VkPrimitiveTopology', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkPrimitiveTopology = type('VkPrimitiveTopology', (c_enum,), dict(names=dict()))
 VkPrimitiveTopology.names = {
     0 : 'VK_PRIMITIVE_TOPOLOGY_POINT_LIST',
     1 : 'VK_PRIMITIVE_TOPOLOGY_LINE_LIST',
@@ -1876,13 +1932,13 @@ VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST_WITH_ADJACENCY = VkPrimitiveTopology(8)
 VK_PRIMITIVE_TOPOLOGY_TRIANGLE_STRIP_WITH_ADJACENCY = VkPrimitiveTopology(9)
 VK_PRIMITIVE_TOPOLOGY_PATCH_LIST = VkPrimitiveTopology(10)
 
-VkQueryControlFlagBits = type('VkQueryControlFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkQueryControlFlagBits = type('VkQueryControlFlagBits', (c_enum,), dict(names=dict()))
 VkQueryControlFlagBits.names = {
     1 : 'VK_QUERY_CONTROL_PRECISE_BIT',
 }
 VK_QUERY_CONTROL_PRECISE_BIT = VkQueryControlFlagBits(1)
 
-VkQueryPipelineStatisticFlagBits = type('VkQueryPipelineStatisticFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkQueryPipelineStatisticFlagBits = type('VkQueryPipelineStatisticFlagBits', (c_enum,), dict(names=dict()))
 VkQueryPipelineStatisticFlagBits.names = {
     1 : 'VK_QUERY_PIPELINE_STATISTIC_INPUT_ASSEMBLY_VERTICES_BIT',
     2 : 'VK_QUERY_PIPELINE_STATISTIC_INPUT_ASSEMBLY_PRIMITIVES_BIT',
@@ -1908,7 +1964,7 @@ VK_QUERY_PIPELINE_STATISTIC_TESSELLATION_CONTROL_SHADER_PATCHES_BIT = VkQueryPip
 VK_QUERY_PIPELINE_STATISTIC_TESSELLATION_EVALUATION_SHADER_INVOCATIONS_BIT = VkQueryPipelineStatisticFlagBits(512)
 VK_QUERY_PIPELINE_STATISTIC_COMPUTE_SHADER_INVOCATIONS_BIT = VkQueryPipelineStatisticFlagBits(1024)
 
-VkQueryResultFlagBits = type('VkQueryResultFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkQueryResultFlagBits = type('VkQueryResultFlagBits', (c_enum,), dict(names=dict()))
 VkQueryResultFlagBits.names = {
     1 : 'VK_QUERY_RESULT_64_BIT',
     2 : 'VK_QUERY_RESULT_WAIT_BIT',
@@ -1920,7 +1976,7 @@ VK_QUERY_RESULT_WAIT_BIT = VkQueryResultFlagBits(2)
 VK_QUERY_RESULT_WITH_AVAILABILITY_BIT = VkQueryResultFlagBits(4)
 VK_QUERY_RESULT_PARTIAL_BIT = VkQueryResultFlagBits(8)
 
-VkQueryType = type('VkQueryType', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkQueryType = type('VkQueryType', (c_enum,), dict(names=dict()))
 VkQueryType.names = {
     0 : 'VK_QUERY_TYPE_OCCLUSION',
     1 : 'VK_QUERY_TYPE_PIPELINE_STATISTICS',
@@ -1942,7 +1998,7 @@ VK_QUERY_TYPE_ACCELERATION_STRUCTURE_SERIALIZATION_SIZE_KHR = VkQueryType(100015
 VK_QUERY_TYPE_ACCELERATION_STRUCTURE_COMPACTED_SIZE_NV = VkQueryType(1000165000)
 VK_QUERY_TYPE_PERFORMANCE_QUERY_INTEL = VkQueryType(1000210000)
 
-VkQueueFlagBits = type('VkQueueFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkQueueFlagBits = type('VkQueueFlagBits', (c_enum,), dict(names=dict()))
 VkQueueFlagBits.names = {
     1 : 'VK_QUEUE_GRAPHICS_BIT',
     2 : 'VK_QUEUE_COMPUTE_BIT',
@@ -1956,7 +2012,7 @@ VK_QUEUE_TRANSFER_BIT = VkQueueFlagBits(4)
 VK_QUEUE_SPARSE_BINDING_BIT = VkQueueFlagBits(8)
 VK_QUEUE_PROTECTED_BIT = VkQueueFlagBits(16)
 
-VkSubpassContents = type('VkSubpassContents', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkSubpassContents = type('VkSubpassContents', (c_enum,), dict(names=dict()))
 VkSubpassContents.names = {
     0 : 'VK_SUBPASS_CONTENTS_INLINE',
     1 : 'VK_SUBPASS_CONTENTS_SECONDARY_COMMAND_BUFFERS',
@@ -1964,7 +2020,7 @@ VkSubpassContents.names = {
 VK_SUBPASS_CONTENTS_INLINE = VkSubpassContents(0)
 VK_SUBPASS_CONTENTS_SECONDARY_COMMAND_BUFFERS = VkSubpassContents(1)
 
-VkResult = type('VkResult', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkResult = type('VkResult', (c_enum,), dict(names=dict()))
 VkResult.names = {
     0 : 'VK_SUCCESS',
     1 : 'VK_NOT_READY',
@@ -2050,7 +2106,7 @@ VK_OPERATION_NOT_DEFERRED_KHR = VkResult(1000268003)
 VK_PIPELINE_COMPILE_REQUIRED_EXT = VkResult(1000297000)
 VK_ERROR_PIPELINE_COMPILE_REQUIRED_EXT = VK_PIPELINE_COMPILE_REQUIRED_EXT
 
-VkShaderStageFlagBits = type('VkShaderStageFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkShaderStageFlagBits = type('VkShaderStageFlagBits', (c_enum,), dict(names=dict()))
 VkShaderStageFlagBits.names = {
     1 : 'VK_SHADER_STAGE_VERTEX_BIT',
     2 : 'VK_SHADER_STAGE_TESSELLATION_CONTROL_BIT',
@@ -2092,13 +2148,13 @@ VK_SHADER_STAGE_CALLABLE_BIT_NV = VK_SHADER_STAGE_CALLABLE_BIT_KHR
 VK_SHADER_STAGE_TASK_BIT_NV = VkShaderStageFlagBits(64)
 VK_SHADER_STAGE_MESH_BIT_NV = VkShaderStageFlagBits(128)
 
-VkSparseMemoryBindFlagBits = type('VkSparseMemoryBindFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkSparseMemoryBindFlagBits = type('VkSparseMemoryBindFlagBits', (c_enum,), dict(names=dict()))
 VkSparseMemoryBindFlagBits.names = {
     1 : 'VK_SPARSE_MEMORY_BIND_METADATA_BIT',
 }
 VK_SPARSE_MEMORY_BIND_METADATA_BIT = VkSparseMemoryBindFlagBits(1)
 
-VkStencilFaceFlagBits = type('VkStencilFaceFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkStencilFaceFlagBits = type('VkStencilFaceFlagBits', (c_enum,), dict(names=dict()))
 VkStencilFaceFlagBits.names = {
     1 : 'VK_STENCIL_FACE_FRONT_BIT',
     2 : 'VK_STENCIL_FACE_BACK_BIT',
@@ -2109,7 +2165,7 @@ VK_STENCIL_FACE_BACK_BIT = VkStencilFaceFlagBits(2)
 VK_STENCIL_FACE_FRONT_AND_BACK = VkStencilFaceFlagBits(0x00000003)
 VK_STENCIL_FRONT_AND_BACK = VK_STENCIL_FACE_FRONT_AND_BACK
 
-VkStencilOp = type('VkStencilOp', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkStencilOp = type('VkStencilOp', (c_enum,), dict(names=dict()))
 VkStencilOp.names = {
     0 : 'VK_STENCIL_OP_KEEP',
     1 : 'VK_STENCIL_OP_ZERO',
@@ -2129,7 +2185,7 @@ VK_STENCIL_OP_INVERT = VkStencilOp(5)
 VK_STENCIL_OP_INCREMENT_AND_WRAP = VkStencilOp(6)
 VK_STENCIL_OP_DECREMENT_AND_WRAP = VkStencilOp(7)
 
-VkStructureType = type('VkStructureType', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkStructureType = type('VkStructureType', (c_enum,), dict(names=dict()))
 VkStructureType.names = {
     0 : 'VK_STRUCTURE_TYPE_APPLICATION_INFO',
     1 : 'VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO',
@@ -3203,7 +3259,7 @@ VK_STRUCTURE_TYPE_IMAGE_RESOLVE_2_KHR = VkStructureType(1000337010)
 VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_4444_FORMATS_FEATURES_EXT = VkStructureType(1000340000)
 VK_STRUCTURE_TYPE_DIRECTFB_SURFACE_CREATE_INFO_EXT = VkStructureType(1000346000)
 
-VkSystemAllocationScope = type('VkSystemAllocationScope', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkSystemAllocationScope = type('VkSystemAllocationScope', (c_enum,), dict(names=dict()))
 VkSystemAllocationScope.names = {
     0 : 'VK_SYSTEM_ALLOCATION_SCOPE_COMMAND',
     1 : 'VK_SYSTEM_ALLOCATION_SCOPE_OBJECT',
@@ -3217,13 +3273,13 @@ VK_SYSTEM_ALLOCATION_SCOPE_CACHE = VkSystemAllocationScope(2)
 VK_SYSTEM_ALLOCATION_SCOPE_DEVICE = VkSystemAllocationScope(3)
 VK_SYSTEM_ALLOCATION_SCOPE_INSTANCE = VkSystemAllocationScope(4)
 
-VkInternalAllocationType = type('VkInternalAllocationType', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkInternalAllocationType = type('VkInternalAllocationType', (c_enum,), dict(names=dict()))
 VkInternalAllocationType.names = {
     0 : 'VK_INTERNAL_ALLOCATION_TYPE_EXECUTABLE',
 }
 VK_INTERNAL_ALLOCATION_TYPE_EXECUTABLE = VkInternalAllocationType(0)
 
-VkSamplerAddressMode = type('VkSamplerAddressMode', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkSamplerAddressMode = type('VkSamplerAddressMode', (c_enum,), dict(names=dict()))
 VkSamplerAddressMode.names = {
     0 : 'VK_SAMPLER_ADDRESS_MODE_REPEAT',
     1 : 'VK_SAMPLER_ADDRESS_MODE_MIRRORED_REPEAT',
@@ -3240,7 +3296,7 @@ VK_SAMPLER_ADDRESS_MODE_MIRROR_CLAMP_TO_EDGE = VkSamplerAddressMode(4)
 VK_SAMPLER_ADDRESS_MODE_MIRROR_CLAMP_TO_EDGE = VkSamplerAddressMode(4)
 VK_SAMPLER_ADDRESS_MODE_MIRROR_CLAMP_TO_EDGE_KHR = VK_SAMPLER_ADDRESS_MODE_MIRROR_CLAMP_TO_EDGE
 
-VkFilter = type('VkFilter', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkFilter = type('VkFilter', (c_enum,), dict(names=dict()))
 VkFilter.names = {
     0 : 'VK_FILTER_NEAREST',
     1 : 'VK_FILTER_LINEAR',
@@ -3251,7 +3307,7 @@ VK_FILTER_LINEAR = VkFilter(1)
 VK_FILTER_CUBIC_IMG = VkFilter(1000015000)
 VK_FILTER_CUBIC_EXT = VK_FILTER_CUBIC_IMG
 
-VkSamplerMipmapMode = type('VkSamplerMipmapMode', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkSamplerMipmapMode = type('VkSamplerMipmapMode', (c_enum,), dict(names=dict()))
 VkSamplerMipmapMode.names = {
     0 : 'VK_SAMPLER_MIPMAP_MODE_NEAREST',
     1 : 'VK_SAMPLER_MIPMAP_MODE_LINEAR',
@@ -3259,7 +3315,7 @@ VkSamplerMipmapMode.names = {
 VK_SAMPLER_MIPMAP_MODE_NEAREST = VkSamplerMipmapMode(0)
 VK_SAMPLER_MIPMAP_MODE_LINEAR = VkSamplerMipmapMode(1)
 
-VkVertexInputRate = type('VkVertexInputRate', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkVertexInputRate = type('VkVertexInputRate', (c_enum,), dict(names=dict()))
 VkVertexInputRate.names = {
     0 : 'VK_VERTEX_INPUT_RATE_VERTEX',
     1 : 'VK_VERTEX_INPUT_RATE_INSTANCE',
@@ -3267,7 +3323,7 @@ VkVertexInputRate.names = {
 VK_VERTEX_INPUT_RATE_VERTEX = VkVertexInputRate(0)
 VK_VERTEX_INPUT_RATE_INSTANCE = VkVertexInputRate(1)
 
-VkPipelineStageFlagBits = type('VkPipelineStageFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkPipelineStageFlagBits = type('VkPipelineStageFlagBits', (c_enum,), dict(names=dict()))
 VkPipelineStageFlagBits.names = {
     1 : 'VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT',
     2 : 'VK_PIPELINE_STAGE_DRAW_INDIRECT_BIT',
@@ -3326,7 +3382,7 @@ VK_PIPELINE_STAGE_FRAGMENT_DENSITY_PROCESS_BIT_EXT = VkPipelineStageFlagBits(838
 VK_PIPELINE_STAGE_FRAGMENT_SHADING_RATE_ATTACHMENT_BIT_KHR = VK_PIPELINE_STAGE_SHADING_RATE_IMAGE_BIT_NV
 VK_PIPELINE_STAGE_COMMAND_PREPROCESS_BIT_NV = VkPipelineStageFlagBits(131072)
 
-VkSparseImageFormatFlagBits = type('VkSparseImageFormatFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkSparseImageFormatFlagBits = type('VkSparseImageFormatFlagBits', (c_enum,), dict(names=dict()))
 VkSparseImageFormatFlagBits.names = {
     1 : 'VK_SPARSE_IMAGE_FORMAT_SINGLE_MIPTAIL_BIT',
     2 : 'VK_SPARSE_IMAGE_FORMAT_ALIGNED_MIP_SIZE_BIT',
@@ -3336,7 +3392,7 @@ VK_SPARSE_IMAGE_FORMAT_SINGLE_MIPTAIL_BIT = VkSparseImageFormatFlagBits(1)
 VK_SPARSE_IMAGE_FORMAT_ALIGNED_MIP_SIZE_BIT = VkSparseImageFormatFlagBits(2)
 VK_SPARSE_IMAGE_FORMAT_NONSTANDARD_BLOCK_SIZE_BIT = VkSparseImageFormatFlagBits(4)
 
-VkSampleCountFlagBits = type('VkSampleCountFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkSampleCountFlagBits = type('VkSampleCountFlagBits', (c_enum,), dict(names=dict()))
 VkSampleCountFlagBits.names = {
     1 : 'VK_SAMPLE_COUNT_1_BIT',
     2 : 'VK_SAMPLE_COUNT_2_BIT',
@@ -3354,13 +3410,13 @@ VK_SAMPLE_COUNT_16_BIT = VkSampleCountFlagBits(16)
 VK_SAMPLE_COUNT_32_BIT = VkSampleCountFlagBits(32)
 VK_SAMPLE_COUNT_64_BIT = VkSampleCountFlagBits(64)
 
-VkAttachmentDescriptionFlagBits = type('VkAttachmentDescriptionFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkAttachmentDescriptionFlagBits = type('VkAttachmentDescriptionFlagBits', (c_enum,), dict(names=dict()))
 VkAttachmentDescriptionFlagBits.names = {
     1 : 'VK_ATTACHMENT_DESCRIPTION_MAY_ALIAS_BIT',
 }
 VK_ATTACHMENT_DESCRIPTION_MAY_ALIAS_BIT = VkAttachmentDescriptionFlagBits(1)
 
-VkDescriptorPoolCreateFlagBits = type('VkDescriptorPoolCreateFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkDescriptorPoolCreateFlagBits = type('VkDescriptorPoolCreateFlagBits', (c_enum,), dict(names=dict()))
 VkDescriptorPoolCreateFlagBits.names = {
     1 : 'VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT',
     2 : 'VK_DESCRIPTOR_POOL_CREATE_UPDATE_AFTER_BIND_BIT',
@@ -3369,7 +3425,7 @@ VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT = VkDescriptorPoolCreateFlagBi
 VK_DESCRIPTOR_POOL_CREATE_UPDATE_AFTER_BIND_BIT = VkDescriptorPoolCreateFlagBits(2)
 VK_DESCRIPTOR_POOL_CREATE_UPDATE_AFTER_BIND_BIT_EXT = VK_DESCRIPTOR_POOL_CREATE_UPDATE_AFTER_BIND_BIT
 
-VkDependencyFlagBits = type('VkDependencyFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkDependencyFlagBits = type('VkDependencyFlagBits', (c_enum,), dict(names=dict()))
 VkDependencyFlagBits.names = {
     1 : 'VK_DEPENDENCY_BY_REGION_BIT',
     4 : 'VK_DEPENDENCY_DEVICE_GROUP_BIT',
@@ -3381,7 +3437,7 @@ VK_DEPENDENCY_VIEW_LOCAL_BIT = VkDependencyFlagBits(2)
 VK_DEPENDENCY_VIEW_LOCAL_BIT_KHR = VK_DEPENDENCY_VIEW_LOCAL_BIT
 VK_DEPENDENCY_DEVICE_GROUP_BIT_KHR = VK_DEPENDENCY_DEVICE_GROUP_BIT
 
-VkObjectType = type('VkObjectType', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkObjectType = type('VkObjectType', (c_enum,), dict(names=dict()))
 VkObjectType.names = {
     0 : 'VK_OBJECT_TYPE_UNKNOWN',
     1 : 'VK_OBJECT_TYPE_INSTANCE',
@@ -3469,7 +3525,7 @@ VK_OBJECT_TYPE_DEFERRED_OPERATION_KHR = VkObjectType(1000268000)
 VK_OBJECT_TYPE_INDIRECT_COMMANDS_LAYOUT_NV = VkObjectType(1000277000)
 VK_OBJECT_TYPE_PRIVATE_DATA_SLOT_EXT = VkObjectType(1000295000)
 
-VkIndirectCommandsLayoutUsageFlagBitsNV = type('VkIndirectCommandsLayoutUsageFlagBitsNV', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkIndirectCommandsLayoutUsageFlagBitsNV = type('VkIndirectCommandsLayoutUsageFlagBitsNV', (c_enum,), dict(names=dict()))
 VkIndirectCommandsLayoutUsageFlagBitsNV.names = {
     1 : 'VK_INDIRECT_COMMANDS_LAYOUT_USAGE_EXPLICIT_PREPROCESS_BIT_NV',
     2 : 'VK_INDIRECT_COMMANDS_LAYOUT_USAGE_INDEXED_SEQUENCES_BIT_NV',
@@ -3479,7 +3535,7 @@ VK_INDIRECT_COMMANDS_LAYOUT_USAGE_EXPLICIT_PREPROCESS_BIT_NV = VkIndirectCommand
 VK_INDIRECT_COMMANDS_LAYOUT_USAGE_INDEXED_SEQUENCES_BIT_NV = VkIndirectCommandsLayoutUsageFlagBitsNV(2)
 VK_INDIRECT_COMMANDS_LAYOUT_USAGE_UNORDERED_SEQUENCES_BIT_NV = VkIndirectCommandsLayoutUsageFlagBitsNV(4)
 
-VkIndirectCommandsTokenTypeNV = type('VkIndirectCommandsTokenTypeNV', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkIndirectCommandsTokenTypeNV = type('VkIndirectCommandsTokenTypeNV', (c_enum,), dict(names=dict()))
 VkIndirectCommandsTokenTypeNV.names = {
     0 : 'VK_INDIRECT_COMMANDS_TOKEN_TYPE_SHADER_GROUP_NV',
     1 : 'VK_INDIRECT_COMMANDS_TOKEN_TYPE_STATE_FLAGS_NV',
@@ -3499,17 +3555,17 @@ VK_INDIRECT_COMMANDS_TOKEN_TYPE_DRAW_INDEXED_NV = VkIndirectCommandsTokenTypeNV(
 VK_INDIRECT_COMMANDS_TOKEN_TYPE_DRAW_NV = VkIndirectCommandsTokenTypeNV(6)
 VK_INDIRECT_COMMANDS_TOKEN_TYPE_DRAW_TASKS_NV = VkIndirectCommandsTokenTypeNV(7)
 
-VkIndirectStateFlagBitsNV = type('VkIndirectStateFlagBitsNV', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkIndirectStateFlagBitsNV = type('VkIndirectStateFlagBitsNV', (c_enum,), dict(names=dict()))
 VkIndirectStateFlagBitsNV.names = {
     1 : 'VK_INDIRECT_STATE_FLAG_FRONTFACE_BIT_NV',
 }
 VK_INDIRECT_STATE_FLAG_FRONTFACE_BIT_NV = VkIndirectStateFlagBitsNV(1)
 
-VkPrivateDataSlotCreateFlagBitsEXT = type('VkPrivateDataSlotCreateFlagBitsEXT', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkPrivateDataSlotCreateFlagBitsEXT = type('VkPrivateDataSlotCreateFlagBitsEXT', (c_enum,), dict(names=dict()))
 VkPrivateDataSlotCreateFlagBitsEXT.names = {
 }
 
-VkDescriptorUpdateTemplateType = type('VkDescriptorUpdateTemplateType', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkDescriptorUpdateTemplateType = type('VkDescriptorUpdateTemplateType', (c_enum,), dict(names=dict()))
 VkDescriptorUpdateTemplateType.names = {
     0 : 'VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_DESCRIPTOR_SET',
     1 : 'VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_PUSH_DESCRIPTORS_KHR',
@@ -3524,7 +3580,7 @@ VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_PUSH_DESCRIPTORS_KHR = VkDescriptorUpdateTemp
 
 VkDescriptorUpdateTemplateTypeKHR = VkDescriptorUpdateTemplateType
 
-VkViewportCoordinateSwizzleNV = type('VkViewportCoordinateSwizzleNV', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkViewportCoordinateSwizzleNV = type('VkViewportCoordinateSwizzleNV', (c_enum,), dict(names=dict()))
 VkViewportCoordinateSwizzleNV.names = {
     0 : 'VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_X_NV',
     1 : 'VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_X_NV',
@@ -3544,7 +3600,7 @@ VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_Z_NV = VkViewportCoordinateSwizzleNV(5)
 VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_W_NV = VkViewportCoordinateSwizzleNV(6)
 VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_W_NV = VkViewportCoordinateSwizzleNV(7)
 
-VkDiscardRectangleModeEXT = type('VkDiscardRectangleModeEXT', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkDiscardRectangleModeEXT = type('VkDiscardRectangleModeEXT', (c_enum,), dict(names=dict()))
 VkDiscardRectangleModeEXT.names = {
     0 : 'VK_DISCARD_RECTANGLE_MODE_INCLUSIVE_EXT',
     1 : 'VK_DISCARD_RECTANGLE_MODE_EXCLUSIVE_EXT',
@@ -3552,7 +3608,7 @@ VkDiscardRectangleModeEXT.names = {
 VK_DISCARD_RECTANGLE_MODE_INCLUSIVE_EXT = VkDiscardRectangleModeEXT(0)
 VK_DISCARD_RECTANGLE_MODE_EXCLUSIVE_EXT = VkDiscardRectangleModeEXT(1)
 
-VkSubpassDescriptionFlagBits = type('VkSubpassDescriptionFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkSubpassDescriptionFlagBits = type('VkSubpassDescriptionFlagBits', (c_enum,), dict(names=dict()))
 VkSubpassDescriptionFlagBits.names = {
     1 : 'VK_SUBPASS_DESCRIPTION_PER_VIEW_ATTRIBUTES_BIT_NVX',
     2 : 'VK_SUBPASS_DESCRIPTION_PER_VIEW_POSITION_X_ONLY_BIT_NVX',
@@ -3564,7 +3620,7 @@ VK_SUBPASS_DESCRIPTION_PER_VIEW_POSITION_X_ONLY_BIT_NVX = VkSubpassDescriptionFl
 VK_SUBPASS_DESCRIPTION_FRAGMENT_REGION_BIT_QCOM = VkSubpassDescriptionFlagBits(4)
 VK_SUBPASS_DESCRIPTION_SHADER_RESOLVE_BIT_QCOM = VkSubpassDescriptionFlagBits(8)
 
-VkPointClippingBehavior = type('VkPointClippingBehavior', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkPointClippingBehavior = type('VkPointClippingBehavior', (c_enum,), dict(names=dict()))
 VkPointClippingBehavior.names = {
     0 : 'VK_POINT_CLIPPING_BEHAVIOR_ALL_CLIP_PLANES',
     1 : 'VK_POINT_CLIPPING_BEHAVIOR_USER_CLIP_PLANES_ONLY',
@@ -3576,7 +3632,7 @@ VK_POINT_CLIPPING_BEHAVIOR_USER_CLIP_PLANES_ONLY_KHR = VK_POINT_CLIPPING_BEHAVIO
 
 VkPointClippingBehaviorKHR = VkPointClippingBehavior
 
-VkCoverageModulationModeNV = type('VkCoverageModulationModeNV', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkCoverageModulationModeNV = type('VkCoverageModulationModeNV', (c_enum,), dict(names=dict()))
 VkCoverageModulationModeNV.names = {
     0 : 'VK_COVERAGE_MODULATION_MODE_NONE_NV',
     1 : 'VK_COVERAGE_MODULATION_MODE_RGB_NV',
@@ -3588,7 +3644,7 @@ VK_COVERAGE_MODULATION_MODE_RGB_NV = VkCoverageModulationModeNV(1)
 VK_COVERAGE_MODULATION_MODE_ALPHA_NV = VkCoverageModulationModeNV(2)
 VK_COVERAGE_MODULATION_MODE_RGBA_NV = VkCoverageModulationModeNV(3)
 
-VkCoverageReductionModeNV = type('VkCoverageReductionModeNV', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkCoverageReductionModeNV = type('VkCoverageReductionModeNV', (c_enum,), dict(names=dict()))
 VkCoverageReductionModeNV.names = {
     0 : 'VK_COVERAGE_REDUCTION_MODE_MERGE_NV',
     1 : 'VK_COVERAGE_REDUCTION_MODE_TRUNCATE_NV',
@@ -3596,13 +3652,13 @@ VkCoverageReductionModeNV.names = {
 VK_COVERAGE_REDUCTION_MODE_MERGE_NV = VkCoverageReductionModeNV(0)
 VK_COVERAGE_REDUCTION_MODE_TRUNCATE_NV = VkCoverageReductionModeNV(1)
 
-VkValidationCacheHeaderVersionEXT = type('VkValidationCacheHeaderVersionEXT', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkValidationCacheHeaderVersionEXT = type('VkValidationCacheHeaderVersionEXT', (c_enum,), dict(names=dict()))
 VkValidationCacheHeaderVersionEXT.names = {
     1 : 'VK_VALIDATION_CACHE_HEADER_VERSION_ONE_EXT',
 }
 VK_VALIDATION_CACHE_HEADER_VERSION_ONE_EXT = VkValidationCacheHeaderVersionEXT(1)
 
-VkShaderInfoTypeAMD = type('VkShaderInfoTypeAMD', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkShaderInfoTypeAMD = type('VkShaderInfoTypeAMD', (c_enum,), dict(names=dict()))
 VkShaderInfoTypeAMD.names = {
     0 : 'VK_SHADER_INFO_TYPE_STATISTICS_AMD',
     1 : 'VK_SHADER_INFO_TYPE_BINARY_AMD',
@@ -3612,7 +3668,7 @@ VK_SHADER_INFO_TYPE_STATISTICS_AMD = VkShaderInfoTypeAMD(0)
 VK_SHADER_INFO_TYPE_BINARY_AMD = VkShaderInfoTypeAMD(1)
 VK_SHADER_INFO_TYPE_DISASSEMBLY_AMD = VkShaderInfoTypeAMD(2)
 
-VkQueueGlobalPriorityEXT = type('VkQueueGlobalPriorityEXT', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkQueueGlobalPriorityEXT = type('VkQueueGlobalPriorityEXT', (c_enum,), dict(names=dict()))
 VkQueueGlobalPriorityEXT.names = {
     128 : 'VK_QUEUE_GLOBAL_PRIORITY_LOW_EXT',
     256 : 'VK_QUEUE_GLOBAL_PRIORITY_MEDIUM_EXT',
@@ -3624,7 +3680,7 @@ VK_QUEUE_GLOBAL_PRIORITY_MEDIUM_EXT = VkQueueGlobalPriorityEXT(256)
 VK_QUEUE_GLOBAL_PRIORITY_HIGH_EXT = VkQueueGlobalPriorityEXT(512)
 VK_QUEUE_GLOBAL_PRIORITY_REALTIME_EXT = VkQueueGlobalPriorityEXT(1024)
 
-VkTimeDomainEXT = type('VkTimeDomainEXT', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkTimeDomainEXT = type('VkTimeDomainEXT', (c_enum,), dict(names=dict()))
 VkTimeDomainEXT.names = {
     0 : 'VK_TIME_DOMAIN_DEVICE_EXT',
     1 : 'VK_TIME_DOMAIN_CLOCK_MONOTONIC_EXT',
@@ -3636,7 +3692,7 @@ VK_TIME_DOMAIN_CLOCK_MONOTONIC_EXT = VkTimeDomainEXT(1)
 VK_TIME_DOMAIN_CLOCK_MONOTONIC_RAW_EXT = VkTimeDomainEXT(2)
 VK_TIME_DOMAIN_QUERY_PERFORMANCE_COUNTER_EXT = VkTimeDomainEXT(3)
 
-VkConservativeRasterizationModeEXT = type('VkConservativeRasterizationModeEXT', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkConservativeRasterizationModeEXT = type('VkConservativeRasterizationModeEXT', (c_enum,), dict(names=dict()))
 VkConservativeRasterizationModeEXT.names = {
     0 : 'VK_CONSERVATIVE_RASTERIZATION_MODE_DISABLED_EXT',
     1 : 'VK_CONSERVATIVE_RASTERIZATION_MODE_OVERESTIMATE_EXT',
@@ -3646,7 +3702,7 @@ VK_CONSERVATIVE_RASTERIZATION_MODE_DISABLED_EXT = VkConservativeRasterizationMod
 VK_CONSERVATIVE_RASTERIZATION_MODE_OVERESTIMATE_EXT = VkConservativeRasterizationModeEXT(1)
 VK_CONSERVATIVE_RASTERIZATION_MODE_UNDERESTIMATE_EXT = VkConservativeRasterizationModeEXT(2)
 
-VkResolveModeFlagBits = type('VkResolveModeFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkResolveModeFlagBits = type('VkResolveModeFlagBits', (c_enum,), dict(names=dict()))
 VkResolveModeFlagBits.names = {
     0 : 'VK_RESOLVE_MODE_NONE',
     1 : 'VK_RESOLVE_MODE_SAMPLE_ZERO_BIT',
@@ -3667,7 +3723,7 @@ VK_RESOLVE_MODE_MAX_BIT_KHR = VK_RESOLVE_MODE_MAX_BIT
 
 VkResolveModeFlagBitsKHR = VkResolveModeFlagBits
 
-VkDescriptorBindingFlagBits = type('VkDescriptorBindingFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkDescriptorBindingFlagBits = type('VkDescriptorBindingFlagBits', (c_enum,), dict(names=dict()))
 VkDescriptorBindingFlagBits.names = {
     1 : 'VK_DESCRIPTOR_BINDING_UPDATE_AFTER_BIND_BIT',
     2 : 'VK_DESCRIPTOR_BINDING_UPDATE_UNUSED_WHILE_PENDING_BIT',
@@ -3685,13 +3741,13 @@ VK_DESCRIPTOR_BINDING_VARIABLE_DESCRIPTOR_COUNT_BIT_EXT = VK_DESCRIPTOR_BINDING_
 
 VkDescriptorBindingFlagBitsEXT = VkDescriptorBindingFlagBits
 
-VkConditionalRenderingFlagBitsEXT = type('VkConditionalRenderingFlagBitsEXT', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkConditionalRenderingFlagBitsEXT = type('VkConditionalRenderingFlagBitsEXT', (c_enum,), dict(names=dict()))
 VkConditionalRenderingFlagBitsEXT.names = {
     1 : 'VK_CONDITIONAL_RENDERING_INVERTED_BIT_EXT',
 }
 VK_CONDITIONAL_RENDERING_INVERTED_BIT_EXT = VkConditionalRenderingFlagBitsEXT(1)
 
-VkSemaphoreType = type('VkSemaphoreType', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkSemaphoreType = type('VkSemaphoreType', (c_enum,), dict(names=dict()))
 VkSemaphoreType.names = {
     0 : 'VK_SEMAPHORE_TYPE_BINARY',
     1 : 'VK_SEMAPHORE_TYPE_TIMELINE',
@@ -3703,7 +3759,7 @@ VK_SEMAPHORE_TYPE_TIMELINE_KHR = VK_SEMAPHORE_TYPE_TIMELINE
 
 VkSemaphoreTypeKHR = VkSemaphoreType
 
-VkGeometryFlagBitsKHR = type('VkGeometryFlagBitsKHR', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkGeometryFlagBitsKHR = type('VkGeometryFlagBitsKHR', (c_enum,), dict(names=dict()))
 VkGeometryFlagBitsKHR.names = {
     1 : 'VK_GEOMETRY_OPAQUE_BIT_KHR',
     2 : 'VK_GEOMETRY_NO_DUPLICATE_ANY_HIT_INVOCATION_BIT_KHR',
@@ -3715,7 +3771,7 @@ VK_GEOMETRY_NO_DUPLICATE_ANY_HIT_INVOCATION_BIT_NV = VK_GEOMETRY_NO_DUPLICATE_AN
 
 VkGeometryFlagBitsNV = VkGeometryFlagBitsKHR
 
-VkGeometryInstanceFlagBitsKHR = type('VkGeometryInstanceFlagBitsKHR', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkGeometryInstanceFlagBitsKHR = type('VkGeometryInstanceFlagBitsKHR', (c_enum,), dict(names=dict()))
 VkGeometryInstanceFlagBitsKHR.names = {
     1 : 'VK_GEOMETRY_INSTANCE_TRIANGLE_FACING_CULL_DISABLE_BIT_KHR',
     2 : 'VK_GEOMETRY_INSTANCE_TRIANGLE_FRONT_COUNTERCLOCKWISE_BIT_KHR',
@@ -3733,7 +3789,7 @@ VK_GEOMETRY_INSTANCE_FORCE_NO_OPAQUE_BIT_NV = VK_GEOMETRY_INSTANCE_FORCE_NO_OPAQ
 
 VkGeometryInstanceFlagBitsNV = VkGeometryInstanceFlagBitsKHR
 
-VkBuildAccelerationStructureFlagBitsKHR = type('VkBuildAccelerationStructureFlagBitsKHR', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkBuildAccelerationStructureFlagBitsKHR = type('VkBuildAccelerationStructureFlagBitsKHR', (c_enum,), dict(names=dict()))
 VkBuildAccelerationStructureFlagBitsKHR.names = {
     1 : 'VK_BUILD_ACCELERATION_STRUCTURE_ALLOW_UPDATE_BIT_KHR',
     2 : 'VK_BUILD_ACCELERATION_STRUCTURE_ALLOW_COMPACTION_BIT_KHR',
@@ -3754,13 +3810,13 @@ VK_BUILD_ACCELERATION_STRUCTURE_LOW_MEMORY_BIT_NV = VK_BUILD_ACCELERATION_STRUCT
 
 VkBuildAccelerationStructureFlagBitsNV = VkBuildAccelerationStructureFlagBitsKHR
 
-VkAccelerationStructureCreateFlagBitsKHR = type('VkAccelerationStructureCreateFlagBitsKHR', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkAccelerationStructureCreateFlagBitsKHR = type('VkAccelerationStructureCreateFlagBitsKHR', (c_enum,), dict(names=dict()))
 VkAccelerationStructureCreateFlagBitsKHR.names = {
     1 : 'VK_ACCELERATION_STRUCTURE_CREATE_DEVICE_ADDRESS_CAPTURE_REPLAY_BIT_KHR',
 }
 VK_ACCELERATION_STRUCTURE_CREATE_DEVICE_ADDRESS_CAPTURE_REPLAY_BIT_KHR = VkAccelerationStructureCreateFlagBitsKHR(1)
 
-VkBuildAccelerationStructureModeKHR = type('VkBuildAccelerationStructureModeKHR', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkBuildAccelerationStructureModeKHR = type('VkBuildAccelerationStructureModeKHR', (c_enum,), dict(names=dict()))
 VkBuildAccelerationStructureModeKHR.names = {
     0 : 'VK_BUILD_ACCELERATION_STRUCTURE_MODE_BUILD_KHR',
     1 : 'VK_BUILD_ACCELERATION_STRUCTURE_MODE_UPDATE_KHR',
@@ -3768,7 +3824,7 @@ VkBuildAccelerationStructureModeKHR.names = {
 VK_BUILD_ACCELERATION_STRUCTURE_MODE_BUILD_KHR = VkBuildAccelerationStructureModeKHR(0)
 VK_BUILD_ACCELERATION_STRUCTURE_MODE_UPDATE_KHR = VkBuildAccelerationStructureModeKHR(1)
 
-VkCopyAccelerationStructureModeKHR = type('VkCopyAccelerationStructureModeKHR', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkCopyAccelerationStructureModeKHR = type('VkCopyAccelerationStructureModeKHR', (c_enum,), dict(names=dict()))
 VkCopyAccelerationStructureModeKHR.names = {
     0 : 'VK_COPY_ACCELERATION_STRUCTURE_MODE_CLONE_KHR',
     1 : 'VK_COPY_ACCELERATION_STRUCTURE_MODE_COMPACT_KHR',
@@ -3784,7 +3840,7 @@ VK_COPY_ACCELERATION_STRUCTURE_MODE_COMPACT_NV = VK_COPY_ACCELERATION_STRUCTURE_
 
 VkCopyAccelerationStructureModeNV = VkCopyAccelerationStructureModeKHR
 
-VkAccelerationStructureTypeKHR = type('VkAccelerationStructureTypeKHR', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkAccelerationStructureTypeKHR = type('VkAccelerationStructureTypeKHR', (c_enum,), dict(names=dict()))
 VkAccelerationStructureTypeKHR.names = {
     0 : 'VK_ACCELERATION_STRUCTURE_TYPE_TOP_LEVEL_KHR',
     1 : 'VK_ACCELERATION_STRUCTURE_TYPE_BOTTOM_LEVEL_KHR',
@@ -3798,7 +3854,7 @@ VK_ACCELERATION_STRUCTURE_TYPE_BOTTOM_LEVEL_NV = VK_ACCELERATION_STRUCTURE_TYPE_
 
 VkAccelerationStructureTypeNV = VkAccelerationStructureTypeKHR
 
-VkGeometryTypeKHR = type('VkGeometryTypeKHR', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkGeometryTypeKHR = type('VkGeometryTypeKHR', (c_enum,), dict(names=dict()))
 VkGeometryTypeKHR.names = {
     0 : 'VK_GEOMETRY_TYPE_TRIANGLES_KHR',
     1 : 'VK_GEOMETRY_TYPE_AABBS_KHR',
@@ -3812,7 +3868,7 @@ VK_GEOMETRY_TYPE_AABBS_NV = VK_GEOMETRY_TYPE_AABBS_KHR
 
 VkGeometryTypeNV = VkGeometryTypeKHR
 
-VkRayTracingShaderGroupTypeKHR = type('VkRayTracingShaderGroupTypeKHR', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkRayTracingShaderGroupTypeKHR = type('VkRayTracingShaderGroupTypeKHR', (c_enum,), dict(names=dict()))
 VkRayTracingShaderGroupTypeKHR.names = {
     0 : 'VK_RAY_TRACING_SHADER_GROUP_TYPE_GENERAL_KHR',
     1 : 'VK_RAY_TRACING_SHADER_GROUP_TYPE_TRIANGLES_HIT_GROUP_KHR',
@@ -3827,7 +3883,7 @@ VK_RAY_TRACING_SHADER_GROUP_TYPE_PROCEDURAL_HIT_GROUP_NV = VK_RAY_TRACING_SHADER
 
 VkRayTracingShaderGroupTypeNV = VkRayTracingShaderGroupTypeKHR
 
-VkAccelerationStructureMemoryRequirementsTypeNV = type('VkAccelerationStructureMemoryRequirementsTypeNV', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkAccelerationStructureMemoryRequirementsTypeNV = type('VkAccelerationStructureMemoryRequirementsTypeNV', (c_enum,), dict(names=dict()))
 VkAccelerationStructureMemoryRequirementsTypeNV.names = {
     0 : 'VK_ACCELERATION_STRUCTURE_MEMORY_REQUIREMENTS_TYPE_OBJECT_NV',
     1 : 'VK_ACCELERATION_STRUCTURE_MEMORY_REQUIREMENTS_TYPE_BUILD_SCRATCH_NV',
@@ -3837,7 +3893,7 @@ VK_ACCELERATION_STRUCTURE_MEMORY_REQUIREMENTS_TYPE_OBJECT_NV = VkAccelerationStr
 VK_ACCELERATION_STRUCTURE_MEMORY_REQUIREMENTS_TYPE_BUILD_SCRATCH_NV = VkAccelerationStructureMemoryRequirementsTypeNV(1)
 VK_ACCELERATION_STRUCTURE_MEMORY_REQUIREMENTS_TYPE_UPDATE_SCRATCH_NV = VkAccelerationStructureMemoryRequirementsTypeNV(2)
 
-VkAccelerationStructureBuildTypeKHR = type('VkAccelerationStructureBuildTypeKHR', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkAccelerationStructureBuildTypeKHR = type('VkAccelerationStructureBuildTypeKHR', (c_enum,), dict(names=dict()))
 VkAccelerationStructureBuildTypeKHR.names = {
     0 : 'VK_ACCELERATION_STRUCTURE_BUILD_TYPE_HOST_KHR',
     1 : 'VK_ACCELERATION_STRUCTURE_BUILD_TYPE_DEVICE_KHR',
@@ -3847,7 +3903,7 @@ VK_ACCELERATION_STRUCTURE_BUILD_TYPE_HOST_KHR = VkAccelerationStructureBuildType
 VK_ACCELERATION_STRUCTURE_BUILD_TYPE_DEVICE_KHR = VkAccelerationStructureBuildTypeKHR(1)
 VK_ACCELERATION_STRUCTURE_BUILD_TYPE_HOST_OR_DEVICE_KHR = VkAccelerationStructureBuildTypeKHR(2)
 
-VkAccelerationStructureCompatibilityKHR = type('VkAccelerationStructureCompatibilityKHR', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkAccelerationStructureCompatibilityKHR = type('VkAccelerationStructureCompatibilityKHR', (c_enum,), dict(names=dict()))
 VkAccelerationStructureCompatibilityKHR.names = {
     0 : 'VK_ACCELERATION_STRUCTURE_COMPATIBILITY_COMPATIBLE_KHR',
     1 : 'VK_ACCELERATION_STRUCTURE_COMPATIBILITY_INCOMPATIBLE_KHR',
@@ -3855,7 +3911,7 @@ VkAccelerationStructureCompatibilityKHR.names = {
 VK_ACCELERATION_STRUCTURE_COMPATIBILITY_COMPATIBLE_KHR = VkAccelerationStructureCompatibilityKHR(0)
 VK_ACCELERATION_STRUCTURE_COMPATIBILITY_INCOMPATIBLE_KHR = VkAccelerationStructureCompatibilityKHR(1)
 
-VkShaderGroupShaderKHR = type('VkShaderGroupShaderKHR', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkShaderGroupShaderKHR = type('VkShaderGroupShaderKHR', (c_enum,), dict(names=dict()))
 VkShaderGroupShaderKHR.names = {
     0 : 'VK_SHADER_GROUP_SHADER_GENERAL_KHR',
     1 : 'VK_SHADER_GROUP_SHADER_CLOSEST_HIT_KHR',
@@ -3867,7 +3923,7 @@ VK_SHADER_GROUP_SHADER_CLOSEST_HIT_KHR = VkShaderGroupShaderKHR(1)
 VK_SHADER_GROUP_SHADER_ANY_HIT_KHR = VkShaderGroupShaderKHR(2)
 VK_SHADER_GROUP_SHADER_INTERSECTION_KHR = VkShaderGroupShaderKHR(3)
 
-VkMemoryOverallocationBehaviorAMD = type('VkMemoryOverallocationBehaviorAMD', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkMemoryOverallocationBehaviorAMD = type('VkMemoryOverallocationBehaviorAMD', (c_enum,), dict(names=dict()))
 VkMemoryOverallocationBehaviorAMD.names = {
     0 : 'VK_MEMORY_OVERALLOCATION_BEHAVIOR_DEFAULT_AMD',
     1 : 'VK_MEMORY_OVERALLOCATION_BEHAVIOR_ALLOWED_AMD',
@@ -3877,7 +3933,7 @@ VK_MEMORY_OVERALLOCATION_BEHAVIOR_DEFAULT_AMD = VkMemoryOverallocationBehaviorAM
 VK_MEMORY_OVERALLOCATION_BEHAVIOR_ALLOWED_AMD = VkMemoryOverallocationBehaviorAMD(1)
 VK_MEMORY_OVERALLOCATION_BEHAVIOR_DISALLOWED_AMD = VkMemoryOverallocationBehaviorAMD(2)
 
-VkScopeNV = type('VkScopeNV', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkScopeNV = type('VkScopeNV', (c_enum,), dict(names=dict()))
 VkScopeNV.names = {
     1 : 'VK_SCOPE_DEVICE_NV',
     2 : 'VK_SCOPE_WORKGROUP_NV',
@@ -3889,7 +3945,7 @@ VK_SCOPE_WORKGROUP_NV = VkScopeNV(2)
 VK_SCOPE_SUBGROUP_NV = VkScopeNV(3)
 VK_SCOPE_QUEUE_FAMILY_NV = VkScopeNV(5)
 
-VkComponentTypeNV = type('VkComponentTypeNV', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkComponentTypeNV = type('VkComponentTypeNV', (c_enum,), dict(names=dict()))
 VkComponentTypeNV.names = {
     0 : 'VK_COMPONENT_TYPE_FLOAT16_NV',
     1 : 'VK_COMPONENT_TYPE_FLOAT32_NV',
@@ -3915,7 +3971,7 @@ VK_COMPONENT_TYPE_UINT16_NV = VkComponentTypeNV(8)
 VK_COMPONENT_TYPE_UINT32_NV = VkComponentTypeNV(9)
 VK_COMPONENT_TYPE_UINT64_NV = VkComponentTypeNV(10)
 
-VkDeviceDiagnosticsConfigFlagBitsNV = type('VkDeviceDiagnosticsConfigFlagBitsNV', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkDeviceDiagnosticsConfigFlagBitsNV = type('VkDeviceDiagnosticsConfigFlagBitsNV', (c_enum,), dict(names=dict()))
 VkDeviceDiagnosticsConfigFlagBitsNV.names = {
     1 : 'VK_DEVICE_DIAGNOSTICS_CONFIG_ENABLE_SHADER_DEBUG_INFO_BIT_NV',
     2 : 'VK_DEVICE_DIAGNOSTICS_CONFIG_ENABLE_RESOURCE_TRACKING_BIT_NV',
@@ -3925,7 +3981,7 @@ VK_DEVICE_DIAGNOSTICS_CONFIG_ENABLE_SHADER_DEBUG_INFO_BIT_NV = VkDeviceDiagnosti
 VK_DEVICE_DIAGNOSTICS_CONFIG_ENABLE_RESOURCE_TRACKING_BIT_NV = VkDeviceDiagnosticsConfigFlagBitsNV(2)
 VK_DEVICE_DIAGNOSTICS_CONFIG_ENABLE_AUTOMATIC_CHECKPOINTS_BIT_NV = VkDeviceDiagnosticsConfigFlagBitsNV(4)
 
-VkPipelineCreationFeedbackFlagBitsEXT = type('VkPipelineCreationFeedbackFlagBitsEXT', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkPipelineCreationFeedbackFlagBitsEXT = type('VkPipelineCreationFeedbackFlagBitsEXT', (c_enum,), dict(names=dict()))
 VkPipelineCreationFeedbackFlagBitsEXT.names = {
     1 : 'VK_PIPELINE_CREATION_FEEDBACK_VALID_BIT_EXT',
     2 : 'VK_PIPELINE_CREATION_FEEDBACK_APPLICATION_PIPELINE_CACHE_HIT_BIT_EXT',
@@ -3935,7 +3991,7 @@ VK_PIPELINE_CREATION_FEEDBACK_VALID_BIT_EXT = VkPipelineCreationFeedbackFlagBits
 VK_PIPELINE_CREATION_FEEDBACK_APPLICATION_PIPELINE_CACHE_HIT_BIT_EXT = VkPipelineCreationFeedbackFlagBitsEXT(2)
 VK_PIPELINE_CREATION_FEEDBACK_BASE_PIPELINE_ACCELERATION_BIT_EXT = VkPipelineCreationFeedbackFlagBitsEXT(4)
 
-VkPerformanceCounterScopeKHR = type('VkPerformanceCounterScopeKHR', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkPerformanceCounterScopeKHR = type('VkPerformanceCounterScopeKHR', (c_enum,), dict(names=dict()))
 VkPerformanceCounterScopeKHR.names = {
     0 : 'VK_PERFORMANCE_COUNTER_SCOPE_COMMAND_BUFFER_KHR',
     1 : 'VK_PERFORMANCE_COUNTER_SCOPE_RENDER_PASS_KHR',
@@ -3948,7 +4004,7 @@ VK_QUERY_SCOPE_COMMAND_BUFFER_KHR = VK_PERFORMANCE_COUNTER_SCOPE_COMMAND_BUFFER_
 VK_QUERY_SCOPE_RENDER_PASS_KHR = VK_PERFORMANCE_COUNTER_SCOPE_RENDER_PASS_KHR
 VK_QUERY_SCOPE_COMMAND_KHR = VK_PERFORMANCE_COUNTER_SCOPE_COMMAND_KHR
 
-VkPerformanceCounterUnitKHR = type('VkPerformanceCounterUnitKHR', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkPerformanceCounterUnitKHR = type('VkPerformanceCounterUnitKHR', (c_enum,), dict(names=dict()))
 VkPerformanceCounterUnitKHR.names = {
     0 : 'VK_PERFORMANCE_COUNTER_UNIT_GENERIC_KHR',
     1 : 'VK_PERFORMANCE_COUNTER_UNIT_PERCENTAGE_KHR',
@@ -3974,7 +4030,7 @@ VK_PERFORMANCE_COUNTER_UNIT_AMPS_KHR = VkPerformanceCounterUnitKHR(8)
 VK_PERFORMANCE_COUNTER_UNIT_HERTZ_KHR = VkPerformanceCounterUnitKHR(9)
 VK_PERFORMANCE_COUNTER_UNIT_CYCLES_KHR = VkPerformanceCounterUnitKHR(10)
 
-VkPerformanceCounterStorageKHR = type('VkPerformanceCounterStorageKHR', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkPerformanceCounterStorageKHR = type('VkPerformanceCounterStorageKHR', (c_enum,), dict(names=dict()))
 VkPerformanceCounterStorageKHR.names = {
     0 : 'VK_PERFORMANCE_COUNTER_STORAGE_INT32_KHR',
     1 : 'VK_PERFORMANCE_COUNTER_STORAGE_INT64_KHR',
@@ -3990,7 +4046,7 @@ VK_PERFORMANCE_COUNTER_STORAGE_UINT64_KHR = VkPerformanceCounterStorageKHR(3)
 VK_PERFORMANCE_COUNTER_STORAGE_FLOAT32_KHR = VkPerformanceCounterStorageKHR(4)
 VK_PERFORMANCE_COUNTER_STORAGE_FLOAT64_KHR = VkPerformanceCounterStorageKHR(5)
 
-VkPerformanceCounterDescriptionFlagBitsKHR = type('VkPerformanceCounterDescriptionFlagBitsKHR', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkPerformanceCounterDescriptionFlagBitsKHR = type('VkPerformanceCounterDescriptionFlagBitsKHR', (c_enum,), dict(names=dict()))
 VkPerformanceCounterDescriptionFlagBitsKHR.names = {
     1 : 'VK_PERFORMANCE_COUNTER_DESCRIPTION_PERFORMANCE_IMPACTING_BIT_KHR',
     2 : 'VK_PERFORMANCE_COUNTER_DESCRIPTION_CONCURRENTLY_IMPACTED_BIT_KHR',
@@ -4000,11 +4056,11 @@ VK_PERFORMANCE_COUNTER_DESCRIPTION_PERFORMANCE_IMPACTING_KHR = VK_PERFORMANCE_CO
 VK_PERFORMANCE_COUNTER_DESCRIPTION_CONCURRENTLY_IMPACTED_BIT_KHR = VkPerformanceCounterDescriptionFlagBitsKHR(2)
 VK_PERFORMANCE_COUNTER_DESCRIPTION_CONCURRENTLY_IMPACTED_KHR = VK_PERFORMANCE_COUNTER_DESCRIPTION_CONCURRENTLY_IMPACTED_BIT_KHR
 
-VkAcquireProfilingLockFlagBitsKHR = type('VkAcquireProfilingLockFlagBitsKHR', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkAcquireProfilingLockFlagBitsKHR = type('VkAcquireProfilingLockFlagBitsKHR', (c_enum,), dict(names=dict()))
 VkAcquireProfilingLockFlagBitsKHR.names = {
 }
 
-VkSemaphoreWaitFlagBits = type('VkSemaphoreWaitFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkSemaphoreWaitFlagBits = type('VkSemaphoreWaitFlagBits', (c_enum,), dict(names=dict()))
 VkSemaphoreWaitFlagBits.names = {
     1 : 'VK_SEMAPHORE_WAIT_ANY_BIT',
 }
@@ -4013,19 +4069,19 @@ VK_SEMAPHORE_WAIT_ANY_BIT_KHR = VK_SEMAPHORE_WAIT_ANY_BIT
 
 VkSemaphoreWaitFlagBitsKHR = VkSemaphoreWaitFlagBits
 
-VkPerformanceConfigurationTypeINTEL = type('VkPerformanceConfigurationTypeINTEL', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkPerformanceConfigurationTypeINTEL = type('VkPerformanceConfigurationTypeINTEL', (c_enum,), dict(names=dict()))
 VkPerformanceConfigurationTypeINTEL.names = {
     0 : 'VK_PERFORMANCE_CONFIGURATION_TYPE_COMMAND_QUEUE_METRICS_DISCOVERY_ACTIVATED_INTEL',
 }
 VK_PERFORMANCE_CONFIGURATION_TYPE_COMMAND_QUEUE_METRICS_DISCOVERY_ACTIVATED_INTEL = VkPerformanceConfigurationTypeINTEL(0)
 
-VkQueryPoolSamplingModeINTEL = type('VkQueryPoolSamplingModeINTEL', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkQueryPoolSamplingModeINTEL = type('VkQueryPoolSamplingModeINTEL', (c_enum,), dict(names=dict()))
 VkQueryPoolSamplingModeINTEL.names = {
     0 : 'VK_QUERY_POOL_SAMPLING_MODE_MANUAL_INTEL',
 }
 VK_QUERY_POOL_SAMPLING_MODE_MANUAL_INTEL = VkQueryPoolSamplingModeINTEL(0)
 
-VkPerformanceOverrideTypeINTEL = type('VkPerformanceOverrideTypeINTEL', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkPerformanceOverrideTypeINTEL = type('VkPerformanceOverrideTypeINTEL', (c_enum,), dict(names=dict()))
 VkPerformanceOverrideTypeINTEL.names = {
     0 : 'VK_PERFORMANCE_OVERRIDE_TYPE_NULL_HARDWARE_INTEL',
     1 : 'VK_PERFORMANCE_OVERRIDE_TYPE_FLUSH_GPU_CACHES_INTEL',
@@ -4033,7 +4089,7 @@ VkPerformanceOverrideTypeINTEL.names = {
 VK_PERFORMANCE_OVERRIDE_TYPE_NULL_HARDWARE_INTEL = VkPerformanceOverrideTypeINTEL(0)
 VK_PERFORMANCE_OVERRIDE_TYPE_FLUSH_GPU_CACHES_INTEL = VkPerformanceOverrideTypeINTEL(1)
 
-VkPerformanceParameterTypeINTEL = type('VkPerformanceParameterTypeINTEL', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkPerformanceParameterTypeINTEL = type('VkPerformanceParameterTypeINTEL', (c_enum,), dict(names=dict()))
 VkPerformanceParameterTypeINTEL.names = {
     0 : 'VK_PERFORMANCE_PARAMETER_TYPE_HW_COUNTERS_SUPPORTED_INTEL',
     1 : 'VK_PERFORMANCE_PARAMETER_TYPE_STREAM_MARKER_VALID_BITS_INTEL',
@@ -4041,7 +4097,7 @@ VkPerformanceParameterTypeINTEL.names = {
 VK_PERFORMANCE_PARAMETER_TYPE_HW_COUNTERS_SUPPORTED_INTEL = VkPerformanceParameterTypeINTEL(0)
 VK_PERFORMANCE_PARAMETER_TYPE_STREAM_MARKER_VALID_BITS_INTEL = VkPerformanceParameterTypeINTEL(1)
 
-VkPerformanceValueTypeINTEL = type('VkPerformanceValueTypeINTEL', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkPerformanceValueTypeINTEL = type('VkPerformanceValueTypeINTEL', (c_enum,), dict(names=dict()))
 VkPerformanceValueTypeINTEL.names = {
     0 : 'VK_PERFORMANCE_VALUE_TYPE_UINT32_INTEL',
     1 : 'VK_PERFORMANCE_VALUE_TYPE_UINT64_INTEL',
@@ -4055,7 +4111,7 @@ VK_PERFORMANCE_VALUE_TYPE_FLOAT_INTEL = VkPerformanceValueTypeINTEL(2)
 VK_PERFORMANCE_VALUE_TYPE_BOOL_INTEL = VkPerformanceValueTypeINTEL(3)
 VK_PERFORMANCE_VALUE_TYPE_STRING_INTEL = VkPerformanceValueTypeINTEL(4)
 
-VkLineRasterizationModeEXT = type('VkLineRasterizationModeEXT', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkLineRasterizationModeEXT = type('VkLineRasterizationModeEXT', (c_enum,), dict(names=dict()))
 VkLineRasterizationModeEXT.names = {
     0 : 'VK_LINE_RASTERIZATION_MODE_DEFAULT_EXT',
     1 : 'VK_LINE_RASTERIZATION_MODE_RECTANGULAR_EXT',
@@ -4067,19 +4123,19 @@ VK_LINE_RASTERIZATION_MODE_RECTANGULAR_EXT = VkLineRasterizationModeEXT(1)
 VK_LINE_RASTERIZATION_MODE_BRESENHAM_EXT = VkLineRasterizationModeEXT(2)
 VK_LINE_RASTERIZATION_MODE_RECTANGULAR_SMOOTH_EXT = VkLineRasterizationModeEXT(3)
 
-VkShaderModuleCreateFlagBits = type('VkShaderModuleCreateFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkShaderModuleCreateFlagBits = type('VkShaderModuleCreateFlagBits', (c_enum,), dict(names=dict()))
 VkShaderModuleCreateFlagBits.names = {
 }
 
-VkPipelineCompilerControlFlagBitsAMD = type('VkPipelineCompilerControlFlagBitsAMD', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkPipelineCompilerControlFlagBitsAMD = type('VkPipelineCompilerControlFlagBitsAMD', (c_enum,), dict(names=dict()))
 VkPipelineCompilerControlFlagBitsAMD.names = {
 }
 
-VkShaderCorePropertiesFlagBitsAMD = type('VkShaderCorePropertiesFlagBitsAMD', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkShaderCorePropertiesFlagBitsAMD = type('VkShaderCorePropertiesFlagBitsAMD', (c_enum,), dict(names=dict()))
 VkShaderCorePropertiesFlagBitsAMD.names = {
 }
 
-VkToolPurposeFlagBitsEXT = type('VkToolPurposeFlagBitsEXT', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkToolPurposeFlagBitsEXT = type('VkToolPurposeFlagBitsEXT', (c_enum,), dict(names=dict()))
 VkToolPurposeFlagBitsEXT.names = {
     1 : 'VK_TOOL_PURPOSE_VALIDATION_BIT_EXT',
     2 : 'VK_TOOL_PURPOSE_PROFILING_BIT_EXT',
@@ -4101,7 +4157,7 @@ VK_TOOL_PURPOSE_DEBUG_MARKERS_BIT_EXT = VkToolPurposeFlagBitsEXT(64)
 VK_TOOL_PURPOSE_DEBUG_REPORTING_BIT_EXT = VkToolPurposeFlagBitsEXT(32)
 VK_TOOL_PURPOSE_DEBUG_MARKERS_BIT_EXT = VkToolPurposeFlagBitsEXT(64)
 
-VkFragmentShadingRateNV = type('VkFragmentShadingRateNV', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkFragmentShadingRateNV = type('VkFragmentShadingRateNV', (c_enum,), dict(names=dict()))
 VkFragmentShadingRateNV.names = {
     0 : 'VK_FRAGMENT_SHADING_RATE_1_INVOCATION_PER_PIXEL_NV',
     1 : 'VK_FRAGMENT_SHADING_RATE_1_INVOCATION_PER_1X2_PIXELS_NV',
@@ -4129,7 +4185,7 @@ VK_FRAGMENT_SHADING_RATE_8_INVOCATIONS_PER_PIXEL_NV = VkFragmentShadingRateNV(13
 VK_FRAGMENT_SHADING_RATE_16_INVOCATIONS_PER_PIXEL_NV = VkFragmentShadingRateNV(14)
 VK_FRAGMENT_SHADING_RATE_NO_INVOCATIONS_NV = VkFragmentShadingRateNV(15)
 
-VkFragmentShadingRateTypeNV = type('VkFragmentShadingRateTypeNV', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkFragmentShadingRateTypeNV = type('VkFragmentShadingRateTypeNV', (c_enum,), dict(names=dict()))
 VkFragmentShadingRateTypeNV.names = {
     0 : 'VK_FRAGMENT_SHADING_RATE_TYPE_FRAGMENT_SIZE_NV',
     1 : 'VK_FRAGMENT_SHADING_RATE_TYPE_ENUMS_NV',
@@ -4137,7 +4193,7 @@ VkFragmentShadingRateTypeNV.names = {
 VK_FRAGMENT_SHADING_RATE_TYPE_FRAGMENT_SIZE_NV = VkFragmentShadingRateTypeNV(0)
 VK_FRAGMENT_SHADING_RATE_TYPE_ENUMS_NV = VkFragmentShadingRateTypeNV(1)
 
-VkColorSpaceKHR = type('VkColorSpaceKHR', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkColorSpaceKHR = type('VkColorSpaceKHR', (c_enum,), dict(names=dict()))
 VkColorSpaceKHR.names = {
     0 : 'VK_COLOR_SPACE_SRGB_NONLINEAR_KHR',
     1000104001 : 'VK_COLOR_SPACE_DISPLAY_P3_NONLINEAR_EXT',
@@ -4175,7 +4231,7 @@ VK_COLOR_SPACE_EXTENDED_SRGB_NONLINEAR_EXT = VkColorSpaceKHR(1000104014)
 VK_COLOR_SPACE_DCI_P3_LINEAR_EXT = VK_COLOR_SPACE_DISPLAY_P3_LINEAR_EXT
 VK_COLOR_SPACE_DISPLAY_NATIVE_AMD = VkColorSpaceKHR(1000213000)
 
-VkCompositeAlphaFlagBitsKHR = type('VkCompositeAlphaFlagBitsKHR', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkCompositeAlphaFlagBitsKHR = type('VkCompositeAlphaFlagBitsKHR', (c_enum,), dict(names=dict()))
 VkCompositeAlphaFlagBitsKHR.names = {
     1 : 'VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR',
     2 : 'VK_COMPOSITE_ALPHA_PRE_MULTIPLIED_BIT_KHR',
@@ -4187,7 +4243,7 @@ VK_COMPOSITE_ALPHA_PRE_MULTIPLIED_BIT_KHR = VkCompositeAlphaFlagBitsKHR(2)
 VK_COMPOSITE_ALPHA_POST_MULTIPLIED_BIT_KHR = VkCompositeAlphaFlagBitsKHR(4)
 VK_COMPOSITE_ALPHA_INHERIT_BIT_KHR = VkCompositeAlphaFlagBitsKHR(8)
 
-VkDisplayPlaneAlphaFlagBitsKHR = type('VkDisplayPlaneAlphaFlagBitsKHR', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkDisplayPlaneAlphaFlagBitsKHR = type('VkDisplayPlaneAlphaFlagBitsKHR', (c_enum,), dict(names=dict()))
 VkDisplayPlaneAlphaFlagBitsKHR.names = {
     1 : 'VK_DISPLAY_PLANE_ALPHA_OPAQUE_BIT_KHR',
     2 : 'VK_DISPLAY_PLANE_ALPHA_GLOBAL_BIT_KHR',
@@ -4199,7 +4255,7 @@ VK_DISPLAY_PLANE_ALPHA_GLOBAL_BIT_KHR = VkDisplayPlaneAlphaFlagBitsKHR(2)
 VK_DISPLAY_PLANE_ALPHA_PER_PIXEL_BIT_KHR = VkDisplayPlaneAlphaFlagBitsKHR(4)
 VK_DISPLAY_PLANE_ALPHA_PER_PIXEL_PREMULTIPLIED_BIT_KHR = VkDisplayPlaneAlphaFlagBitsKHR(8)
 
-VkPresentModeKHR = type('VkPresentModeKHR', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkPresentModeKHR = type('VkPresentModeKHR', (c_enum,), dict(names=dict()))
 VkPresentModeKHR.names = {
     0 : 'VK_PRESENT_MODE_IMMEDIATE_KHR',
     1 : 'VK_PRESENT_MODE_MAILBOX_KHR',
@@ -4215,7 +4271,7 @@ VK_PRESENT_MODE_FIFO_RELAXED_KHR = VkPresentModeKHR(3)
 VK_PRESENT_MODE_SHARED_DEMAND_REFRESH_KHR = VkPresentModeKHR(1000111000)
 VK_PRESENT_MODE_SHARED_CONTINUOUS_REFRESH_KHR = VkPresentModeKHR(1000111001)
 
-VkSurfaceTransformFlagBitsKHR = type('VkSurfaceTransformFlagBitsKHR', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkSurfaceTransformFlagBitsKHR = type('VkSurfaceTransformFlagBitsKHR', (c_enum,), dict(names=dict()))
 VkSurfaceTransformFlagBitsKHR.names = {
     1 : 'VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR',
     2 : 'VK_SURFACE_TRANSFORM_ROTATE_90_BIT_KHR',
@@ -4237,7 +4293,7 @@ VK_SURFACE_TRANSFORM_HORIZONTAL_MIRROR_ROTATE_180_BIT_KHR = VkSurfaceTransformFl
 VK_SURFACE_TRANSFORM_HORIZONTAL_MIRROR_ROTATE_270_BIT_KHR = VkSurfaceTransformFlagBitsKHR(128)
 VK_SURFACE_TRANSFORM_INHERIT_BIT_KHR = VkSurfaceTransformFlagBitsKHR(256)
 
-VkDebugReportFlagBitsEXT = type('VkDebugReportFlagBitsEXT', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkDebugReportFlagBitsEXT = type('VkDebugReportFlagBitsEXT', (c_enum,), dict(names=dict()))
 VkDebugReportFlagBitsEXT.names = {
     1 : 'VK_DEBUG_REPORT_INFORMATION_BIT_EXT',
     2 : 'VK_DEBUG_REPORT_WARNING_BIT_EXT',
@@ -4251,7 +4307,7 @@ VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT = VkDebugReportFlagBitsEXT(4)
 VK_DEBUG_REPORT_ERROR_BIT_EXT = VkDebugReportFlagBitsEXT(8)
 VK_DEBUG_REPORT_DEBUG_BIT_EXT = VkDebugReportFlagBitsEXT(16)
 
-VkDebugReportObjectTypeEXT = type('VkDebugReportObjectTypeEXT', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkDebugReportObjectTypeEXT = type('VkDebugReportObjectTypeEXT', (c_enum,), dict(names=dict()))
 VkDebugReportObjectTypeEXT.names = {
     0 : 'VK_DEBUG_REPORT_OBJECT_TYPE_UNKNOWN_EXT',
     1 : 'VK_DEBUG_REPORT_OBJECT_TYPE_INSTANCE_EXT',
@@ -4333,7 +4389,7 @@ VK_DEBUG_REPORT_OBJECT_TYPE_SAMPLER_YCBCR_CONVERSION_KHR_EXT = VK_DEBUG_REPORT_O
 VK_DEBUG_REPORT_OBJECT_TYPE_SAMPLER_YCBCR_CONVERSION_EXT = VkDebugReportObjectTypeEXT(1000156000)
 VK_DEBUG_REPORT_OBJECT_TYPE_ACCELERATION_STRUCTURE_NV_EXT = VkDebugReportObjectTypeEXT(1000165000)
 
-VkDeviceMemoryReportEventTypeEXT = type('VkDeviceMemoryReportEventTypeEXT', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkDeviceMemoryReportEventTypeEXT = type('VkDeviceMemoryReportEventTypeEXT', (c_enum,), dict(names=dict()))
 VkDeviceMemoryReportEventTypeEXT.names = {
     0 : 'VK_DEVICE_MEMORY_REPORT_EVENT_TYPE_ALLOCATE_EXT',
     1 : 'VK_DEVICE_MEMORY_REPORT_EVENT_TYPE_FREE_EXT',
@@ -4347,7 +4403,7 @@ VK_DEVICE_MEMORY_REPORT_EVENT_TYPE_IMPORT_EXT = VkDeviceMemoryReportEventTypeEXT
 VK_DEVICE_MEMORY_REPORT_EVENT_TYPE_UNIMPORT_EXT = VkDeviceMemoryReportEventTypeEXT(3)
 VK_DEVICE_MEMORY_REPORT_EVENT_TYPE_ALLOCATION_FAILED_EXT = VkDeviceMemoryReportEventTypeEXT(4)
 
-VkRasterizationOrderAMD = type('VkRasterizationOrderAMD', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkRasterizationOrderAMD = type('VkRasterizationOrderAMD', (c_enum,), dict(names=dict()))
 VkRasterizationOrderAMD.names = {
     0 : 'VK_RASTERIZATION_ORDER_STRICT_AMD',
     1 : 'VK_RASTERIZATION_ORDER_RELAXED_AMD',
@@ -4355,7 +4411,7 @@ VkRasterizationOrderAMD.names = {
 VK_RASTERIZATION_ORDER_STRICT_AMD = VkRasterizationOrderAMD(0)
 VK_RASTERIZATION_ORDER_RELAXED_AMD = VkRasterizationOrderAMD(1)
 
-VkExternalMemoryHandleTypeFlagBitsNV = type('VkExternalMemoryHandleTypeFlagBitsNV', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkExternalMemoryHandleTypeFlagBitsNV = type('VkExternalMemoryHandleTypeFlagBitsNV', (c_enum,), dict(names=dict()))
 VkExternalMemoryHandleTypeFlagBitsNV.names = {
     1 : 'VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT_NV',
     2 : 'VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_NV',
@@ -4367,7 +4423,7 @@ VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_NV = VkExternalMemoryHandleT
 VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_BIT_NV = VkExternalMemoryHandleTypeFlagBitsNV(4)
 VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_BIT_NV = VkExternalMemoryHandleTypeFlagBitsNV(8)
 
-VkExternalMemoryFeatureFlagBitsNV = type('VkExternalMemoryFeatureFlagBitsNV', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkExternalMemoryFeatureFlagBitsNV = type('VkExternalMemoryFeatureFlagBitsNV', (c_enum,), dict(names=dict()))
 VkExternalMemoryFeatureFlagBitsNV.names = {
     1 : 'VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT_NV',
     2 : 'VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT_NV',
@@ -4377,7 +4433,7 @@ VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT_NV = VkExternalMemoryFeatureFlagBi
 VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT_NV = VkExternalMemoryFeatureFlagBitsNV(2)
 VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT_NV = VkExternalMemoryFeatureFlagBitsNV(4)
 
-VkValidationCheckEXT = type('VkValidationCheckEXT', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkValidationCheckEXT = type('VkValidationCheckEXT', (c_enum,), dict(names=dict()))
 VkValidationCheckEXT.names = {
     0 : 'VK_VALIDATION_CHECK_ALL_EXT',
     1 : 'VK_VALIDATION_CHECK_SHADERS_EXT',
@@ -4385,7 +4441,7 @@ VkValidationCheckEXT.names = {
 VK_VALIDATION_CHECK_ALL_EXT = VkValidationCheckEXT(0)
 VK_VALIDATION_CHECK_SHADERS_EXT = VkValidationCheckEXT(1)
 
-VkValidationFeatureEnableEXT = type('VkValidationFeatureEnableEXT', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkValidationFeatureEnableEXT = type('VkValidationFeatureEnableEXT', (c_enum,), dict(names=dict()))
 VkValidationFeatureEnableEXT.names = {
     0 : 'VK_VALIDATION_FEATURE_ENABLE_GPU_ASSISTED_EXT',
     1 : 'VK_VALIDATION_FEATURE_ENABLE_GPU_ASSISTED_RESERVE_BINDING_SLOT_EXT',
@@ -4399,7 +4455,7 @@ VK_VALIDATION_FEATURE_ENABLE_BEST_PRACTICES_EXT = VkValidationFeatureEnableEXT(2
 VK_VALIDATION_FEATURE_ENABLE_DEBUG_PRINTF_EXT = VkValidationFeatureEnableEXT(3)
 VK_VALIDATION_FEATURE_ENABLE_SYNCHRONIZATION_VALIDATION_EXT = VkValidationFeatureEnableEXT(4)
 
-VkValidationFeatureDisableEXT = type('VkValidationFeatureDisableEXT', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkValidationFeatureDisableEXT = type('VkValidationFeatureDisableEXT', (c_enum,), dict(names=dict()))
 VkValidationFeatureDisableEXT.names = {
     0 : 'VK_VALIDATION_FEATURE_DISABLE_ALL_EXT',
     1 : 'VK_VALIDATION_FEATURE_DISABLE_SHADERS_EXT',
@@ -4417,7 +4473,7 @@ VK_VALIDATION_FEATURE_DISABLE_OBJECT_LIFETIMES_EXT = VkValidationFeatureDisableE
 VK_VALIDATION_FEATURE_DISABLE_CORE_CHECKS_EXT = VkValidationFeatureDisableEXT(5)
 VK_VALIDATION_FEATURE_DISABLE_UNIQUE_HANDLES_EXT = VkValidationFeatureDisableEXT(6)
 
-VkExternalMemoryHandleTypeFlagBits = type('VkExternalMemoryHandleTypeFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkExternalMemoryHandleTypeFlagBits = type('VkExternalMemoryHandleTypeFlagBits', (c_enum,), dict(names=dict()))
 VkExternalMemoryHandleTypeFlagBits.names = {
     1 : 'VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD_BIT',
     2 : 'VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT',
@@ -4452,7 +4508,7 @@ VK_EXTERNAL_MEMORY_HANDLE_TYPE_HOST_MAPPED_FOREIGN_MEMORY_BIT_EXT = VkExternalMe
 
 VkExternalMemoryHandleTypeFlagBitsKHR = VkExternalMemoryHandleTypeFlagBits
 
-VkExternalMemoryFeatureFlagBits = type('VkExternalMemoryFeatureFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkExternalMemoryFeatureFlagBits = type('VkExternalMemoryFeatureFlagBits', (c_enum,), dict(names=dict()))
 VkExternalMemoryFeatureFlagBits.names = {
     1 : 'VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT',
     2 : 'VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT',
@@ -4467,7 +4523,7 @@ VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT_KHR = VK_EXTERNAL_MEMORY_FEATURE_IMPOR
 
 VkExternalMemoryFeatureFlagBitsKHR = VkExternalMemoryFeatureFlagBits
 
-VkExternalSemaphoreHandleTypeFlagBits = type('VkExternalSemaphoreHandleTypeFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkExternalSemaphoreHandleTypeFlagBits = type('VkExternalSemaphoreHandleTypeFlagBits', (c_enum,), dict(names=dict()))
 VkExternalSemaphoreHandleTypeFlagBits.names = {
     1 : 'VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD_BIT',
     2 : 'VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_BIT',
@@ -4489,7 +4545,7 @@ VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD_BIT_KHR = VK_EXTERNAL_SEMAPHORE_HANDLE
 
 VkExternalSemaphoreHandleTypeFlagBitsKHR = VkExternalSemaphoreHandleTypeFlagBits
 
-VkExternalSemaphoreFeatureFlagBits = type('VkExternalSemaphoreFeatureFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkExternalSemaphoreFeatureFlagBits = type('VkExternalSemaphoreFeatureFlagBits', (c_enum,), dict(names=dict()))
 VkExternalSemaphoreFeatureFlagBits.names = {
     1 : 'VK_EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE_BIT',
     2 : 'VK_EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE_BIT',
@@ -4501,7 +4557,7 @@ VK_EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE_BIT_KHR = VK_EXTERNAL_SEMAPHORE_FEATURE
 
 VkExternalSemaphoreFeatureFlagBitsKHR = VkExternalSemaphoreFeatureFlagBits
 
-VkSemaphoreImportFlagBits = type('VkSemaphoreImportFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkSemaphoreImportFlagBits = type('VkSemaphoreImportFlagBits', (c_enum,), dict(names=dict()))
 VkSemaphoreImportFlagBits.names = {
     1 : 'VK_SEMAPHORE_IMPORT_TEMPORARY_BIT',
 }
@@ -4510,7 +4566,7 @@ VK_SEMAPHORE_IMPORT_TEMPORARY_BIT_KHR = VK_SEMAPHORE_IMPORT_TEMPORARY_BIT
 
 VkSemaphoreImportFlagBitsKHR = VkSemaphoreImportFlagBits
 
-VkExternalFenceHandleTypeFlagBits = type('VkExternalFenceHandleTypeFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkExternalFenceHandleTypeFlagBits = type('VkExternalFenceHandleTypeFlagBits', (c_enum,), dict(names=dict()))
 VkExternalFenceHandleTypeFlagBits.names = {
     1 : 'VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD_BIT',
     2 : 'VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_BIT',
@@ -4528,7 +4584,7 @@ VK_EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD_BIT_KHR = VK_EXTERNAL_FENCE_HANDLE_TYPE_SY
 
 VkExternalFenceHandleTypeFlagBitsKHR = VkExternalFenceHandleTypeFlagBits
 
-VkExternalFenceFeatureFlagBits = type('VkExternalFenceFeatureFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkExternalFenceFeatureFlagBits = type('VkExternalFenceFeatureFlagBits', (c_enum,), dict(names=dict()))
 VkExternalFenceFeatureFlagBits.names = {
     1 : 'VK_EXTERNAL_FENCE_FEATURE_EXPORTABLE_BIT',
     2 : 'VK_EXTERNAL_FENCE_FEATURE_IMPORTABLE_BIT',
@@ -4540,7 +4596,7 @@ VK_EXTERNAL_FENCE_FEATURE_IMPORTABLE_BIT_KHR = VK_EXTERNAL_FENCE_FEATURE_IMPORTA
 
 VkExternalFenceFeatureFlagBitsKHR = VkExternalFenceFeatureFlagBits
 
-VkFenceImportFlagBits = type('VkFenceImportFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkFenceImportFlagBits = type('VkFenceImportFlagBits', (c_enum,), dict(names=dict()))
 VkFenceImportFlagBits.names = {
     1 : 'VK_FENCE_IMPORT_TEMPORARY_BIT',
 }
@@ -4549,14 +4605,14 @@ VK_FENCE_IMPORT_TEMPORARY_BIT_KHR = VK_FENCE_IMPORT_TEMPORARY_BIT
 
 VkFenceImportFlagBitsKHR = VkFenceImportFlagBits
 
-VkSurfaceCounterFlagBitsEXT = type('VkSurfaceCounterFlagBitsEXT', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkSurfaceCounterFlagBitsEXT = type('VkSurfaceCounterFlagBitsEXT', (c_enum,), dict(names=dict()))
 VkSurfaceCounterFlagBitsEXT.names = {
     1 : 'VK_SURFACE_COUNTER_VBLANK_BIT_EXT',
 }
 VK_SURFACE_COUNTER_VBLANK_BIT_EXT = VkSurfaceCounterFlagBitsEXT(1)
 VK_SURFACE_COUNTER_VBLANK_EXT = VK_SURFACE_COUNTER_VBLANK_BIT_EXT
 
-VkDisplayPowerStateEXT = type('VkDisplayPowerStateEXT', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkDisplayPowerStateEXT = type('VkDisplayPowerStateEXT', (c_enum,), dict(names=dict()))
 VkDisplayPowerStateEXT.names = {
     0 : 'VK_DISPLAY_POWER_STATE_OFF_EXT',
     1 : 'VK_DISPLAY_POWER_STATE_SUSPEND_EXT',
@@ -4566,19 +4622,19 @@ VK_DISPLAY_POWER_STATE_OFF_EXT = VkDisplayPowerStateEXT(0)
 VK_DISPLAY_POWER_STATE_SUSPEND_EXT = VkDisplayPowerStateEXT(1)
 VK_DISPLAY_POWER_STATE_ON_EXT = VkDisplayPowerStateEXT(2)
 
-VkDeviceEventTypeEXT = type('VkDeviceEventTypeEXT', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkDeviceEventTypeEXT = type('VkDeviceEventTypeEXT', (c_enum,), dict(names=dict()))
 VkDeviceEventTypeEXT.names = {
     0 : 'VK_DEVICE_EVENT_TYPE_DISPLAY_HOTPLUG_EXT',
 }
 VK_DEVICE_EVENT_TYPE_DISPLAY_HOTPLUG_EXT = VkDeviceEventTypeEXT(0)
 
-VkDisplayEventTypeEXT = type('VkDisplayEventTypeEXT', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkDisplayEventTypeEXT = type('VkDisplayEventTypeEXT', (c_enum,), dict(names=dict()))
 VkDisplayEventTypeEXT.names = {
     0 : 'VK_DISPLAY_EVENT_TYPE_FIRST_PIXEL_OUT_EXT',
 }
 VK_DISPLAY_EVENT_TYPE_FIRST_PIXEL_OUT_EXT = VkDisplayEventTypeEXT(0)
 
-VkPeerMemoryFeatureFlagBits = type('VkPeerMemoryFeatureFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkPeerMemoryFeatureFlagBits = type('VkPeerMemoryFeatureFlagBits', (c_enum,), dict(names=dict()))
 VkPeerMemoryFeatureFlagBits.names = {
     1 : 'VK_PEER_MEMORY_FEATURE_COPY_SRC_BIT',
     2 : 'VK_PEER_MEMORY_FEATURE_COPY_DST_BIT',
@@ -4596,7 +4652,7 @@ VK_PEER_MEMORY_FEATURE_GENERIC_DST_BIT_KHR = VK_PEER_MEMORY_FEATURE_GENERIC_DST_
 
 VkPeerMemoryFeatureFlagBitsKHR = VkPeerMemoryFeatureFlagBits
 
-VkMemoryAllocateFlagBits = type('VkMemoryAllocateFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkMemoryAllocateFlagBits = type('VkMemoryAllocateFlagBits', (c_enum,), dict(names=dict()))
 VkMemoryAllocateFlagBits.names = {
     1 : 'VK_MEMORY_ALLOCATE_DEVICE_MASK_BIT',
     2 : 'VK_MEMORY_ALLOCATE_DEVICE_ADDRESS_BIT',
@@ -4611,7 +4667,7 @@ VK_MEMORY_ALLOCATE_DEVICE_ADDRESS_CAPTURE_REPLAY_BIT_KHR = VK_MEMORY_ALLOCATE_DE
 
 VkMemoryAllocateFlagBitsKHR = VkMemoryAllocateFlagBits
 
-VkDeviceGroupPresentModeFlagBitsKHR = type('VkDeviceGroupPresentModeFlagBitsKHR', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkDeviceGroupPresentModeFlagBitsKHR = type('VkDeviceGroupPresentModeFlagBitsKHR', (c_enum,), dict(names=dict()))
 VkDeviceGroupPresentModeFlagBitsKHR.names = {
     1 : 'VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_BIT_KHR',
     2 : 'VK_DEVICE_GROUP_PRESENT_MODE_REMOTE_BIT_KHR',
@@ -4623,7 +4679,7 @@ VK_DEVICE_GROUP_PRESENT_MODE_REMOTE_BIT_KHR = VkDeviceGroupPresentModeFlagBitsKH
 VK_DEVICE_GROUP_PRESENT_MODE_SUM_BIT_KHR = VkDeviceGroupPresentModeFlagBitsKHR(4)
 VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_MULTI_DEVICE_BIT_KHR = VkDeviceGroupPresentModeFlagBitsKHR(8)
 
-VkSwapchainCreateFlagBitsKHR = type('VkSwapchainCreateFlagBitsKHR', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkSwapchainCreateFlagBitsKHR = type('VkSwapchainCreateFlagBitsKHR', (c_enum,), dict(names=dict()))
 VkSwapchainCreateFlagBitsKHR.names = {
     1 : 'VK_SWAPCHAIN_CREATE_SPLIT_INSTANCE_BIND_REGIONS_BIT_KHR',
     2 : 'VK_SWAPCHAIN_CREATE_PROTECTED_BIT_KHR',
@@ -4635,7 +4691,7 @@ VK_SWAPCHAIN_CREATE_PROTECTED_BIT_KHR = VkSwapchainCreateFlagBitsKHR(2)
 VK_SWAPCHAIN_CREATE_SPLIT_INSTANCE_BIND_REGIONS_BIT_KHR = VkSwapchainCreateFlagBitsKHR(1)
 VK_SWAPCHAIN_CREATE_MUTABLE_FORMAT_BIT_KHR = VkSwapchainCreateFlagBitsKHR(4)
 
-VkSubgroupFeatureFlagBits = type('VkSubgroupFeatureFlagBits', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkSubgroupFeatureFlagBits = type('VkSubgroupFeatureFlagBits', (c_enum,), dict(names=dict()))
 VkSubgroupFeatureFlagBits.names = {
     1 : 'VK_SUBGROUP_FEATURE_BASIC_BIT',
     2 : 'VK_SUBGROUP_FEATURE_VOTE_BIT',
@@ -4657,7 +4713,7 @@ VK_SUBGROUP_FEATURE_CLUSTERED_BIT = VkSubgroupFeatureFlagBits(64)
 VK_SUBGROUP_FEATURE_QUAD_BIT = VkSubgroupFeatureFlagBits(128)
 VK_SUBGROUP_FEATURE_PARTITIONED_BIT_NV = VkSubgroupFeatureFlagBits(256)
 
-VkTessellationDomainOrigin = type('VkTessellationDomainOrigin', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkTessellationDomainOrigin = type('VkTessellationDomainOrigin', (c_enum,), dict(names=dict()))
 VkTessellationDomainOrigin.names = {
     0 : 'VK_TESSELLATION_DOMAIN_ORIGIN_UPPER_LEFT',
     1 : 'VK_TESSELLATION_DOMAIN_ORIGIN_LOWER_LEFT',
@@ -4669,7 +4725,7 @@ VK_TESSELLATION_DOMAIN_ORIGIN_LOWER_LEFT_KHR = VK_TESSELLATION_DOMAIN_ORIGIN_LOW
 
 VkTessellationDomainOriginKHR = VkTessellationDomainOrigin
 
-VkSamplerYcbcrModelConversion = type('VkSamplerYcbcrModelConversion', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkSamplerYcbcrModelConversion = type('VkSamplerYcbcrModelConversion', (c_enum,), dict(names=dict()))
 VkSamplerYcbcrModelConversion.names = {
     0 : 'VK_SAMPLER_YCBCR_MODEL_CONVERSION_RGB_IDENTITY',
     1 : 'VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_IDENTITY',
@@ -4690,7 +4746,7 @@ VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_2020_KHR = VK_SAMPLER_YCBCR_MODEL_CONVER
 
 VkSamplerYcbcrModelConversionKHR = VkSamplerYcbcrModelConversion
 
-VkSamplerYcbcrRange = type('VkSamplerYcbcrRange', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkSamplerYcbcrRange = type('VkSamplerYcbcrRange', (c_enum,), dict(names=dict()))
 VkSamplerYcbcrRange.names = {
     0 : 'VK_SAMPLER_YCBCR_RANGE_ITU_FULL',
     1 : 'VK_SAMPLER_YCBCR_RANGE_ITU_NARROW',
@@ -4702,7 +4758,7 @@ VK_SAMPLER_YCBCR_RANGE_ITU_NARROW_KHR = VK_SAMPLER_YCBCR_RANGE_ITU_NARROW
 
 VkSamplerYcbcrRangeKHR = VkSamplerYcbcrRange
 
-VkChromaLocation = type('VkChromaLocation', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkChromaLocation = type('VkChromaLocation', (c_enum,), dict(names=dict()))
 VkChromaLocation.names = {
     0 : 'VK_CHROMA_LOCATION_COSITED_EVEN',
     1 : 'VK_CHROMA_LOCATION_MIDPOINT',
@@ -4714,7 +4770,7 @@ VK_CHROMA_LOCATION_MIDPOINT_KHR = VK_CHROMA_LOCATION_MIDPOINT
 
 VkChromaLocationKHR = VkChromaLocation
 
-VkSamplerReductionMode = type('VkSamplerReductionMode', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkSamplerReductionMode = type('VkSamplerReductionMode', (c_enum,), dict(names=dict()))
 VkSamplerReductionMode.names = {
     0 : 'VK_SAMPLER_REDUCTION_MODE_WEIGHTED_AVERAGE',
     1 : 'VK_SAMPLER_REDUCTION_MODE_MIN',
@@ -4729,7 +4785,7 @@ VK_SAMPLER_REDUCTION_MODE_MAX_EXT = VK_SAMPLER_REDUCTION_MODE_MAX
 
 VkSamplerReductionModeEXT = VkSamplerReductionMode
 
-VkBlendOverlapEXT = type('VkBlendOverlapEXT', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkBlendOverlapEXT = type('VkBlendOverlapEXT', (c_enum,), dict(names=dict()))
 VkBlendOverlapEXT.names = {
     0 : 'VK_BLEND_OVERLAP_UNCORRELATED_EXT',
     1 : 'VK_BLEND_OVERLAP_DISJOINT_EXT',
@@ -4739,7 +4795,7 @@ VK_BLEND_OVERLAP_UNCORRELATED_EXT = VkBlendOverlapEXT(0)
 VK_BLEND_OVERLAP_DISJOINT_EXT = VkBlendOverlapEXT(1)
 VK_BLEND_OVERLAP_CONJOINT_EXT = VkBlendOverlapEXT(2)
 
-VkDebugUtilsMessageSeverityFlagBitsEXT = type('VkDebugUtilsMessageSeverityFlagBitsEXT', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkDebugUtilsMessageSeverityFlagBitsEXT = type('VkDebugUtilsMessageSeverityFlagBitsEXT', (c_enum,), dict(names=dict()))
 VkDebugUtilsMessageSeverityFlagBitsEXT.names = {
     1 : 'VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT',
     16 : 'VK_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT',
@@ -4751,7 +4807,7 @@ VK_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT = VkDebugUtilsMessageSeverityFlagBi
 VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT = VkDebugUtilsMessageSeverityFlagBitsEXT(256)
 VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT = VkDebugUtilsMessageSeverityFlagBitsEXT(4096)
 
-VkDebugUtilsMessageTypeFlagBitsEXT = type('VkDebugUtilsMessageTypeFlagBitsEXT', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkDebugUtilsMessageTypeFlagBitsEXT = type('VkDebugUtilsMessageTypeFlagBitsEXT', (c_enum,), dict(names=dict()))
 VkDebugUtilsMessageTypeFlagBitsEXT.names = {
     1 : 'VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT',
     2 : 'VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT',
@@ -4761,7 +4817,7 @@ VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT = VkDebugUtilsMessageTypeFlagBitsEXT
 VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT = VkDebugUtilsMessageTypeFlagBitsEXT(2)
 VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT = VkDebugUtilsMessageTypeFlagBitsEXT(4)
 
-VkFullScreenExclusiveEXT = type('VkFullScreenExclusiveEXT', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkFullScreenExclusiveEXT = type('VkFullScreenExclusiveEXT', (c_enum,), dict(names=dict()))
 VkFullScreenExclusiveEXT.names = {
     0 : 'VK_FULL_SCREEN_EXCLUSIVE_DEFAULT_EXT',
     1 : 'VK_FULL_SCREEN_EXCLUSIVE_ALLOWED_EXT',
@@ -4773,7 +4829,7 @@ VK_FULL_SCREEN_EXCLUSIVE_ALLOWED_EXT = VkFullScreenExclusiveEXT(1)
 VK_FULL_SCREEN_EXCLUSIVE_DISALLOWED_EXT = VkFullScreenExclusiveEXT(2)
 VK_FULL_SCREEN_EXCLUSIVE_APPLICATION_CONTROLLED_EXT = VkFullScreenExclusiveEXT(3)
 
-VkShaderFloatControlsIndependence = type('VkShaderFloatControlsIndependence', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkShaderFloatControlsIndependence = type('VkShaderFloatControlsIndependence', (c_enum,), dict(names=dict()))
 VkShaderFloatControlsIndependence.names = {
     0 : 'VK_SHADER_FLOAT_CONTROLS_INDEPENDENCE_32_BIT_ONLY',
     1 : 'VK_SHADER_FLOAT_CONTROLS_INDEPENDENCE_ALL',
@@ -4788,13 +4844,13 @@ VK_SHADER_FLOAT_CONTROLS_INDEPENDENCE_NONE_KHR = VK_SHADER_FLOAT_CONTROLS_INDEPE
 
 VkShaderFloatControlsIndependenceKHR = VkShaderFloatControlsIndependence
 
-VkSwapchainImageUsageFlagBitsANDROID = type('VkSwapchainImageUsageFlagBitsANDROID', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkSwapchainImageUsageFlagBitsANDROID = type('VkSwapchainImageUsageFlagBitsANDROID', (c_enum,), dict(names=dict()))
 VkSwapchainImageUsageFlagBitsANDROID.names = {
     1 : 'VK_SWAPCHAIN_IMAGE_USAGE_SHARED_BIT_ANDROID',
 }
 VK_SWAPCHAIN_IMAGE_USAGE_SHARED_BIT_ANDROID = VkSwapchainImageUsageFlagBitsANDROID(1)
 
-VkFragmentShadingRateCombinerOpKHR = type('VkFragmentShadingRateCombinerOpKHR', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkFragmentShadingRateCombinerOpKHR = type('VkFragmentShadingRateCombinerOpKHR', (c_enum,), dict(names=dict()))
 VkFragmentShadingRateCombinerOpKHR.names = {
     0 : 'VK_FRAGMENT_SHADING_RATE_COMBINER_OP_KEEP_KHR',
     1 : 'VK_FRAGMENT_SHADING_RATE_COMBINER_OP_REPLACE_KHR',
@@ -4808,7 +4864,7 @@ VK_FRAGMENT_SHADING_RATE_COMBINER_OP_MIN_KHR = VkFragmentShadingRateCombinerOpKH
 VK_FRAGMENT_SHADING_RATE_COMBINER_OP_MAX_KHR = VkFragmentShadingRateCombinerOpKHR(3)
 VK_FRAGMENT_SHADING_RATE_COMBINER_OP_MUL_KHR = VkFragmentShadingRateCombinerOpKHR(4)
 
-VkVendorId = type('VkVendorId', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkVendorId = type('VkVendorId', (c_enum,), dict(names=dict()))
 VkVendorId.names = {
     0x10001 : 'VK_VENDOR_ID_VIV',
     0x10002 : 'VK_VENDOR_ID_VSI',
@@ -4822,7 +4878,7 @@ VK_VENDOR_ID_KAZAN = VkVendorId(0x10003)
 VK_VENDOR_ID_CODEPLAY = VkVendorId(0x10004)
 VK_VENDOR_ID_MESA = VkVendorId(0x10005)
 
-VkDriverId = type('VkDriverId', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkDriverId = type('VkDriverId', (c_enum,), dict(names=dict()))
 VkDriverId.names = {
     1 : 'VK_DRIVER_ID_AMD_PROPRIETARY',
     2 : 'VK_DRIVER_ID_AMD_OPEN_SOURCE',
@@ -4868,7 +4924,7 @@ VK_DRIVER_ID_BROADCOM_PROPRIETARY_KHR = VK_DRIVER_ID_BROADCOM_PROPRIETARY
 
 VkDriverIdKHR = VkDriverId
 
-VkShadingRatePaletteEntryNV = type('VkShadingRatePaletteEntryNV', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkShadingRatePaletteEntryNV = type('VkShadingRatePaletteEntryNV', (c_enum,), dict(names=dict()))
 VkShadingRatePaletteEntryNV.names = {
     0 : 'VK_SHADING_RATE_PALETTE_ENTRY_NO_INVOCATIONS_NV',
     1 : 'VK_SHADING_RATE_PALETTE_ENTRY_16_INVOCATIONS_PER_PIXEL_NV',
@@ -4896,7 +4952,7 @@ VK_SHADING_RATE_PALETTE_ENTRY_1_INVOCATION_PER_4X2_PIXELS_NV = VkShadingRatePale
 VK_SHADING_RATE_PALETTE_ENTRY_1_INVOCATION_PER_2X4_PIXELS_NV = VkShadingRatePaletteEntryNV(10)
 VK_SHADING_RATE_PALETTE_ENTRY_1_INVOCATION_PER_4X4_PIXELS_NV = VkShadingRatePaletteEntryNV(11)
 
-VkCoarseSampleOrderTypeNV = type('VkCoarseSampleOrderTypeNV', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkCoarseSampleOrderTypeNV = type('VkCoarseSampleOrderTypeNV', (c_enum,), dict(names=dict()))
 VkCoarseSampleOrderTypeNV.names = {
     0 : 'VK_COARSE_SAMPLE_ORDER_TYPE_DEFAULT_NV',
     1 : 'VK_COARSE_SAMPLE_ORDER_TYPE_CUSTOM_NV',
@@ -4908,7 +4964,7 @@ VK_COARSE_SAMPLE_ORDER_TYPE_CUSTOM_NV = VkCoarseSampleOrderTypeNV(1)
 VK_COARSE_SAMPLE_ORDER_TYPE_PIXEL_MAJOR_NV = VkCoarseSampleOrderTypeNV(2)
 VK_COARSE_SAMPLE_ORDER_TYPE_SAMPLE_MAJOR_NV = VkCoarseSampleOrderTypeNV(3)
 
-VkPipelineExecutableStatisticFormatKHR = type('VkPipelineExecutableStatisticFormatKHR', (ctypes.c_int,), copy.deepcopy(enum_type_mixin))
+VkPipelineExecutableStatisticFormatKHR = type('VkPipelineExecutableStatisticFormatKHR', (c_enum,), dict(names=dict()))
 VkPipelineExecutableStatisticFormatKHR.names = {
     0 : 'VK_PIPELINE_EXECUTABLE_STATISTIC_FORMAT_BOOL32_KHR',
     1 : 'VK_PIPELINE_EXECUTABLE_STATISTIC_FORMAT_INT64_KHR',

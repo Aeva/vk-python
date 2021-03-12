@@ -109,7 +109,7 @@ class VulkanWindow:
             vkGetPhysicalDeviceSurfaceSupportKHR(self.adapter, queue_index, self.surface, byref(supports_present))
             if not supports_present.value:
                 continue
-            match = VK_QUEUE_GRAPHICS_BIT.value | VK_QUEUE_COMPUTE_BIT.value | VK_QUEUE_TRANSFER_BIT.value
+            match = VK_QUEUE_GRAPHICS_BIT | VK_QUEUE_COMPUTE_BIT | VK_QUEUE_TRANSFER_BIT
             if (queue_family.queueFlags.value & match):
                 self.queue_index = queue_index
                 self.queue_family = queue_family
@@ -157,7 +157,7 @@ class VulkanWindow:
         self.swapchain_create_info.imageExtent.width = self.width
         self.swapchain_create_info.imageExtent.height = self.height
         self.swapchain_create_info.imageArrayLayers = 1
-        self.swapchain_create_info.imageUsage = VkImageUsageFlags(VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT.value)
+        self.swapchain_create_info.imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT.value
         self.swapchain_create_info.imageSharingMode = VK_SHARING_MODE_EXCLUSIVE
         self.swapchain_create_info.queueFamilyIndexCount = 1
         self.swapchain_create_info.pQueueFamilyIndices = pointer(queue_index)
@@ -187,7 +187,7 @@ class VulkanWindow:
             image_view_create_info.components.g = VK_COMPONENT_SWIZZLE_IDENTITY
             image_view_create_info.components.b = VK_COMPONENT_SWIZZLE_IDENTITY
             image_view_create_info.components.a = VK_COMPONENT_SWIZZLE_IDENTITY
-            image_view_create_info.subresourceRange.aspectMask = VkImageAspectFlags(VK_IMAGE_ASPECT_COLOR_BIT.value)
+            image_view_create_info.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT.value
             image_view_create_info.subresourceRange.baseMipLevel = 0
             image_view_create_info.subresourceRange.levelCount = 1
             image_view_create_info.subresourceRange.baseArrayLayer = 0

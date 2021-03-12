@@ -243,7 +243,8 @@ class vk_enum(vk_type):
     def __str__(self):
         src = super().__str__()
         if self.alias is None and self.ctype is not None:
-            src = f"{self.name} = type('{self.name}', ({self.ctype},), copy.deepcopy(enum_type_mixin))\n"
+            assert(self.ctype == "ctypes.c_int")
+            src = f"{self.name} = type('{self.name}', (c_enum,), dict(names=dict()))\n"
             src += f"{self.name}.names = " + "{\n"
             for enum in self.enums:
                 if enum.alias is None:
@@ -446,7 +447,6 @@ class vk_boilerplate:
 
     def __str__(self):
         src = """
-import copy
 import ctypes
 import platform
 
@@ -511,15 +511,72 @@ def vk_device_fn(name, proto):
             raise RuntimeError
     return wrapper
 
-enum_type_mixin = {
-    'names' : {},
-    '__str__' : lambda self: self.names.get(self.value, str(self.value)),
-    '__eq__' : lambda self, other: self.value == other.value,
-    '__lt__' : lambda self, other: self.value < other.value,
-    '__le__' : lambda self, other: self.value <= other.value,
-    '__gt__' : lambda self, other: self.value > other.value,
-    '__ge__' : lambda self, other: self.value >= other.value,
-}
+class c_enum(ctypes.c_int):
+    names = {}
+    def __str__(self):
+        return self.names.get(self.value, str(self.value))
+    def __int__(self):
+        return int(self.value)
+    def __float__(self):
+        return float(self.value)
+    def __eq__(self, other):
+        return self.value == int(other)
+    def __lt__(self, other):
+        return self.value < int(other)
+    def __le__(self, other):
+        return self.value <= int(other)
+    def __gt__(self, other):
+        return self.value > int(other)
+    def __ge__(self, other):
+        return self.value >= int(other)
+    def __add__(self, other):
+        return self.value + int(other)
+    def __sub__(self, other):
+        return self.value - int(other)
+    def __mul__(self, other):
+        return self.value * int(other)
+    def __truediv__(self, other):
+        return self.value / int(other)
+    def __floordiv__(self, other):
+        return self.value // int(other)
+    def __mod__(self, other):
+        return self.value % int(other)
+    def __pow__(self, other):
+        return self.value ** int(other)
+    def __lshift__(self, other):
+        return self.value << int(other)
+    def __rshift__(self, other):
+        return self.value >> int(other)
+    def __and__(self, other):
+        return self.value & int(other)
+    def __xor__(self, other):
+        return self.value ^ int(other)
+    def __or__(self, other):
+        return self.value | int(other)
+    def __radd__(self, other):
+        return int(other) + self.value
+    def __rsub__(self, other):
+        return int(other) - self.value
+    def __rmul__(self, other):
+        return int(other) * self.value
+    def __rtruediv__(self, other):
+        return int(other) / self.value
+    def __rfloordiv__(self, other):
+        return int(other) // self.value
+    def __rmod__(self, other):
+        return int(other) % self.value
+    def __rpow__(self, other):
+        return int(other) ** self.value
+    def __rlshift__(self, other):
+        return int(other) << self.value
+    def __rrshift__(self, other):
+        return int(other) >> self.value
+    def __rand__(self, other):
+        return int(other) & self.value
+    def __rxor__(self, other):
+        return int(other) ^ self.value
+    def __ror__(self, other):
+        return int(other) | self.value
 
 #=============================================================================#
 # The remainder of this file was generated automatically from the Vulkan API  #
