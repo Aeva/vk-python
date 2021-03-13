@@ -263,7 +263,9 @@ class vk_enum(vk_type):
             src += "        return ctypes.c_int(obj)\n"
             for enum in self.enums:
                 if enum.alias is None:
-                    src += f"    {enum.name} = {enum.value}\n"
+                    src += f"    {enum.name} = {enum.sign}{enum.value}\n"
+                else:
+                    src += f"    {enum.name} = {enum.alias}\n"
         for enum in self.enums:
             src += str(enum)
         return src
