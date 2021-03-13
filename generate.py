@@ -60,7 +60,7 @@ common_constants = {
 }
 
 
-def parse_type(c_noise):
+def parse_type(c_noise, enum_class_names=None):
     match = re.match(r'^(\w[A-Za-z0-9_* ]+?)\s+(\w[A-Za-z0-9_]*)(\[[A-Za-z0-9_\[\]]*\])?(:\d+)?$', c_noise)
     assert(match is not None)
     m_type, m_name, m_subscript, m_bitfield = match.groups()
@@ -80,6 +80,8 @@ def parse_type(c_noise):
         pointers = pointers.count("*")
     else:
         pointers = 0
+    if enum_class_names and m_type in enum_class_names:
+        m_type = "ctypes.c_int"
     if m_type == "void":
         if pointers > 0:
             m_type = "ctypes.c_void_p"
@@ -156,6 +158,12 @@ class vk_basetype(vk_type):
             else:
                 # basetype is an empty struct, probably
                 self.ctype = f"ctypes.Structure"
+    def __str__(self):
+        src = super().__str__()
+        if self.name in ["VkBool32", "VkFlags"]:
+            return f"# {src}"
+        else:
+            return src
 
 
 class vk_bitmask(vk_type):
@@ -229,34 +237,40 @@ class vk_enum(vk_type):
             type_name = None
         enums_tag = find_one(soup, "enums", attrs={"name":self.name})
         self.enums = []
+        found = {}
+        def add_enum(enum_tag, type_name):
+            wrapped = vk_enum_value(enum_tag, type_name)
+            if wrapped.name in found:
+                assert(wrapped.value == found[wrapped.name])
+            else:
+                found[wrapped.name] = wrapped.value
+                self.enums.append(wrapped)
         if enums_tag:
             for enum_tag in enums_tag.find_all("enum"):
-                value = vk_enum_value(enum_tag, type_name)
-                self.enums.append(value)
+                add_enum(enum_tag, type_name)
         for enum_tag in soup.find_all("enum", extends=self.name):
             ext_tag = enum_tag.parent.parent
             if ext_tag.name in ["extension", "feature"]:
                 if ext_tag.get("supported") != "disabled":
-                    value = vk_enum_value(enum_tag, type_name)
-                    self.enums.append(value)
+                    add_enum(enum_tag, type_name)
 
     def __str__(self):
         src = super().__str__()
         if self.alias is None and self.ctype is not None:
             assert(self.ctype == "ctypes.c_int")
-            src = f"{self.name} = type('{self.name}', (c_enum,), dict(names=dict()))\n"
-            src += f"{self.name}.names = " + "{\n"
+            src = f"class {self.name}(enum.IntFlag):\n"
+            src += "    def from_param(obj):\n"
+            src += "        return ctypes.c_int(obj)\n"
             for enum in self.enums:
                 if enum.alias is None:
-                    src += f"    {enum.value} : '{enum.name}',\n"
-            src += "}\n"
+                    src += f"    {enum.name} = {enum.value}\n"
         for enum in self.enums:
             src += str(enum)
         return src
 
 
 class vk_funcpointer(vk_type):
-    def __init__(self, tag):
+    def __init__(self, tag, enum_class_names):
         super().__init__(tag)
         lines = [i.strip() for i in tag.text.split("\n")]
         match = re.match(r'^typedef\s*(\w[A-Za-z0-9_*]*)\s*\(', lines.pop(0))
@@ -269,7 +283,7 @@ class vk_funcpointer(vk_type):
             if not line:
                 continue
             line = re.sub(r'(,|\);)$', '', line)
-            a_type, a_name, a_bitfield = parse_type(line)
+            a_type, a_name, a_bitfield = parse_type(line, enum_class_names)
             assert(a_bitfield is None)
             assert(a_type != "None")
             self.args.append(a_type)
@@ -281,7 +295,7 @@ class vk_funcpointer(vk_type):
 
 
 class vk_struct(vk_type):
-    def __init__(self, tag):
+    def __init__(self, tag, enum_class_names):
         super().__init__(tag)
         self.dependencies = []
         self.condition = None
@@ -299,7 +313,7 @@ class vk_struct(vk_type):
             line = line.strip()
             if not line:
                 continue
-            m_type, m_name, m_bitfield = parse_type(line)
+            m_type, m_name, m_bitfield = parse_type(line, enum_class_names)
             assert(m_type != "None")
             self.fields.append((m_type, m_name, m_bitfield))
             for found in re.findall(r'vk[a-z_]*', m_type, re.IGNORECASE):
@@ -327,13 +341,13 @@ class vk_struct(vk_type):
 
 
 class vk_union(vk_struct):
-    def __init__(self, tag):
-        super().__init__(tag)
+    def __init__(self, tag, enum_class_names):
+        super().__init__(tag, enum_class_names)
         self.kind = "Union"
 
 
 class vk_command:
-    def __init__(self, tag):
+    def __init__(self, tag, enum_class_names):
         self.condition = None
         self.loader_type = None
         self.alias = tag.get("alias")
@@ -346,7 +360,7 @@ class vk_command:
             self.p_types = []
             for param in tag.find_all("param"):
                 if param.parent == tag:
-                    p_type, p_name, invalid = parse_type(param.text)
+                    p_type, p_name, invalid = parse_type(param.text, enum_class_names)
                     assert(invalid is None)
                     self.p_types.append(p_type)
 
@@ -386,6 +400,13 @@ class vk_boilerplate:
         # API Constants
         self.enums.append(vk_enum(None, soup))
 
+        enum_class_names = set()
+        for types_tag in soup.find_all("types"):
+            for enum_tag in types_tag.find_all("type", category="enum"):
+                name = enum_tag.get("name")
+                assert(name is not None)
+                enum_class_names.add(name)
+
         categories = ('basetype', 'bitmask', 'handle', 'enum', 'funcpointer', 'struct', 'union')
         for types_tag in soup.find_all("types"):
             for type_tag in types_tag.find_all("type"):
@@ -403,17 +424,17 @@ class vk_boilerplate:
                 elif category == "enum":
                     self.enums.append(vk_enum(type_tag, soup))
                 elif category == "funcpointer":
-                    self.funcpointers.append(vk_funcpointer(type_tag))
+                    self.funcpointers.append(vk_funcpointer(type_tag, enum_class_names))
                 elif category == "struct":
-                    struct = vk_struct(type_tag)
+                    struct = vk_struct(type_tag, enum_class_names)
                     structs_dict[struct.name] = struct
                 elif category == "union":
-                    struct = vk_union(type_tag)
+                    struct = vk_union(type_tag, enum_class_names)
                     structs_dict[struct.name] = struct
 
         for commands in soup.find_all("commands"):
             for cmd_tag in commands.find_all("command"):
-                command = vk_command(cmd_tag)
+                command = vk_command(cmd_tag, enum_class_names)
                 self.commands[command.name] = command
 
         platforms = {p.get("name"):p.get("protect") for p in soup.find_all("platform")}
@@ -448,6 +469,7 @@ class vk_boilerplate:
     def __str__(self):
         src = """
 import ctypes
+import enum
 import platform
 
 if ctypes.sizeof(ctypes.c_void_p) != 8:
@@ -511,66 +533,17 @@ def vk_device_fn(name, proto):
             raise RuntimeError
     return wrapper
 
-class c_enum(ctypes.c_int):
-    names = {}
-    def __str__(self):
-        return self.names.get(self.value, str(self.value))
-    def __int__(self):
-        return int(self.value)
-    def __float__(self):
-        return float(self.value)
-    def __eq__(self, other):
-        return self.value == int(other)
-    def __lt__(self, other):
-        return self.value < int(other)
-    def __le__(self, other):
-        return self.value <= int(other)
-    def __gt__(self, other):
-        return self.value > int(other)
-    def __ge__(self, other):
-        return self.value >= int(other)
-    def __add__(self, other):
-        return self.value + int(other)
-    def __sub__(self, other):
-        return self.value - int(other)
-    def __mul__(self, other):
-        return self.value * int(other)
-    def __truediv__(self, other):
-        return self.value / int(other)
-    def __floordiv__(self, other):
-        return self.value // int(other)
-    def __mod__(self, other):
-        return self.value % int(other)
-    def __pow__(self, other):
-        return self.value ** int(other)
-    def __lshift__(self, other):
-        return self.value << int(other)
-    def __rshift__(self, other):
-        return self.value >> int(other)
+class VkBool32(ctypes.c_uint32):
+    def __bool__(self):
+        return self.value != 0
+
+class VkFlags(ctypes.c_uint32):
     def __and__(self, other):
         return self.value & int(other)
     def __xor__(self, other):
         return self.value ^ int(other)
     def __or__(self, other):
         return self.value | int(other)
-    def __radd__(self, other):
-        return int(other) + self.value
-    def __rsub__(self, other):
-        return int(other) - self.value
-    def __rmul__(self, other):
-        return int(other) * self.value
-    def __rtruediv__(self, other):
-        return int(other) / self.value
-    def __rfloordiv__(self, other):
-        return int(other) // self.value
-    def __rmod__(self, other):
-        return int(other) % self.value
-    def __rpow__(self, other):
-        return int(other) ** self.value
-    def __rlshift__(self, other):
-        return int(other) << self.value
-    def __rrshift__(self, other):
-        return int(other) >> self.value
     def __rand__(self, other):
         return int(other) & self.value
     def __rxor__(self, other):
