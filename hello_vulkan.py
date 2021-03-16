@@ -30,6 +30,9 @@ class VulkanWindow:
         self.setup_device()
         self.setup_swapchain()
         self.setup_frames()
+        self.setup_depth_buffer()
+        self.setup_render_pass()
+        self.setup_frame_buffers()
 
     def create_instance(self):
         app_info = VkApplicationInfo()
@@ -216,6 +219,187 @@ class VulkanWindow:
         self.swapchain_semaphore = VkSemaphore()
         vkCreateSemaphore(self.device, semaphore_create_info, None, byref(self.swapchain_semaphore))
         self.teardown.append(self._destroy_frame)
+
+    def get_depth_tiling_mode(self, depth_format):
+        depth_format_properties = VkFormatProperties()
+        vkGetPhysicalDeviceFormatProperties(self.adapter, depth_format, byref(depth_format_properties))
+        if (depth_format_properties.optimalTilingFeatures & VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT):
+            return VK_IMAGE_TILING_OPTIMAL
+        elif (depth_format_properties.linearTilingFeatures & VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT):
+            return VK_IMAGE_TILING_LINEAR
+        else:
+            raise RuntimeError(f"Cannot determine the tiling mode for {str(depth_format)}")
+
+    def get_image_alloc_info(self, image, property_flags):
+        memory_requirements = VkMemoryRequirements()
+        vkGetImageMemoryRequirements(self.device, image, byref(memory_requirements));
+
+        allocate_info = VkMemoryAllocateInfo()
+        allocate_info.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO
+        allocate_info.pNext = None
+        allocate_info.allocationSize = memory_requirements.size
+
+        for index, memory_type in enumerate(self.adapter_memory_properties.memoryTypes):
+            memory_type_bit = 1 << index
+            matches_bits = (memory_requirements.memoryTypeBits & memory_type_bit) == memory_type_bit
+            matches_properties = (memory_type.propertyFlags & property_flags) == property_flags
+            if matches_bits and matches_properties:
+                allocate_info.memoryTypeIndex = index
+                return allocate_info
+
+        error = "Unable to find a memory type index matching the following flags:\n"
+        for flag in VkMemoryPropertyFlags(property_flags).get_active():
+            error += f" - {str(flag)}\n"
+        raise RuntimeError(error)
+
+    def setup_depth_buffer(self):
+        depth_buffer_create_info = VkImageCreateInfo()
+        depth_buffer_create_info.sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO
+        depth_buffer_create_info.pNext = None
+        depth_buffer_create_info.imageType = VK_IMAGE_TYPE_2D
+        depth_buffer_create_info.format = VK_FORMAT_D16_UNORM
+        depth_buffer_create_info.extent.width = self.width
+        depth_buffer_create_info.extent.height = self.height
+        depth_buffer_create_info.extent.depth = 1
+        depth_buffer_create_info.mipLevels = 1
+        depth_buffer_create_info.arrayLayers = 1
+        depth_buffer_create_info.samples = VK_SAMPLE_COUNT_1_BIT
+        depth_buffer_create_info.tiling = self.get_depth_tiling_mode(VK_FORMAT_D16_UNORM)
+        depth_buffer_create_info.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED
+        depth_buffer_create_info.usage = VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT
+        depth_buffer_create_info.queueFamilyIndexCount = 0
+        depth_buffer_create_info.pQueueFamilyIndices = None
+        depth_buffer_create_info.sharingMode = VK_SHARING_MODE_EXCLUSIVE
+        depth_buffer_create_info.flags = 0
+        self.depth_buffer_image = VkImage()
+        result = vkCreateImage(self.device, byref(depth_buffer_create_info), None, byref(self.depth_buffer_image))
+        assert(result == VK_SUCCESS)
+
+        depth_buffer_allocation_info = self.get_image_alloc_info(self.depth_buffer_image, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT)
+        self.depth_buffer_memory = VkDeviceMemory()
+        result = vkAllocateMemory(self.device, byref(depth_buffer_allocation_info), None, byref(self.depth_buffer_memory))
+        assert(result == VK_SUCCESS)
+        relust = vkBindImageMemory(self.device, self.depth_buffer_image, self.depth_buffer_memory, 0)
+        assert(result == VK_SUCCESS)
+
+        image_view_create_info = VkImageViewCreateInfo()
+        image_view_create_info.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO
+        image_view_create_info.pNext = None
+        image_view_create_info.flags = 0
+        image_view_create_info.image = self.depth_buffer_image
+        image_view_create_info.format = depth_buffer_create_info.format
+        image_view_create_info.viewType = VK_IMAGE_VIEW_TYPE_2D
+        image_view_create_info.components.r = VK_COMPONENT_SWIZZLE_IDENTITY
+        image_view_create_info.components.g = VK_COMPONENT_SWIZZLE_IDENTITY
+        image_view_create_info.components.b = VK_COMPONENT_SWIZZLE_IDENTITY
+        image_view_create_info.components.a = VK_COMPONENT_SWIZZLE_IDENTITY
+        image_view_create_info.subresourceRange.aspectMask = VK_IMAGE_ASPECT_DEPTH_BIT
+        image_view_create_info.subresourceRange.baseMipLevel = 0
+        image_view_create_info.subresourceRange.levelCount = depth_buffer_create_info.mipLevels
+        image_view_create_info.subresourceRange.baseArrayLayer = 0
+        image_view_create_info.subresourceRange.layerCount = depth_buffer_create_info.arrayLayers
+        self.depth_buffer_view = VkImageView()
+        result = vkCreateImageView(self.device, byref(image_view_create_info), None, byref(self.depth_buffer_view))
+        assert(result == VK_SUCCESS)
+        self.teardown.append(self._destroy_depth_image)
+
+    def setup_render_pass(self):
+        attachments = (VkAttachmentDescription * 2)()
+        attachments[0].flags = 0
+        attachments[0].format = self.surface_format.format
+        attachments[0].samples = VK_SAMPLE_COUNT_1_BIT
+        attachments[0].loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR
+        attachments[0].storeOp = VK_ATTACHMENT_STORE_OP_STORE
+        attachments[0].stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE
+        attachments[0].stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE
+        attachments[0].initialLayout = VK_IMAGE_LAYOUT_UNDEFINED
+        attachments[0].finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR
+        attachments[1].flags = 0
+        attachments[1].format = VK_FORMAT_D16_UNORM
+        attachments[1].samples = VK_SAMPLE_COUNT_1_BIT
+        attachments[1].loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR
+        attachments[1].storeOp = VK_ATTACHMENT_STORE_OP_DONT_CARE
+        attachments[1].stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE
+        attachments[1].stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE
+        attachments[1].initialLayout = VK_IMAGE_LAYOUT_UNDEFINED
+        attachments[1].finalLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL
+
+        attachment_refs = (VkAttachmentReference * 2)()
+        attachment_refs[0].attachment = 0
+        attachment_refs[0].layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL
+        attachment_refs[1].attachment = 1
+        attachment_refs[1].layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL
+
+        subpass_desc = VkSubpassDescription()
+        subpass_desc.flags = 0
+        subpass_desc.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS
+        subpass_desc.inputAttachmentCount = 0
+        subpass_desc.pInputAttachments = None
+        subpass_desc.colorAttachmentCount = 1
+        subpass_desc.pColorAttachments = pointer(attachment_refs[0])
+        subpass_desc.pResolveAttachments = None
+        subpass_desc.pDepthStencilAttachment = pointer(attachment_refs[1])
+        subpass_desc.preserveAttachmentCount = 0
+        subpass_desc.pPreserveAttachments = None
+
+        subpass_dependency = VkSubpassDependency()
+        subpass_dependency.srcSubpass = VK_SUBPASS_EXTERNAL
+        subpass_dependency.dstSubpass = 0
+        subpass_dependency.srcStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT
+        subpass_dependency.dstStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT
+        subpass_dependency.srcAccessMask = 0
+        subpass_dependency.dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT
+        subpass_dependency.dependencyFlags = 0
+
+        render_pass_create_info = VkRenderPassCreateInfo()
+        render_pass_create_info.sType = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO
+        render_pass_create_info.pNext = None
+        render_pass_create_info.attachmentCount = 2
+        render_pass_create_info.pAttachments = attachments
+        render_pass_create_info.subpassCount = 1
+        render_pass_create_info.pSubpasses = pointer(subpass_desc)
+        render_pass_create_info.dependencyCount = 1
+        render_pass_create_info.pDependencies = pointer(subpass_dependency)
+
+        self.render_pass = VkRenderPass()
+        result = vkCreateRenderPass(self.device, render_pass_create_info, None, byref(self.render_pass))
+        assert(result == VK_SUCCESS)
+        self.teardown.append(self._destroy_render_pass)
+
+    def setup_frame_buffers(self):
+        image_views = (VkImageView * 2)()
+        image_views[1] = self.depth_buffer_view
+        frame_buffer_create_info = VkFramebufferCreateInfo()
+        frame_buffer_create_info.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO
+        frame_buffer_create_info.pNext = None
+        frame_buffer_create_info.renderPass = self.render_pass
+        frame_buffer_create_info.attachmentCount = 2
+        frame_buffer_create_info.pAttachments = image_views
+        frame_buffer_create_info.width = self.width
+        frame_buffer_create_info.height = self.height
+        frame_buffer_create_info.layers = 1
+
+        self.frame_buffers = []
+        for swapchain_view in self.swapchain_views:
+            image_views[0] = swapchain_view
+            frame_buffer = VkFramebuffer()
+            result = vkCreateFramebuffer(self.device, frame_buffer_create_info, None, byref(frame_buffer))
+            assert(result == VK_SUCCESS)
+            self.frame_buffers.append(frame_buffer)
+
+        self.teardown.append(self._destroy_frame_buffers)
+
+    def _destroy_frame_buffers(self):
+        for frame_buffer in self.frame_buffers:
+            vkDestroyFramebuffer(self.device, frame_buffer, None)
+
+    def _destroy_render_pass(self):
+        vkDestroyRenderPass(self.device, self.render_pass, None)
+
+    def _destroy_depth_image(self):
+        vkDestroyImageView(self.device, self.depth_buffer_view, None)
+        vkFreeMemory(self.device, self.depth_buffer_memory, None)
+        vkDestroyImage(self.device, self.depth_buffer_image, None)
 
     def _destroy_frame(self):
         vkDestroySemaphore(self.device, self.swapchain_semaphore, None)
