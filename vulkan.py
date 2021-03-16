@@ -81,6 +81,12 @@ class VkFlags(ctypes.c_uint32):
         return int(other) ^ self.value
     def __ror__(self, other):
         return int(other) | self.value
+    def get_active(self):
+        FlagBits = globals().get(f"{type(self).__name__[:-1]}Bits", None)
+        if FlagBits:
+            return [FlagBits(1<<i) for i in range(32) if self.value & (1<<i)]
+        else:
+            return None
 
 #=============================================================================#
 # The remainder of this file was generated automatically from the Vulkan API  #
