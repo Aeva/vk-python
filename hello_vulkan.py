@@ -1,4 +1,5 @@
 
+import os
 import time
 import sdl2
 import sdl2.ext
@@ -33,6 +34,7 @@ class VulkanWindow:
         self.setup_depth_buffer()
         self.setup_render_pass()
         self.setup_frame_buffers()
+        self.setup_pipeline()
 
     def create_instance(self):
         app_info = VkApplicationInfo()
@@ -388,6 +390,191 @@ class VulkanWindow:
             self.frame_buffers.append(frame_buffer)
 
         self.teardown.append(self._destroy_frame_buffers)
+
+    def load_shader_module(self, spirv_path):
+        with open(os.path.join("shaders", spirv_path), "rb") as infile:
+            bytes = infile.read()
+        shader_module_create_info = VkShaderModuleCreateInfo()
+        shader_module_create_info.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO
+        shader_module_create_info.pNext = None
+        shader_module_create_info.flags = 0
+        shader_module_create_info.codeSize = len(bytes)
+        shader_module_create_info.pCode = ctypes.cast(c_char_p(bytes), POINTER(c_uint32))
+        module = VkShaderModule();
+        result = vkCreateShaderModule(self.device, byref(shader_module_create_info), None, byref(module))
+        assert(result == VK_SUCCESS)
+        return module
+
+    def setup_pipeline(self):
+        self.vertex_shader = self.load_shader_module("test.vs.spv")
+        self.fragment_shader = self.load_shader_module("test.fs.spv")
+        shader_stages_create_info = (VkPipelineShaderStageCreateInfo * 2)()
+        shader_stages_create_info[0].sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO
+        shader_stages_create_info[0].pNext = None
+        shader_stages_create_info[0].flags = 0
+        shader_stages_create_info[0].stage = VK_SHADER_STAGE_VERTEX_BIT
+        shader_stages_create_info[0].module = self.vertex_shader
+        shader_stages_create_info[0].pName = b"main"
+        shader_stages_create_info[0].pSpecializationInfo = None
+        shader_stages_create_info[1].sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO
+        shader_stages_create_info[1].pNext = None
+        shader_stages_create_info[1].flags = 0
+        shader_stages_create_info[1].stage = VK_SHADER_STAGE_FRAGMENT_BIT
+        shader_stages_create_info[1].module = self.fragment_shader
+        shader_stages_create_info[1].pName = b"main"
+        shader_stages_create_info[1].pSpecializationInfo = None
+        pipeline_layout_create_info = VkPipelineLayoutCreateInfo()
+        pipeline_layout_create_info.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO
+        pipeline_layout_create_info.pNext = None
+        pipeline_layout_create_info.pushConstantRangeCount = 0
+        pipeline_layout_create_info.pPushConstantRanges = None
+        pipeline_layout_create_info.setLayoutCount = 0
+        pipeline_layout_create_info.pSetLayouts = None
+
+        self.pipeline_layout = VkPipelineLayout()
+        result = vkCreatePipelineLayout(self.device, byref(pipeline_layout_create_info), None, byref(self.pipeline_layout))
+        assert(result == VK_SUCCESS)
+
+        enabled_dynamic_states = (c_int * 2)()
+        enabled_dynamic_states[0] = VK_DYNAMIC_STATE_VIEWPORT
+        enabled_dynamic_states[1] = VK_DYNAMIC_STATE_SCISSOR
+        dynamic_state_create_info = VkPipelineDynamicStateCreateInfo()
+        dynamic_state_create_info.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO
+        dynamic_state_create_info.pNext = None
+        dynamic_state_create_info.flags = 0
+        dynamic_state_create_info.dynamicStateCount = 2
+        dynamic_state_create_info.pDynamicStates = enabled_dynamic_states
+
+        vertex_input_state_create_info = VkPipelineVertexInputStateCreateInfo()
+        vertex_input_state_create_info.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO
+        vertex_input_state_create_info.pNext = None
+        vertex_input_state_create_info.flags = 0
+        vertex_input_state_create_info.vertexBindingDescriptionCount = 0
+        vertex_input_state_create_info.pVertexBindingDescriptions = None
+        vertex_input_state_create_info.vertexAttributeDescriptionCount = 0
+        vertex_input_state_create_info.pVertexAttributeDescriptions = None
+
+        input_assembly_state_create_info = VkPipelineInputAssemblyStateCreateInfo()
+        input_assembly_state_create_info.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO
+        input_assembly_state_create_info.pNext = None
+        input_assembly_state_create_info.flags = 0
+        input_assembly_state_create_info.topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST
+        input_assembly_state_create_info.primitiveRestartEnable = VK_FALSE
+
+        rasterization_state_create_info = VkPipelineRasterizationStateCreateInfo()
+        rasterization_state_create_info.sType = VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO
+        rasterization_state_create_info.pNext = None
+        rasterization_state_create_info.flags = 0
+        rasterization_state_create_info.depthClampEnable = VK_FALSE
+        rasterization_state_create_info.rasterizerDiscardEnable = VK_FALSE
+        rasterization_state_create_info.polygonMode = VK_POLYGON_MODE_FILL
+        rasterization_state_create_info.cullMode = VK_CULL_MODE_BACK_BIT
+        rasterization_state_create_info.frontFace = VK_FRONT_FACE_CLOCKWISE
+        rasterization_state_create_info.depthBiasEnable = VK_FALSE
+        rasterization_state_create_info.depthBiasConstantFactor = 0
+        rasterization_state_create_info.depthBiasClamp = 0
+        rasterization_state_create_info.depthBiasSlopeFactor = 0
+        rasterization_state_create_info.lineWidth = 1.0
+
+        color_blend_attachment_state_create_info = VkPipelineColorBlendAttachmentState()
+        color_blend_attachment_state_create_info.blendEnable = VK_FALSE
+        color_blend_attachment_state_create_info.srcColorBlendFactor = VK_BLEND_FACTOR_ZERO
+        color_blend_attachment_state_create_info.dstColorBlendFactor = VK_BLEND_FACTOR_ZERO
+        color_blend_attachment_state_create_info.colorBlendOp = VK_BLEND_OP_ADD
+        color_blend_attachment_state_create_info.srcAlphaBlendFactor = VK_BLEND_FACTOR_ZERO
+        color_blend_attachment_state_create_info.dstAlphaBlendFactor = VK_BLEND_FACTOR_ZERO
+        color_blend_attachment_state_create_info.alphaBlendOp = VK_BLEND_OP_ADD
+        color_blend_attachment_state_create_info.colorWriteMask = 0
+
+        color_blend_state_create_info = VkPipelineColorBlendStateCreateInfo()
+        color_blend_state_create_info.sType = VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO
+        color_blend_state_create_info.pNext = None;
+        color_blend_state_create_info.flags = 0
+        color_blend_state_create_info.logicOpEnable = VK_FALSE
+        color_blend_state_create_info.logicOp = VK_LOGIC_OP_NO_OP
+        color_blend_state_create_info.attachmentCount = 1
+        color_blend_state_create_info.pAttachments = pointer(color_blend_attachment_state_create_info)
+        color_blend_state_create_info.blendConstants[0] = 1.0
+        color_blend_state_create_info.blendConstants[1] = 1.0
+        color_blend_state_create_info.blendConstants[2] = 1.0
+        color_blend_state_create_info.blendConstants[3] = 1.0
+
+        viewport_state_create_info = VkPipelineViewportStateCreateInfo()
+        viewport_state_create_info.sType = VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO
+        viewport_state_create_info.pNext = None
+        viewport_state_create_info.flags = 0
+        viewport_state_create_info.viewportCount = 1
+        viewport_state_create_info.pViewports = None
+        viewport_state_create_info.scissorCount = 1
+        viewport_state_create_info.pScissors = None
+
+        depth_stencil_state_create_info = VkPipelineDepthStencilStateCreateInfo()
+        depth_stencil_state_create_info.sType = VK_STRUCTURE_TYPE_PIPELINE_DEPTH_STENCIL_STATE_CREATE_INFO
+        depth_stencil_state_create_info.pNext = None
+        depth_stencil_state_create_info.flags = 0
+        depth_stencil_state_create_info.depthTestEnable = VK_TRUE
+        depth_stencil_state_create_info.depthWriteEnable = VK_TRUE
+        depth_stencil_state_create_info.depthCompareOp = VK_COMPARE_OP_LESS_OR_EQUAL
+        depth_stencil_state_create_info.depthBoundsTestEnable = VK_FALSE
+        depth_stencil_state_create_info.stencilTestEnable = VK_FALSE
+        depth_stencil_state_create_info.front.failOp = VK_STENCIL_OP_KEEP
+        depth_stencil_state_create_info.front.passOp = VK_STENCIL_OP_KEEP
+        depth_stencil_state_create_info.front.depthFailOp = VK_STENCIL_OP_KEEP
+        depth_stencil_state_create_info.front.compareOp = VK_COMPARE_OP_ALWAYS
+        depth_stencil_state_create_info.front.compareMask = 0
+        depth_stencil_state_create_info.front.writeMask = 0
+        depth_stencil_state_create_info.front.reference = 0
+        depth_stencil_state_create_info.back.failOp = VK_STENCIL_OP_KEEP
+        depth_stencil_state_create_info.back.passOp = VK_STENCIL_OP_KEEP
+        depth_stencil_state_create_info.back.depthFailOp = VK_STENCIL_OP_KEEP
+        depth_stencil_state_create_info.back.compareOp = VK_COMPARE_OP_ALWAYS
+        depth_stencil_state_create_info.back.compareMask = 0
+        depth_stencil_state_create_info.back.writeMask = 0
+        depth_stencil_state_create_info.back.reference = 0
+        depth_stencil_state_create_info.minDepthBounds = 0
+        depth_stencil_state_create_info.maxDepthBounds = 0
+
+        multisample_state_create_info = VkPipelineMultisampleStateCreateInfo()
+        multisample_state_create_info.sType = VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO
+        multisample_state_create_info.pNext = None
+        multisample_state_create_info.flags = 0
+        multisample_state_create_info.rasterizationSamples = VK_SAMPLE_COUNT_1_BIT
+        multisample_state_create_info.sampleShadingEnable = VK_FALSE
+        multisample_state_create_info.minSampleShading = 0.0
+        multisample_state_create_info.pSampleMask = None
+        multisample_state_create_info.alphaToCoverageEnable = VK_FALSE
+        multisample_state_create_info.alphaToOneEnable = VK_FALSE
+
+        graphics_pipeline_create_info = VkGraphicsPipelineCreateInfo()
+        graphics_pipeline_create_info.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO
+        graphics_pipeline_create_info.pNext = None
+        graphics_pipeline_create_info.flags = 0
+        graphics_pipeline_create_info.stageCount = 2
+        graphics_pipeline_create_info.pStages = shader_stages_create_info
+        graphics_pipeline_create_info.pVertexInputState = pointer(vertex_input_state_create_info)
+        graphics_pipeline_create_info.pInputAssemblyState = pointer(input_assembly_state_create_info)
+        graphics_pipeline_create_info.pTessellationState = None
+        graphics_pipeline_create_info.pViewportState = pointer(viewport_state_create_info)
+        graphics_pipeline_create_info.pRasterizationState = pointer(rasterization_state_create_info)
+        graphics_pipeline_create_info.pMultisampleState = pointer(multisample_state_create_info)
+        graphics_pipeline_create_info.pDepthStencilState = pointer(depth_stencil_state_create_info)
+        graphics_pipeline_create_info.pColorBlendState = pointer(color_blend_state_create_info)
+        graphics_pipeline_create_info.pDynamicState = pointer(dynamic_state_create_info)
+        graphics_pipeline_create_info.layout = self.pipeline_layout
+        graphics_pipeline_create_info.renderPass = self.render_pass
+        graphics_pipeline_create_info.subpass = 0
+        graphics_pipeline_create_info.basePipelineHandle = None
+        graphics_pipeline_create_info.basePipelineIndex = 0
+
+        self.graphics_pipeline = VkPipeline()
+        result = vkCreateGraphicsPipelines(self.device, None, 1, byref(graphics_pipeline_create_info), None, byref(self.graphics_pipeline))
+        self.teardown.append(self._destroy_pipeline)
+
+    def _destroy_pipeline(self):
+        vkDestroyPipeline(self.device, self.graphics_pipeline, None)
+        vkDestroyPipelineLayout(self.device, self.pipeline_layout, None)
+        vkDestroyShaderModule(self.device, self.vertex_shader, None)
+        vkDestroyShaderModule(self.device, self.fragment_shader, None)
 
     def _destroy_frame_buffers(self):
         for frame_buffer in self.frame_buffers:
