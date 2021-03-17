@@ -35,6 +35,8 @@ class VulkanWindow:
         self.setup_render_pass()
         self.setup_frame_buffers()
         self.setup_pipeline()
+        self.submitted = []
+        self.submitted_pool = None
 
     def create_instance(self):
         app_info = VkApplicationInfo()
@@ -147,6 +149,10 @@ class VulkanWindow:
         self.device = VkDevice()
         result = vkCreateDevice(self.adapter, byref(device_create_info), None, byref(self.device))
         assert(result == VK_SUCCESS)
+
+        self.graphics_queue = VkQueue()
+        vkGetDeviceQueue(self.device, self.queue_index, 0, byref(self.graphics_queue))
+
         self.teardown.append(self._destroy_device)
 
     def setup_swapchain(self):
@@ -234,7 +240,7 @@ class VulkanWindow:
 
     def get_image_alloc_info(self, image, property_flags):
         memory_requirements = VkMemoryRequirements()
-        vkGetImageMemoryRequirements(self.device, image, byref(memory_requirements));
+        vkGetImageMemoryRequirements(self.device, image, byref(memory_requirements))
 
         allocate_info = VkMemoryAllocateInfo()
         allocate_info.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO
@@ -400,7 +406,7 @@ class VulkanWindow:
         shader_module_create_info.flags = 0
         shader_module_create_info.codeSize = len(bytes)
         shader_module_create_info.pCode = ctypes.cast(c_char_p(bytes), POINTER(c_uint32))
-        module = VkShaderModule();
+        module = VkShaderModule()
         result = vkCreateShaderModule(self.device, byref(shader_module_create_info), None, byref(module))
         assert(result == VK_SUCCESS)
         return module
@@ -468,7 +474,7 @@ class VulkanWindow:
         rasterization_state_create_info.depthClampEnable = VK_FALSE
         rasterization_state_create_info.rasterizerDiscardEnable = VK_FALSE
         rasterization_state_create_info.polygonMode = VK_POLYGON_MODE_FILL
-        rasterization_state_create_info.cullMode = VK_CULL_MODE_BACK_BIT
+        rasterization_state_create_info.cullMode = VK_CULL_MODE_NONE
         rasterization_state_create_info.frontFace = VK_FRONT_FACE_CLOCKWISE
         rasterization_state_create_info.depthBiasEnable = VK_FALSE
         rasterization_state_create_info.depthBiasConstantFactor = 0
@@ -484,11 +490,11 @@ class VulkanWindow:
         color_blend_attachment_state_create_info.srcAlphaBlendFactor = VK_BLEND_FACTOR_ZERO
         color_blend_attachment_state_create_info.dstAlphaBlendFactor = VK_BLEND_FACTOR_ZERO
         color_blend_attachment_state_create_info.alphaBlendOp = VK_BLEND_OP_ADD
-        color_blend_attachment_state_create_info.colorWriteMask = 0
+        color_blend_attachment_state_create_info.colorWriteMask = 0xf
 
         color_blend_state_create_info = VkPipelineColorBlendStateCreateInfo()
         color_blend_state_create_info.sType = VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO
-        color_blend_state_create_info.pNext = None;
+        color_blend_state_create_info.pNext = None
         color_blend_state_create_info.flags = 0
         color_blend_state_create_info.logicOpEnable = VK_FALSE
         color_blend_state_create_info.logicOp = VK_LOGIC_OP_NO_OP
@@ -512,8 +518,8 @@ class VulkanWindow:
         depth_stencil_state_create_info.sType = VK_STRUCTURE_TYPE_PIPELINE_DEPTH_STENCIL_STATE_CREATE_INFO
         depth_stencil_state_create_info.pNext = None
         depth_stencil_state_create_info.flags = 0
-        depth_stencil_state_create_info.depthTestEnable = VK_TRUE
-        depth_stencil_state_create_info.depthWriteEnable = VK_TRUE
+        depth_stencil_state_create_info.depthTestEnable = VK_FALSE
+        depth_stencil_state_create_info.depthWriteEnable = VK_FALSE
         depth_stencil_state_create_info.depthCompareOp = VK_COMPARE_OP_LESS_OR_EQUAL
         depth_stencil_state_create_info.depthBoundsTestEnable = VK_FALSE
         depth_stencil_state_create_info.stencilTestEnable = VK_FALSE
@@ -616,11 +622,119 @@ class VulkanWindow:
     def pump_events(self):
         return not sdl2.SDL_QuitRequested()
 
+    def draw(self):
+        frame = c_uint32()
+        result = vkAcquireNextImageKHR(self.device, self.swapchain, c_uint64(-1), self.swapchain_semaphore, None, byref(frame))
+        assert(result == VK_SUCCESS)
+
+        for command_buffer in self.submitted:
+            assert(isinstance(command_buffer, VkCommandBuffer))
+            vkFreeCommandBuffers(self.device, self.submitted_pool, 1, byref(command_buffer))
+        self.submitted = []
+        if self.submitted_pool:
+            vkResetCommandPool(self.device, self.submitted_pool, VK_COMMAND_POOL_RESET_RELEASE_RESOURCES_BIT)
+
+        command_pool = self.command_pools[frame.value]
+        self.submitted_pool = command_pool
+
+        command_buffer_allocate_info = VkCommandBufferAllocateInfo()
+        command_buffer_allocate_info.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO
+        command_buffer_allocate_info.pNext = None
+        command_buffer_allocate_info.commandPool = command_pool
+        command_buffer_allocate_info.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY
+        command_buffer_allocate_info.commandBufferCount = 1
+        command_buffer = VkCommandBuffer()
+        result = vkAllocateCommandBuffers(self.device, byref(command_buffer_allocate_info), byref(command_buffer))
+        assert(result == VK_SUCCESS)
+        self.submitted.append(command_buffer)
+
+        command_buffer_begin_info = VkCommandBufferBeginInfo()
+        command_buffer_begin_info.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO
+        command_buffer_begin_info.pNext = None
+        command_buffer_begin_info.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT
+        command_buffer_begin_info.pInheritanceInfo = None
+        vkBeginCommandBuffer(command_buffer, byref(command_buffer_begin_info))
+
+        clear_colors = (VkClearValue * 2)()
+        clear_colors[0].color.float32[0] = 0.5
+        clear_colors[0].color.float32[1] = 0.5
+        clear_colors[0].color.float32[2] = 0.5
+        clear_colors[0].color.float32[3] = 1.0
+        clear_colors[1].depthStencil.depth = 1.0
+        clear_colors[1].depthStencil.stencil = 0
+
+        renderpass_begin_info = VkRenderPassBeginInfo()
+        renderpass_begin_info.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO
+        renderpass_begin_info.pNext = None
+        renderpass_begin_info.renderPass = self.render_pass
+        renderpass_begin_info.framebuffer = self.frame_buffers[frame.value]
+        renderpass_begin_info.renderArea.offset.x = 0
+        renderpass_begin_info.renderArea.offset.y = 0
+        renderpass_begin_info.renderArea.extent.width = self.width
+        renderpass_begin_info.renderArea.extent.height = self.height
+        renderpass_begin_info.clearValueCount = 2
+        renderpass_begin_info.pClearValues = clear_colors
+
+        vkCmdBeginRenderPass(command_buffer, byref(renderpass_begin_info), VK_SUBPASS_CONTENTS_INLINE)
+        vkCmdBindPipeline(command_buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, self.graphics_pipeline)
+
+        viewport = VkViewport()
+        viewport.width = float(self.width)
+        viewport.height = float(self.height)
+        viewport.minDepth = 0.0
+        viewport.maxDepth = 1.0
+        viewport.x = 0
+        viewport.y = 0
+        vkCmdSetViewport(command_buffer, 0, 1, byref(viewport))
+
+        scissor_rect = VkRect2D()
+        scissor_rect.extent.width = 800
+        scissor_rect.extent.height = 600
+        scissor_rect.offset.x = 0
+        scissor_rect.offset.y = 0
+        vkCmdSetScissor(command_buffer, 0, 1, byref(scissor_rect))
+
+        # draw the triangle!
+        vkCmdDraw(command_buffer, 3, 1, 0, 0)
+
+        vkCmdEndRenderPass(command_buffer)
+        vkEndCommandBuffer(command_buffer)
+
+        pipeline_stage_flags = VkPipelineStageFlags(VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT)
+        submit_info = VkSubmitInfo()
+        submit_info.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO
+        submit_info.pNext = None
+        submit_info.waitSemaphoreCount = 1
+        submit_info.pWaitSemaphores = pointer(self.swapchain_semaphore)
+        submit_info.pWaitDstStageMask = pointer(pipeline_stage_flags)
+        submit_info.commandBufferCount = 1
+        submit_info.pCommandBuffers = pointer(command_buffer)
+        submit_info.signalSemaphoreCount = 0
+        submit_info.pSignalSemaphores = None
+
+        vkResetFences(self.device, 1, byref(self.frame_fence))
+        vkQueueSubmit(self.graphics_queue, 1, byref(submit_info), self.frame_fence)
+        result = VK_TIMEOUT
+        while result == VK_TIMEOUT:
+            result = vkWaitForFences(self.device, 1, byref(self.frame_fence), VK_TRUE, c_uint64(-1))
+        assert(result == VK_SUCCESS)
+
+        present_info = VkPresentInfoKHR()
+        present_info.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR
+        present_info.pNext = None
+        present_info.waitSemaphoreCount = 0
+        present_info.pWaitSemaphores = None
+        present_info.swapchainCount = 1
+        present_info.pSwapchains = pointer(self.swapchain)
+        present_info.pImageIndices = pointer(frame)
+        present_info.pResults = None
+        vkQueuePresentKHR(self.graphics_queue, byref(present_info))
 
 if __name__ == "__main__":
     sdl2.ext.init()
     window = VulkanWindow("Hello World!", 800, 600, flags=sdl2.SDL_WINDOW_RESIZABLE)
     while window.pump_events():
+        window.draw()
         time.sleep(0.01)
     window.shutdown()
     sdl2.ext.quit()
